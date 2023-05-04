@@ -51,13 +51,13 @@ public class UsrArticleController {
 	@ResponseBody
 	public Object doModify(int id, String title, String body) {
 		
+		articleService.modifyArticle(id, title, body);
+		
 		Article foundArticle = articleService.getArticleById(id);
 		
 		if(foundArticle==null) {
 			return id +"번 게시글은 존재하지 않습니다.";
 		}
-		
-		articleService.modifyArticle(id, title, body);
 		
 		return foundArticle;
 	}
