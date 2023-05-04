@@ -13,9 +13,14 @@ public class ArticleService {
 	@Autowired
 	ArticleRepository articleRepository;
 	
-	public Article writeArticle(String title, String body) {
-
-		return articleRepository.writeArticle(title, body);
+	public ArticleService(ArticleRepository articleRepository) {
+		this.articleRepository = articleRepository;
+	}
+	
+	public int writeArticle(String title, String body) {
+		articleRepository.writeArticle(title, body);
+		
+		return articleRepository.getLastInsertId();
 	}
 
 	public List<Article> getArticles() {
@@ -23,9 +28,9 @@ public class ArticleService {
 		return articleRepository.getArticles();
 	}
 	
-	public Article modifyArticle(int id, String title, String body) {
+	public void modifyArticle(int id, String title, String body) {
 		
-		return articleRepository.modifyArticle(id, title, body);
+		articleRepository.modifyArticle(id, title, body);
 	}
 
 	public void deleteArticle(int id) {
