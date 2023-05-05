@@ -2,7 +2,7 @@ package com.KoreaIT.sdy.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KoreaIT.sdy.demo.service.ArticleService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Article;
-import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
+import com.KoreaIT.sdy.demo.vo.Rq;
 
 @Controller
 public class UsrArticleController {
@@ -23,20 +23,10 @@ public class UsrArticleController {
 	
 	@RequestMapping("usr/article/write")
 	@ResponseBody
-	public ResultData write(HttpSession httpSession, String title, String body) {
-		boolean isLogined = false;
-		Member member = null;
+	public ResultData write(HttpServletRequest req, String title, String body) {
+		Rq rq = (Rq)req.getAttribute("rq");
 		
-		if(httpSession.getAttribute("loginedMember")!=null) {
-			isLogined = true;
-			member = (Member) httpSession.getAttribute("loginedMember");
-		}
-		
-		if(isLogined==false) {
-			return ResultData.from("F-L", "로그인 후 이용해주세요.");
-		}
-		
-		int id = articleService.writeArticle(title, body, member.getId());
+		int id = articleService.writeArticle(title, body, rq.getLoginedMemberId());
 		
 		Article article = articleService.getArticleById(id);
 		
@@ -54,29 +44,21 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("usr/article/detail")
-	public String showDetail(int id, Model model) {
+	public String showDetail(HttpServletRequest req, int id, Model model) {
+		Rq rq = (Rq)req.getAttribute("rq");
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
 		model.addAttribute("article", foundArticle);
+		model.addAttribute("rq", rq);
 		
 		return "usr/article/detail";
 	}
 	
 	@RequestMapping("usr/article/modify")
 	@ResponseBody
-	public ResultData doModify(HttpSession httpSession, int id, String title, String body) {
-		boolean isLogined = false;
-		Member member = null;
-		
-		if(httpSession.getAttribute("loginedMember")!=null) {
-			isLogined = true;
-			member = (Member) httpSession.getAttribute("loginedMember");
-		}
-		
-		if(isLogined==false) {
-			return ResultData.from("F-L", "로그인 후 이용해주세요.");
-		}
+	public ResultData doModify(HttpServletRequest req, int id, String title, String body) {
+		Rq rq = (Rq)req.getAttribute("rq");
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
@@ -84,7 +66,7 @@ public class UsrArticleController {
 			return ResultData.from("F-E", "존재하지 않는 게시글입니다.");
 		}
 		
-		ResultData actorCanModifyRd = articleService.actorCanModifyRd(foundArticle, member.getId());
+		ResultData actorCanModifyRd = articleService.actorCanModifyRd(foundArticle, rq.getLoginedMemberId());
 		
 		if(actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
@@ -97,18 +79,8 @@ public class UsrArticleController {
 	
 	@RequestMapping("usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(HttpSession httpSession, int id) {
-		boolean isLogined = false;
-		Member member = null;
-		
-		if(httpSession.getAttribute("loginedMember")!=null) {
-			isLogined = true;
-			member = (Member) httpSession.getAttribute("loginedMember");
-		}
-		
-		if(isLogined==false) {
-			return ResultData.from("F-L", "로그인 후 이용해주세요.");
-		}
+	public ResultData doDelete(HttpServletRequest req, int id) {
+		Rq rq = (Rq)req.getAttribute("rq");
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
@@ -116,7 +88,7 @@ public class UsrArticleController {
 			return ResultData.from("F-E", Ut.f("%d번 게시글은 존재하지 않습니다.", id));
 		}
 		
-		ResultData actorCanDeleteRd = articleService.actorCanDeleteRd(foundArticle, member.getId());
+		ResultData actorCanDeleteRd = articleService.actorCanDeleteRd(foundArticle, rq.getLoginedMemberId());
 		
 		if(actorCanDeleteRd.isFail()) {
 			return actorCanDeleteRd;
