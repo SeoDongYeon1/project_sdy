@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+
+html > body {
+	font-family: 'OAGothic-ExtraBold';
+}
+
+/* 라이브러리 */
+header > div > ul > li{
+	position: relative;
+}
+
+header > div > ul > li > ul {
+	display: none;
+}
+
+header > div > ul > li:hover > ul {
+	display: block;
+	position: absolute;
+}
+
+header > div > ul > li > ul > li > a{
+	white-space: nowrap;
+}
