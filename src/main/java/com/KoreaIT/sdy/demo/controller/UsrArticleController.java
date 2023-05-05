@@ -54,16 +54,13 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("usr/article/detail")
-	@ResponseBody
-	public ResultData showDetail(int id) {
+	public String showDetail(int id, Model model) {
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
-		if(foundArticle==null) {
-			return ResultData.from("F-E", Ut.f("%d번 게시글은 존재하지 않습니다.", id));
-		}
+		model.addAttribute("article", foundArticle);
 		
-		return ResultData.from("S-1", Ut.f("%d번 게시글 입니다.", id), foundArticle);
+		return "usr/article/detail";
 	}
 	
 	@RequestMapping("usr/article/modify")
@@ -98,7 +95,7 @@ public class UsrArticleController {
 		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), foundArticle);
 	}
 	
-	@RequestMapping("usr/article/delete")
+	@RequestMapping("usr/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(HttpSession httpSession, int id) {
 		boolean isLogined = false;
