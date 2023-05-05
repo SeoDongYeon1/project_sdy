@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.ArticleRepository;
 import com.KoreaIT.sdy.demo.vo.Article;
+import com.KoreaIT.sdy.demo.vo.ResultData;
 
 @Service
 public class ArticleService {
@@ -17,8 +18,8 @@ public class ArticleService {
 		this.articleRepository = articleRepository;
 	}
 	
-	public int writeArticle(String title, String body) {
-		articleRepository.writeArticle(title, body);
+	public int writeArticle(String title, String body, int memberId) {
+		articleRepository.writeArticle(title, body, memberId);
 		
 		return articleRepository.getLastInsertId();
 	}
@@ -29,7 +30,6 @@ public class ArticleService {
 	}
 	
 	public void modifyArticle(int id, String title, String body) {
-		
 		articleRepository.modifyArticle(id, title, body);
 	}
 
@@ -39,6 +39,24 @@ public class ArticleService {
 
 	public Article getArticleById(int id) {
 		return articleRepository.getArticleById(id);
+	}
+
+	public ResultData actorCanModifyRd(Article article, int actorId) {
+		
+		if(article.getMemberId()!=actorId) {
+			return ResultData.from("F-1", "해당 게시글에 권한이 없습니다.");
+		}
+		
+		return ResultData.from("S-1", "수정 가능");
+	}
+
+	public ResultData actorCanDeleteRd(Article article, int actorId) {
+		
+		if(article.getMemberId()!=actorId) {
+			return ResultData.from("F-1", "해당 게시글에 권한이 없습니다.");
+		}
+		
+		return ResultData.from("S-1", "삭제 가능");
 	}
 }
 

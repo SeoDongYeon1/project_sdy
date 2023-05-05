@@ -11,6 +11,9 @@ CREATE TABLE article(
     `body` TEXT NOT NULL
 );
 
+# 한글 에러
+ALTER TABLE article CONVERT TO CHARSET UTF8;
+
 # 게시물 테스트데이터 생성
 INSERT INTO article 
 SET regDate = NOW(),
@@ -47,6 +50,9 @@ CREATE TABLE `member`(
     delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
+# 한글 에러
+ALTER TABLE `member` CONVERT TO CHARSET UTF8;
+
 # 회원 테스트데이터 생성 (관리자)
 INSERT INTO `member` 
 SET regDate = NOW(),
@@ -79,6 +85,14 @@ loginPw = 'test2',
 `nickname` = '회원2',
 cellphoneNum = '01067896789',
 email = 'test2@gmail.com';
+
+# article 테이블에 memberId 추가
+ALTER TABLE article ADD COLUMN memberId INT(11) UNSIGNED NOT NULL;
+
+# memberId가 없는 게시글에 memberId 부여
+UPDATE article SET memberId = 2 WHERE id = 1;
+UPDATE article SET memberId = 3 WHERE id = 2;
+UPDATE article SET memberId = 2 WHERE id = 3;
 
 #############################################################################################
 
