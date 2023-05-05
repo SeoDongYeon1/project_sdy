@@ -57,6 +57,12 @@ public class UsrMemberController {
 
 	
 	@RequestMapping("usr/member/login")
+	public String login(String loginId, String loginPw) {
+		
+		return "usr/member/login";
+	}
+	
+	@RequestMapping("usr/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(HttpSession httpSession, String loginId, String loginPw) {
 		boolean isLogined = false;
