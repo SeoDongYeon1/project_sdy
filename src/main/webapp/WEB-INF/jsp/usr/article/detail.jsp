@@ -11,6 +11,10 @@
 				<th>${article.id }</th>
 			</tr>
 			<tr>
+				<th>작성자</th>
+				<th>${article.extra__writer }</th>
+			</tr>
+			<tr>
 				<th>제목</th>
 				<th>${article.title }</th>
 			</tr>

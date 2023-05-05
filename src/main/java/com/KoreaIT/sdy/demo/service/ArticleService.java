@@ -58,5 +58,9 @@ public class ArticleService {
 		
 		return ResultData.from("S-1", "삭제 가능");
 	}
+
+	public Article getForPrintArticle(int id) {
+		return articleRepository.getForPrintArticle(id);
+	}
 }
 

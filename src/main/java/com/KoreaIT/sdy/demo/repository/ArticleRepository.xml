@@ -43,4 +43,12 @@
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
+	
+	<select id="getForPrintArticle" resultType="Article">
+		SELECT a.*, m.nickname AS 'extra__writer'
+		FROM article a
+		INNER JOIN `member` m
+		ON a.memberId = m.id
+		WHERE a.id = #{id};
+	</select>
 </mapper>

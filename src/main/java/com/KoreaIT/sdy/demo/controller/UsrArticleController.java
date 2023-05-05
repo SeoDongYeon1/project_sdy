@@ -47,7 +47,7 @@ public class UsrArticleController {
 	public String showDetail(HttpServletRequest req, int id, Model model) {
 		Rq rq = (Rq)req.getAttribute("rq");
 		
-		Article foundArticle = articleService.getArticleById(id);
+		Article foundArticle = articleService.getForPrintArticle(id);
 		
 		model.addAttribute("article", foundArticle);
 		model.addAttribute("rq", rq);
@@ -56,25 +56,45 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("usr/article/modify")
+	public String modify(HttpServletRequest req,Model model, int id, String title, String body) {
+		Rq rq = (Rq)req.getAttribute("rq");
+		Article article = articleService.getForPrintArticle(id);
+
+		if (article == null) {
+			return Ut.jsHistoryBack("F-1", Ut.f("%d번 게시글은 존재하지 않습니다.", id));
+		}
+
+		ResultData actorCanModifyRd = articleService.actorCanModifyRd(article, rq.getLoginedMemberId());
+
+		if (actorCanModifyRd.isFail()) {
+			return Ut.jsHistoryBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
+		}
+
+		model.addAttribute("article", article);
+		
+		return "usr/article/modify";
+	}
+	
+	@RequestMapping("usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(HttpServletRequest req, int id, String title, String body) {
+	public String doModify(HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq)req.getAttribute("rq");
 		
-		Article foundArticle = articleService.getArticleById(id);
+		Article foundArticle = articleService.getForPrintArticle(id);
 		
 		if(foundArticle==null) {
-			return ResultData.from("F-E", "존재하지 않는 게시글입니다.");
+			return Ut.jsHistoryBack("F-E", "존재하지 않는 게시글입니다.");
 		}
 		
 		ResultData actorCanModifyRd = articleService.actorCanModifyRd(foundArticle, rq.getLoginedMemberId());
 		
 		if(actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+			return Ut.jsHistoryBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
 		}
 		
 		articleService.modifyArticle(id, title, body);
 		
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), foundArticle);
+		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d",id));
 	}
 	
 	@RequestMapping("usr/article/doDelete")
