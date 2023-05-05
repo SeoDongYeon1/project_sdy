@@ -5,7 +5,6 @@
 <%@ include file="../common/head.jspf" %>
 
 <div class="mt-8 text-xl mx-auto px-3">
-		<div style="text-align:center;">전체 게시물 갯수 : ${articlesCount }개</div>
 		<table class="table-box-type-1 table w-full" style="text-align:center;">
 		
 			<tr>

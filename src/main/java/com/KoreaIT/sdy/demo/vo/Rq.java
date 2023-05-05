@@ -15,7 +15,9 @@ public class Rq {
 	private boolean isLogined;
 	@Getter
 	private int loginedMemberId;
-
+	@Getter
+	private Member loginedMember;
+	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
@@ -28,14 +30,17 @@ public class Rq {
 
 		boolean isLogined = false;
 		int loginedMemberId = 0;
+		Member loginedMember = null;
 
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			loginedMember = (Member) session.getAttribute("loginedMember");
 		}
 
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
+		this.loginedMember = loginedMember;
 	}
 
 	public void printHitoryBackJs(String msg) throws IOException {
@@ -62,6 +67,7 @@ public class Rq {
 	
 	public void login(Member member) {
 		session.setAttribute("loginedMemberId", member.getId());
+		session.setAttribute("loginedMember", member);
 	}
 
 	public void logout() {

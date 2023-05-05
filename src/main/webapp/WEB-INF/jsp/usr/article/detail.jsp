@@ -34,9 +34,12 @@
 		
 		<br />
 		<div class="btn_box">
+			<c:if test="${rq.getLoginedMemberId()==article.memberId }">
+				<a class="btn btn-outline" href="../article/modify?id=${article.id }">수정</a>
+				<a class="btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;"
+						href="doDelete?id=${article.id }">삭제</a>
+			</c:if>
 			<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>
-			<a class="btn btn-outline" href="../article/modify?id=${article.id }">수정</a>
-			<a class="btn btn-outline" href="../article/doDelete?id=${article.id }">삭제</a>
 		</div>
 	</div>
 

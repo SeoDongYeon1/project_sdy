@@ -2,11 +2,18 @@ package com.KoreaIT.sdy.demo.util;
 
 public class Ut {
 
-	public static boolean empty(String str) {
-		if(str == null || str.trim().length()==0) {
+	public static boolean empty(Object obj) {
+		if (obj == null || obj =="") {
 			return true;
 		}
-		return false;
+
+		if (obj instanceof String == false) {
+			return true;
+		}
+
+		String str = (String) obj;
+
+		return str.trim().length() == 0;
 	}
 
 	public static String f(String format, Object... args) { // 가변인자

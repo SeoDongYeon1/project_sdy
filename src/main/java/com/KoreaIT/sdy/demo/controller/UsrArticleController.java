@@ -22,15 +22,29 @@ public class UsrArticleController {
 	ArticleService articleService;
 	
 	@RequestMapping("usr/article/write")
+	public String write(String title, String body, Integer boardId) {
+		
+		return "usr/article/write";
+	}
+	
+	@RequestMapping("usr/article/doWrite")
 	@ResponseBody
-	public ResultData write(HttpServletRequest req, String title, String body) {
+	public String doWrite(String title, String body, int boardId, HttpServletRequest req) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
-		int id = articleService.writeArticle(title, body, rq.getLoginedMemberId());
+		if(Ut.empty(title)) {
+			return Ut.jsHistoryBack("F-1", "제목을 입력하세요.");
+		}
+		if(Ut.empty(body)) {
+			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
+		}
+		if(Ut.empty(boardId)) {
+			return Ut.jsHistoryBack("F-3", "게시판을 선택해주세요.");
+		}
 		
-		Article article = articleService.getArticleById(id);
+		int id = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 생성되었습니다.", id), article);
+		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 생성되었습니다.", id), Ut.f("../article/detail?id=%d",id));
 	}
 	
 	@RequestMapping("usr/article/list")
@@ -56,7 +70,7 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("usr/article/modify")
-	public String modify(HttpServletRequest req,Model model, int id, String title, String body) {
+	public String modify(HttpServletRequest req, Model model, int id, String title, String body) {
 		Rq rq = (Rq)req.getAttribute("rq");
 		Article article = articleService.getForPrintArticle(id);
 
@@ -99,24 +113,24 @@ public class UsrArticleController {
 	
 	@RequestMapping("usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(HttpServletRequest req, int id) {
+	public String doDelete(HttpServletRequest req, int id) {
 		Rq rq = (Rq)req.getAttribute("rq");
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
 		if(foundArticle==null) {
-			return ResultData.from("F-E", Ut.f("%d번 게시글은 존재하지 않습니다.", id));
+			return Ut.jsHistoryBack("F-E", "존재하지 않는 게시글입니다.");
 		}
 		
 		ResultData actorCanDeleteRd = articleService.actorCanDeleteRd(foundArticle, rq.getLoginedMemberId());
 		
 		if(actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return Ut.jsHistoryBack(actorCanDeleteRd.getResultCode(), actorCanDeleteRd.getMsg());
 		}
 		
 		articleService.deleteArticle(id);
 		
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id));
+		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id), "../article/list");
 	}
 
 	

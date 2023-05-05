@@ -94,11 +94,55 @@ UPDATE article SET memberId = 2 WHERE id = 1;
 UPDATE article SET memberId = 3 WHERE id = 2;
 UPDATE article SET memberId = 2 WHERE id = 3;
 
+# 게시판 테이블 생성
+CREATE TABLE board(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `code` CHAR(100) NOT NULL UNIQUE COMMENT 'Notice(공지사항), Free(자유게시판), QnA(질의응답), ...',
+    `name` CHAR(100) NOT NULL UNIQUE COMMENT '게시판 이름',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
+    delDate DATETIME COMMENT '삭제 날짜'
+);
+ALTER TABLE board CONVERT TO CHARSET UTF8;
+
+# 게시판 추가
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'Notice',
+`name` = '공지사항';
+
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'Free',
+`name` = '자유게시판';
+
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'QnA',
+`name` = '질의응답';
+
+# article 테이블에 boardId 추가
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
+
+UPDATE article
+SET boardId = 1
+WHERE id IN(1,2);
+
+UPDATE article
+SET boardId = 2
+WHERE id = 3;
+
 #############################################################################################
 
-# 게시글 검색
-SELECT * FROM article;
+# 검색 쿼리
+SELECT * FROM art
+icle;
 SELECT * FROM `member`;
+SELECT * FROM board;
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
