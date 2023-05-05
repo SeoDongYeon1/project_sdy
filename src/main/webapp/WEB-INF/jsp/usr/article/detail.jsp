@@ -5,7 +5,7 @@
 <%@ include file="../common/head.jspf" %>
 
 <div class="mt-8 text-xl mx-auto px-3">
-		<table class="table-box-type-1 table table-zebra" style="text-align:center;">
+		<table class="table-box-type-1 table table-zebra w-full" style="text-align:center;">
 			<tr>
 				<th>번호</th>
 				<th>${article.id }</th>

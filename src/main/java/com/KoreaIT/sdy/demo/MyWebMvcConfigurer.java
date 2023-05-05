@@ -10,15 +10,14 @@ import com.KoreaIT.sdy.demo.interceptor.NeedLoginInterceptor;
 
 @Configuration
 public class MyWebMvcConfigurer implements WebMvcConfigurer {
-	// BeforeActionInterceptor 불러오기
+	// BeforeActionInterceptor 불러오기(연결)
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;
 
-	// NeedLoginInterceptor 불러오기
+	// NeedLoginInterceptor 불러오기(연결)
 	@Autowired
 	NeedLoginInterceptor needLoginInterceptor;
 
-	// /resource/common.css
 	// 인터셉터 적용
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**")

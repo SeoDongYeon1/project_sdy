@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.MemberRepository;
 import com.KoreaIT.sdy.demo.vo.Member;
-import com.KoreaIT.sdy.demo.vo.ResultData;
 
 @Service
 public class MemberService {

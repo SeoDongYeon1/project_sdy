@@ -61,7 +61,7 @@ public class UsrMemberController {
 	public ResultData doLogin(HttpSession httpSession, String loginId, String loginPw) {
 		boolean isLogined = false;
 		
-		if(httpSession.getAttribute("loginedMember")!=null) {
+		if(httpSession.getAttribute("loginedMemberId")!=null) {
 			isLogined = true;
 		}
 		
@@ -87,7 +87,7 @@ public class UsrMemberController {
 			return ResultData.from("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 		
-		httpSession.setAttribute("loginedMember", member);
+		httpSession.setAttribute("loginedMemberId", member.getId());
 		
 		return ResultData.from("S-1", Ut.f("%s님 반갑습니다.",member.getNickname()));
 	}
@@ -97,7 +97,7 @@ public class UsrMemberController {
 	public ResultData doLogout(HttpSession httpSession) {
 		boolean isLogined = false;
 		
-		if(httpSession.getAttribute("loginedMember")!=null) {
+		if(httpSession.getAttribute("loginedMemberId")!=null) {
 			isLogined = true;
 		}
 		
@@ -105,7 +105,7 @@ public class UsrMemberController {
 			return ResultData.from("F-A", "로그인 상태가 아닙니다.");
 		}
 		
-		httpSession.removeAttribute("loginedMember");
+		httpSession.removeAttribute("loginedMemberId");
 		
 		return ResultData.from("S-1", "로그아웃 되었습니다.");
 	}

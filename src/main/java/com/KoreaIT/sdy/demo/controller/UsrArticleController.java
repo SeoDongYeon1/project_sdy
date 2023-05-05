@@ -24,7 +24,7 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/write")
 	@ResponseBody
 	public ResultData write(HttpServletRequest req, String title, String body) {
-		Rq rq = (Rq)req.getAttribute("rq");
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		int id = articleService.writeArticle(title, body, rq.getLoginedMemberId());
 		
