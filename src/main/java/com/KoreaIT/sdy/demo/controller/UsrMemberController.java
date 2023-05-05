@@ -1,5 +1,6 @@
 package com.KoreaIT.sdy.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.KoreaIT.sdy.demo.service.MemberService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
+import com.KoreaIT.sdy.demo.vo.Rq;
 
 @Controller
 public class UsrMemberController {
@@ -64,56 +66,48 @@ public class UsrMemberController {
 	
 	@RequestMapping("usr/member/doLogin")
 	@ResponseBody
-	public ResultData doLogin(HttpSession httpSession, String loginId, String loginPw) {
-		boolean isLogined = false;
+	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
+		Rq rq = (Rq)req.getAttribute("rq");
 		
-		if(httpSession.getAttribute("loginedMemberId")!=null) {
-			isLogined = true;
-		}
-		
-		if (isLogined) {
-			return ResultData.from("F-A", "이미 로그인 상태입니다.");
+		if (rq.isLogined()) {
+			return Ut.jsHistoryBack("F-A", "이미 로그인 상태입니다.");
 		}
 		
 		if(Ut.empty(loginId)) {
-			return ResultData.from("F-1", "아이디를 입력해주세요.");
+			return Ut.jsHistoryBack("F-1", "아이디를 입력해주세요.");
 		}
 		
 		if(Ut.empty(loginPw)) {
-			return ResultData.from("F-2", "비밀번호를 입력해주세요.");
+			return Ut.jsHistoryBack("F-2", "비밀번호를 입력해주세요.");
 		}
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if(member==null) {
-			return ResultData.from("F-3", "아이디 또는 비밀번호를 확인해주세요.");
+			return Ut.jsHistoryBack("F-3", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 		
 		if(member.getLoginPw().equals(loginPw)==false) {
-			return ResultData.from("F-4", "아이디 또는 비밀번호를 확인해주세요.");
+			return Ut.jsHistoryBack("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 		
-		httpSession.setAttribute("loginedMemberId", member.getId());
+		rq.login(member);
 		
-		return ResultData.from("S-1", Ut.f("%s님 반갑습니다.",member.getNickname()));
+		return Ut.jsReplace("S-1", Ut.f("%s님 로그인 되었습니다.", member.getNickname()), "/");
 	}
 	
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
-	public ResultData doLogout(HttpSession httpSession) {
-		boolean isLogined = false;
+	public String doLogout(HttpServletRequest req) {
+		Rq rq = (Rq)req.getAttribute("rq");
 		
-		if(httpSession.getAttribute("loginedMemberId")!=null) {
-			isLogined = true;
+		if (rq.isLogined()==false) {
+			return Ut.jsHistoryBack("F-A", "로그인 상태가 아닙니다.");
 		}
 		
-		if (isLogined==false) {
-			return ResultData.from("F-A", "로그인 상태가 아닙니다.");
-		}
+		rq.logout();
 		
-		httpSession.removeAttribute("loginedMemberId");
-		
-		return ResultData.from("S-1", "로그아웃 되었습니다.");
+		return Ut.jsReplace("S-1", "로그아웃 되었습니다.","/");
 	}
 	
 }
