@@ -17,4 +17,5 @@ public class Article {
 	private int boardId;
 	
 	private String extra__writer;
+	private String board_name;
 }

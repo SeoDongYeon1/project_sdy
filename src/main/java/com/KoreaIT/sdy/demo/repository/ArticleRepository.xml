@@ -14,15 +14,34 @@
 	</insert>
 	
 	<select id="getArticles" resultType="Article">
-		SELECT a.*, m.nickname AS 'extra__writer'
+		SELECT a.*, m.nickname AS 'extra__writer', b.name AS board_name
 		FROM article a
 		INNER JOIN `member` m
 		ON a.memberId = m.id
+		INNER JOIN board b
+		ON a.boardId = b.id
 		WHERE 1
 		<if test="boardId != 0">		
 			AND a.boardId = #{boardId}
 		</if>
 		ORDER BY a.id DESC
+	</select>
+	
+	<select id="getForPrintArticles" resultType="Article">
+		SELECT a.*, m.nickname AS 'extra__writer', b.name AS board_name
+		FROM article a
+		INNER JOIN `member` m
+		ON a.memberId = m.id
+		INNER JOIN board b
+		ON a.boardId = b.id
+		WHERE 1
+		<if test="boardId != 0">		
+			AND a.boardId = #{boardId}
+		</if>
+		ORDER BY a.id DESC
+		<if test="limitFrom >= 0">
+			LIMIT #{limitFrom}, #{limitTake}
+		</if>
 	</select>
 	
 	<update id="modifyArticle">

@@ -25,4 +25,6 @@ public interface ArticleRepository {
 
 	public int getArticlesCount(int boardId);
 
+	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake);
+
 }
