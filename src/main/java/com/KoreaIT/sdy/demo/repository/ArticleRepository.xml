@@ -14,10 +14,11 @@
 	</insert>
 	
 	<select id="getArticles" resultType="Article">
-		SELECT *
-		FROM article
-		ORDER BY
-		id DESC
+		SELECT a.*, m.nickname AS 'extra__writer'
+		FROM article a
+		INNER JOIN `member` m
+		ON a.memberId = m.id
+		ORDER BY a.id DESC
 	</select>
 	
 	<update id="modifyArticle">

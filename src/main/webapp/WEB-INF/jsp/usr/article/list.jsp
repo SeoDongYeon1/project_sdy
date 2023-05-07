@@ -10,16 +10,16 @@
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
+				<th>작성자</th>
 				<th>작성날짜</th>
 			</tr>
 		<c:forEach var="article" items="${articles }">
 			<tr>
 				<th><div class="badge badge-outline">${article.id }</div></th>
 				<th>
-					<a class="title" href="detail?id=${article.id }">
-						${article.title } 
-					</a>
+					<a class="title" href="detail?id=${article.id }">${article.title }</a>
 				</th>
+				<th>${article.extra__writer }</th>
 				<th>${article.regDate.substring(0,10) }</th>
 			</tr>
 

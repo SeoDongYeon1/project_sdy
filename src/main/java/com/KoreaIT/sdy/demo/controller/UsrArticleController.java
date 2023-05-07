@@ -38,9 +38,6 @@ public class UsrArticleController {
 		if(Ut.empty(body)) {
 			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
 		}
-		if(Ut.empty(boardId)) {
-			return Ut.jsHistoryBack("F-3", "게시판을 선택해주세요.");
-		}
 		
 		int id = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		
