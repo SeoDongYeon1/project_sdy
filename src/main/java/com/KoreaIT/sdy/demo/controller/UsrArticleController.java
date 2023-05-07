@@ -23,68 +23,73 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
-	
+
 	@Autowired
 	private BoardService boardService;
-	
+
 	@Autowired
 	private Rq rq;
-	
+
 	@RequestMapping("usr/article/write")
 	public String write(String title, String body, Integer boardId) {
-		
+
 		return "usr/article/write";
 	}
-	
+
 	@RequestMapping("usr/article/doWrite")
 	@ResponseBody
 	public String doWrite(String title, String body, int boardId) {
-		if(Ut.empty(title)) {
+		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력하세요.");
 		}
-		if(Ut.empty(body)) {
+		if (Ut.empty(body)) {
 			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
 		}
-		
+
 		int id = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
-		
-		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 생성되었습니다.", id), Ut.f("../article/detail?id=%d",id));
+
+		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 생성되었습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
-	
+
 	@RequestMapping("usr/article/list")
-	public String showList(Model model, @RequestParam(defaultValue = "0") int boardId, @RequestParam(defaultValue = "1")int page) {
-		Board board = boardService.getBoardById(boardId);
+	public String showList(Model model, 
+			@RequestParam(defaultValue = "0") int boardId,
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "title,body") String searchKeywordTypeCode,
+			@RequestParam(defaultValue = "") String searchKeyword) {
 		
-		if(boardId!=0 && board==null) {
+		Board board = boardService.getBoardById(boardId);
+
+		if (boardId != 0 && board == null) {
 			return rq.jsHitoryBackOnView("존재하지 않는 게시판입니다.");
 		}
-		
-		int articlesCount = articleService.getArticlesCount(boardId);
-		
+
+		int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
+
 		// 페이지 네이션
 		int itemsInAPage = 10;
 		int totalPage = (int) Math.ceil(articlesCount / (double) itemsInAPage);
-		
-		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page);
-		
+
+		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode, searchKeyword);
+
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
 		model.addAttribute("page", page);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("articlesCount", articlesCount);
-		
+
 		return "usr/article/list";
 	}
-	
+
 	@RequestMapping("usr/article/detail")
 	public String showDetail(int id, Model model) {
 		Article foundArticle = articleService.getForPrintArticle(id);
-		
+
 		model.addAttribute("article", foundArticle);
-		
+
 		return "usr/article/detail";
 	}
-	
+
 	@RequestMapping("usr/article/modify")
 	public String modify(Model model, int id, String title, String body) {
 		Article article = articleService.getForPrintArticle(id);
@@ -100,49 +105,48 @@ public class UsrArticleController {
 		}
 
 		model.addAttribute("article", article);
-		
+
 		return "usr/article/modify";
 	}
-	
+
 	@RequestMapping("usr/article/doModify")
 	@ResponseBody
 	public String doModify(int id, String title, String body) {
 		Article foundArticle = articleService.getForPrintArticle(id);
-		
-		if(foundArticle==null) {
+
+		if (foundArticle == null) {
 			return Ut.jsHistoryBack("F-E", "존재하지 않는 게시글입니다.");
 		}
-		
+
 		ResultData actorCanModifyRd = articleService.actorCanModifyRd(foundArticle, rq.getLoginedMemberId());
-		
-		if(actorCanModifyRd.isFail()) {
+
+		if (actorCanModifyRd.isFail()) {
 			return Ut.jsHistoryBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
 		}
-		
+
 		articleService.modifyArticle(id, title, body);
-		
-		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d",id));
+
+		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
-	
+
 	@RequestMapping("usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
 		Article foundArticle = articleService.getArticleById(id);
-		
-		if(foundArticle==null) {
+
+		if (foundArticle == null) {
 			return Ut.jsHistoryBack("F-E", "존재하지 않는 게시글입니다.");
 		}
-		
+
 		ResultData actorCanDeleteRd = articleService.actorCanDeleteRd(foundArticle, rq.getLoginedMemberId());
-		
-		if(actorCanDeleteRd.isFail()) {
+
+		if (actorCanDeleteRd.isFail()) {
 			return Ut.jsHistoryBack(actorCanDeleteRd.getResultCode(), actorCanDeleteRd.getMsg());
 		}
-		
+
 		articleService.deleteArticle(id);
-		
+
 		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id), "../article/list");
 	}
 
-	
 }
