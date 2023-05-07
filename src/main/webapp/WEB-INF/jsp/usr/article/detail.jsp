@@ -63,7 +63,7 @@
 				</tr>
 				<tr>
 						<th>좋아요</th>
-						<th>${article.extra__goodReactionPoint }</th>
+						<th>${article.goodReactionPoint }</th>
 				</tr>
 		</table>
 
