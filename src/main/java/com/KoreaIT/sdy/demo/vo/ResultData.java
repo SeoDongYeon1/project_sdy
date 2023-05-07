@@ -26,6 +26,10 @@ public class ResultData {
 		return rd;
 	}
 	
+	public static ResultData newData(ResultData Rd, Object newData) {
+		return from(Rd.getResultCode(), Rd.getMsg(), newData);
+	}
+	
 	public boolean isSuccess() { // 출력형태 -> "success": true || false
 		return resultCode.startsWith("S-");
 	}

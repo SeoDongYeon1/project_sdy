@@ -73,5 +73,19 @@ public class ArticleService {
 		
 		return articleRepository.getForPrintArticles(boardId, limitFrom, limitTake, searchKeywordTypeCode, searchKeyword);
 	}
+
+	public ResultData increaseHitCount(int id) {
+		int affectedRow = articleRepository.increaseHitCount(id);
+		
+		if(affectedRow==0) {
+			return ResultData.from("F-1", "해당 게시글은 존재하지 않습니다.", affectedRow);
+		}
+		
+		return ResultData.from("S-1", "조회수 증가", affectedRow);
+	}
+
+	public int getArticleHitCount(int id) {
+		return articleRepository.getArticleHitCount(id);
+	}
 }
 

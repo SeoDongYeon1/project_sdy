@@ -89,6 +89,20 @@ public class UsrArticleController {
 
 		return "usr/article/detail";
 	}
+	
+	@RequestMapping("usr/article/doIncreaseHitCount")
+	@ResponseBody
+	public ResultData doIncreaseHitCount(int id) {
+		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+		
+		if(increaseHitCountRd.isFail()) {
+			return increaseHitCountRd;
+		}
+		
+		ResultData rd =  ResultData.newData(increaseHitCountRd, articleService.getArticleHitCount(id));
+		
+		return rd;
+	}
 
 	@RequestMapping("usr/article/modify")
 	public String modify(Model model, int id, String title, String body) {

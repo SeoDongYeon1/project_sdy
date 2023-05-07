@@ -125,7 +125,7 @@ updateDate = NOW(),
 `code` = 'QnA',
 `name` = '질의응답';
 
-# article 테이블에 boardId 추가
+# article 테이블에 boardId 컬럼 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
 
 UPDATE article
@@ -136,13 +136,24 @@ UPDATE article
 SET boardId = 2
 WHERE id = 3;
 
+# article 테이블에 hitCount 컬럼 추가
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL;
+
 #############################################################################################
 
 # 검색 쿼리
-SELECT * FROM art
-icle;
+SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
+
+# 게시물 갯수 늘리기
+INSERT INTO article 
+( 
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
+FROM article;
+
