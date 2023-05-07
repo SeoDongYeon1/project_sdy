@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.ArticleService;
+import com.KoreaIT.sdy.demo.service.BoardService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Article;
+import com.KoreaIT.sdy.demo.vo.Board;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -20,6 +23,9 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@Autowired
 	private Rq rq;
@@ -46,11 +52,19 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("usr/article/list")
-	public String showList(Model model) {
+	public String showList(Model model, @RequestParam(defaultValue = "0") int boardId) {
+		Board board = boardService.getBoardById(boardId);
 		
-		List<Article> articles = articleService.getArticles();
+		if(boardId!=0 && board==null) {
+			return rq.jsHitoryBackOnView("존재하지 않는 게시판입니다.");
+		}
+		
+		int articlesCount = articleService.getArticlesCount(boardId);
+		List<Article> articles = articleService.getArticles(boardId);
 		
 		model.addAttribute("articles", articles);
+		model.addAttribute("board", board);
+		model.addAttribute("articlesCount", articlesCount);
 		
 		return "usr/article/list";
 	}

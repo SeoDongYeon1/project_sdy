@@ -18,6 +18,10 @@
 		FROM article a
 		INNER JOIN `member` m
 		ON a.memberId = m.id
+		WHERE 1
+		<if test="boardId != 0">		
+			AND a.boardId = #{boardId}
+		</if>
 		ORDER BY a.id DESC
 	</select>
 	
@@ -52,5 +56,14 @@
 		INNER JOIN `member` m
 		ON a.memberId = m.id
 		WHERE a.id = #{id};
+	</select>
+	
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article
+		WHERE 1
+		<if test="boardId != 0">		
+			AND boardId = #{boardId};
+		</if>
 	</select>
 </mapper>

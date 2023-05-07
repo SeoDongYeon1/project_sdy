@@ -24,9 +24,9 @@ public class ArticleService {
 		return articleRepository.getLastInsertId();
 	}
 
-	public List<Article> getArticles() {
+	public List<Article> getArticles(int boardId) {
 		
-		return articleRepository.getArticles();
+		return articleRepository.getArticles(boardId);
 	}
 	
 	public void modifyArticle(int id, String title, String body) {
@@ -61,6 +61,10 @@ public class ArticleService {
 
 	public Article getForPrintArticle(int id) {
 		return articleRepository.getForPrintArticle(id);
+	}
+
+	public int getArticlesCount(int boardId) {
+		return articleRepository.getArticlesCount(boardId);
 	}
 }
 

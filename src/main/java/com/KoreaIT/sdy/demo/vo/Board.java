@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Board {
-
 	private int id;
 	private String regDate;
 	private String updateDate;
@@ -16,5 +15,4 @@ public class Board {
 	private String name;
 	private boolean delStatus;
 	private String delDate;
-	
 }
