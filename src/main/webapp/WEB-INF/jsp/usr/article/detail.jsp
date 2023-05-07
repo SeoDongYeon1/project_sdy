@@ -61,6 +61,10 @@
 						<th>조회수</th>
 						<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
 				</tr>
+				<tr>
+						<th>좋아요</th>
+						<th>${article.extra__goodReactionPoint }</th>
+				</tr>
 		</table>
 
 		<br />

@@ -87,5 +87,14 @@ public class ArticleService {
 	public int getArticleHitCount(int id) {
 		return articleRepository.getArticleHitCount(id);
 	}
+
+	public ResultData increaseGoodReactionPoint(int id) {
+		int affectedRow = articleRepository.increaseGoodReactionPoint(id);
+		
+		if(affectedRow==0) {
+			return ResultData.from("F-1", "해당 게시글은 존재하지 않습니다.", affectedRow);
+		}
+		return ResultData.from("S-1", "좋아요 증가", affectedRow);
+	}
 }
 

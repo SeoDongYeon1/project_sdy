@@ -2,8 +2,6 @@ package com.KoreaIT.sdy.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.ArticleService;
 import com.KoreaIT.sdy.demo.service.BoardService;
+import com.KoreaIT.sdy.demo.service.ReactionPointService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Board;
@@ -26,6 +25,9 @@ public class UsrArticleController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ReactionPointService reactionPointService;
 
 	@Autowired
 	private Rq rq;
@@ -61,7 +63,7 @@ public class UsrArticleController {
 		Board board = boardService.getBoardById(boardId);
 
 		if (boardId != 0 && board == null) {
-			return rq.jsHitoryBackOnView("존재하지 않는 게시판입니다.");
+			return rq.jsHistoryBackOnView("존재하지 않는 게시판입니다.");
 		}
 
 		int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
@@ -84,8 +86,11 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/detail")
 	public String showDetail(int id, Model model) {
 		Article foundArticle = articleService.getForPrintArticle(id);
-
+		
+		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
+		
 		model.addAttribute("article", foundArticle);
+		model.addAttribute("actorCanMakeReaction", actorCanMakeReaction);
 
 		return "usr/article/detail";
 	}

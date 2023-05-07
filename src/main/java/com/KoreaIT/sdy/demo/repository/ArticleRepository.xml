@@ -107,11 +107,19 @@
 	</select>
 	
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT a.*, m.nickname AS 'extra__writer'
+		SELECT a.*, m.name AS 'extra__writer', b.name AS 'board_name',
+		IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+		IFNULL(SUM(IF(R.`point` &gt; 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+		IFNULL(SUM(IF(R.`point` &lt; 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
 		FROM article a
 		INNER JOIN `member` m
 		ON a.memberId = m.id
-		WHERE a.id = #{id};
+		INNER JOIN board b
+		ON a.boardId = b.id
+		LEFT JOIN reactionPoint AS R
+		ON A.id = R.relId AND R.relTypeCode = 'article'
+		WHERE a.id = #{id}
+		GROUP BY a.id
 	</select>
 	
 	<update id="increaseHitCount">
@@ -125,5 +133,11 @@
 		FROM article
 		WHERE id = #{id};
 	</select>
+	
+	<update id="increaseGoodReactionPoint">
+		UPDATE article
+		SET goodReactionPoint = goodReactionPoint + 1
+		WHERE id = #{id}
+	</update>
 	
 </mapper>
