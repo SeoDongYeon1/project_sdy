@@ -1,7 +1,6 @@
 package com.KoreaIT.sdy.demo.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,10 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 @Controller
 public class UsrMemberController {
 	@Autowired
-	MemberService memberService;
+	private MemberService memberService;
+	
+	@Autowired
+	private Rq rq;
 	
 	@RequestMapping("usr/member/join")
 	@ResponseBody
@@ -98,9 +100,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpServletRequest req) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
+	public String doLogout() {
 		if (rq.isLogined()==false) {
 			return Ut.jsHistoryBack("F-A", "로그인 상태가 아닙니다.");
 		}

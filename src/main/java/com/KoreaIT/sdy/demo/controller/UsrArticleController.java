@@ -19,7 +19,10 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 @Controller
 public class UsrArticleController {
 	@Autowired
-	ArticleService articleService;
+	private ArticleService articleService;
+	
+	@Autowired
+	private Rq rq;
 	
 	@RequestMapping("usr/article/write")
 	public String write(String title, String body, Integer boardId) {
@@ -29,9 +32,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(String title, String body, int boardId, HttpServletRequest req) {
-		Rq rq = (Rq) req.getAttribute("rq");
-		
+	public String doWrite(String title, String body, int boardId) {
 		if(Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력하세요.");
 		}
@@ -55,20 +56,16 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("usr/article/detail")
-	public String showDetail(HttpServletRequest req, int id, Model model) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
+	public String showDetail(int id, Model model) {
 		Article foundArticle = articleService.getForPrintArticle(id);
 		
 		model.addAttribute("article", foundArticle);
-		model.addAttribute("rq", rq);
 		
 		return "usr/article/detail";
 	}
 	
 	@RequestMapping("usr/article/modify")
-	public String modify(HttpServletRequest req, Model model, int id, String title, String body) {
-		Rq rq = (Rq)req.getAttribute("rq");
+	public String modify(Model model, int id, String title, String body) {
 		Article article = articleService.getForPrintArticle(id);
 
 		if (article == null) {
@@ -88,9 +85,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("usr/article/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
+	public String doModify(int id, String title, String body) {
 		Article foundArticle = articleService.getForPrintArticle(id);
 		
 		if(foundArticle==null) {
@@ -110,9 +105,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(HttpServletRequest req, int id) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
+	public String doDelete(int id) {
 		Article foundArticle = articleService.getArticleById(id);
 		
 		if(foundArticle==null) {
