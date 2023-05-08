@@ -33,6 +33,11 @@ public interface ArticleRepository {
 
 	public int increaseGoodReactionPoint(int id);
 
+	public int increaseBadReactionPoint(int id);
+	
 	public int decreaseGoodReactionPoint(int id);
+
+	public int decreaseBadReactionPoint(int id);
+
 
 }

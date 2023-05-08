@@ -9,6 +9,9 @@ public interface ReactionPointRepository {
 
 	int addGoodReactionPoint(int actorId, String relTypeCode, int relId);
 
+	int addBadReactionPoint(int actorId, String relTypeCode, int relId);
+	
 	void deleteReactionPoint(int actorId, String relTypeCode, int relId);
+
 	
 }

@@ -13,6 +13,16 @@
 		`point` = 1;
 	</insert>
 	
+	<insert id="addBadReactionPoint">
+		INSERT INTO reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{actorId},
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
+		`point` = -1;
+	</insert>
+	
 	<delete id="deleteReactionPoint">
 		DELETE FROM reactionPoint
 		WHERE memberId = #{actorId} 

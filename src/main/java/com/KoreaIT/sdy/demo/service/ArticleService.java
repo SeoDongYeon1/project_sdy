@@ -94,7 +94,18 @@ public class ArticleService {
 		if(affectedRow==0) {
 			return ResultData.from("F-1", "해당 게시글은 존재하지 않습니다.", affectedRow);
 		}
+		
 		return ResultData.from("S-1", "좋아요 증가", affectedRow);
+	}
+	
+	public ResultData increaseBadReactionPoint(int id) {
+		int affectedRow = articleRepository.increaseBadReactionPoint(id);
+		
+		if(affectedRow==0) {
+			return ResultData.from("F-1", "해당 게시글은 존재하지 않습니다.", affectedRow);
+		}
+		
+		return ResultData.from("S-1", "싫어요 증가", affectedRow);
 	}
 
 	public ResultData decreaseGoodReactionPoint(int id) {
@@ -106,5 +117,16 @@ public class ArticleService {
 		return ResultData.from("S-1", "좋아요 감소", affectedRow);
 		
 	}
+
+	public ResultData decreaseBadReactionPoint(int id) {
+		int affectedRow = articleRepository.decreaseBadReactionPoint(id);
+		
+		if(affectedRow==0) {
+			return ResultData.from("F-1", "해당 게시글은 존재하지 않습니다.", affectedRow);
+		}
+		return ResultData.from("S-1", "싫어요 감소", affectedRow);
+		
+	}
+
 }
 
