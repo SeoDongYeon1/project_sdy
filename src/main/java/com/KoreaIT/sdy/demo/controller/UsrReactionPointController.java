@@ -29,16 +29,18 @@ public class UsrReactionPointController {
 			return ResultData.from("S-1", "좋아요 취소");
 		}
 		else if (actorCanMakeReaction == -1) {
-			return ResultData.from("F-1", "싫어요 누른 상태입니다.");
+			ResultData rd = reactionPointService.deleteBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+			rd = reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+			return ResultData.from("S-2", "싫어요 누른 상태입니다.");
 		}
 
 		ResultData rd = reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 
 		if (rd.isFail()) {
-			ResultData.from("F-2", rd.getMsg());
+			ResultData.from("F-1", rd.getMsg());
 		}
 
-		return ResultData.from("S-2", "좋아요");
+		return ResultData.from("S-3", "좋아요");
 	}
 	
 	@RequestMapping("usr/reactionPoint/doBadReaction")
@@ -53,16 +55,18 @@ public class UsrReactionPointController {
 			return ResultData.from("S-1", "싫어요 취소");
 		}
 		else if (actorCanMakeReaction == 1) {
-			return ResultData.from("F-1", "좋아요 누른 상태입니다.");
+			ResultData rd = reactionPointService.deleteGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+			rd = reactionPointService.addBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+			return ResultData.from("S-2", "좋아요 누른 상태입니다.");
 		}
 		
 		ResultData rd = reactionPointService.addBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 		
 		if (rd.isFail()) {
-			ResultData.from("F-2", rd.getMsg());
+			ResultData.from("F-1", rd.getMsg());
 		}
 		
-		return ResultData.from("S-2", "싫어요");
+		return ResultData.from("S-3", "싫어요");
 	}
 
 }

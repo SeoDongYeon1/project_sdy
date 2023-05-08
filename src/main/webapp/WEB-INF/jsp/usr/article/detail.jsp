@@ -69,11 +69,20 @@
                 if (data.resultCode.startsWith('S-')) {
                     var likeButton = $('#likeButton');
                     var likeCount = $('#likeCount');
+                    var DislikeButton = $('#DislikeButton');
+                    var DislikeCount = $('#DislikeCount');
 
                     if (data.resultCode == 'S-1') {
                         likeButton.removeClass('btn-danger').addClass('btn-outline');
                         likeCount.text(parseInt(likeCount.text()) - 1);
-                    } else {
+                    } 
+                    else if (data.resultCode == 'S-2') {
+                    	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
+                        DislikeCount.text(parseInt(DislikeCount.text()) - 1);
+                        likeButton.removeClass('btn-outline').addClass('btn-danger');
+                        likeCount.text(parseInt(likeCount.text()) + 1);
+                    }
+                    else {
                         likeButton.removeClass('btn-outline').addClass('btn-danger');
                         likeCount.text(parseInt(likeCount.text()) + 1);
                     }
@@ -96,12 +105,19 @@
             dataType: 'json',
             success: function(data) {
                 if (data.resultCode.startsWith('S-')) {
+                	var likeButton = $('#likeButton');
+                    var likeCount = $('#likeCount');                	
                     var DislikeButton = $('#DislikeButton');
                     var DislikeCount = $('#DislikeCount');
 
                     if (data.resultCode == 'S-1') {
                     	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
                     	DislikeCount.text(parseInt(DislikeCount.text()) - 1);
+                    } else if (data.resultCode == 'S-2') {
+                    	likeButton.removeClass('btn-danger').addClass('btn-outline');
+                    	likeCount.text(parseInt(likeCount.text()) - 1);
+                    	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
+                        DislikeCount.text(parseInt(DislikeCount.text()) + 1);
                     } else {
                     	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
                         DislikeCount.text(parseInt(DislikeCount.text()) + 1);
