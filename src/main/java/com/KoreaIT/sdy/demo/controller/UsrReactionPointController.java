@@ -48,7 +48,7 @@ public class UsrReactionPointController {
 		
 		int actorCanMakeReaction = (int) actorCanMakeReactionRd.getData1();
 		
-		if (actorCanMakeReaction == 1) {
+		if (actorCanMakeReaction == -1) {
 			ResultData rd = reactionPointService.deleteBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 			return ResultData.from("S-1", "싫어요 취소");
 		}

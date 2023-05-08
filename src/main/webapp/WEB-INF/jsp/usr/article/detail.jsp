@@ -8,6 +8,9 @@
 	const params = {};
 	params.id = parseInt('${param.id}');
 	params.memberId = parseInt('${loginedMemberId}');
+	
+	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
+	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
 </script>
 
 <!-- 조회수 관련 -->
@@ -27,9 +30,31 @@
 			$('.article-detail__hit-count').empty().html(data.data1);
 		}, 'json');
 	}
+	
+</script>
+
+<!-- 변수 값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
+<script>
+	function checkAddRpBefore() {
+		if (isAlreadyAddGoodRp == true) {
+			$('#likeButton').removeClass('btn-outline').addClass('btn-danger');
+		} else if (isAlreadyAddBadRp == true) {
+			$('#DislikeButton').removeClass('btn-outline').addClass('btn-danger');
+		} else {
+			return;
+		}
+	};
+</script>
+
+<!-- 리액션 실행 코드 -->
+<script>
 	$(function() {
 		ArticleDetail__increaseHitCount();
-	})
+	});
+	
+	$(function() {
+		checkAddRpBefore();
+		});
 </script>
 
 <!-- 좋아요, 싫어요 관련 -->
