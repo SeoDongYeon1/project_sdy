@@ -117,7 +117,7 @@
 		INNER JOIN board b
 		ON a.boardId = b.id
 		LEFT JOIN reactionPoint AS R
-		ON A.id = R.relId AND R.relTypeCode = 'article'
+		ON a.id = R.relId AND R.relTypeCode = 'article'
 		WHERE a.id = #{id}
 		GROUP BY a.id
 	</select>
@@ -138,6 +138,12 @@
 		UPDATE article
 		SET goodReactionPoint = goodReactionPoint + 1
 		WHERE id = #{id}
+	</update>
+	
+	<update id="decreaseGoodReactionPoint">
+		UPDATE article
+		SET goodReactionPoint = goodReactionPoint - 1
+		WHERE id = #{relId}
 	</update>
 	
 </mapper>

@@ -8,5 +8,7 @@ public interface ReactionPointRepository {
 	int getSumReactionPointByMemberId(int actorId, String relTypeCode, int relId);
 
 	int addGoodReactionPoint(int actorId, String relTypeCode, int relId);
+
+	void deleteReactionPoint(int actorId, String relTypeCode, int relId);
 	
 }

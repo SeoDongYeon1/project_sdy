@@ -87,7 +87,7 @@ public class UsrArticleController {
 	public String showDetail(int id, Model model) {
 		Article foundArticle = articleService.getForPrintArticle(id);
 		
-		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
+		ResultData actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		model.addAttribute("article", foundArticle);
 		model.addAttribute("actorCanMakeReaction", actorCanMakeReaction);

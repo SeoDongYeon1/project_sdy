@@ -7,6 +7,7 @@
 <script>
 	const params = {};
 	params.id = parseInt('${param.id}');
+	params.memberId = parseInt('${loginedMemberId}');
 </script>
 
 <!-- 조회수 관련 -->
@@ -29,6 +30,38 @@
 	$(function() {
 		ArticleDetail__increaseHitCount();
 	})
+</script>
+
+<!-- 좋아요 관련 -->
+<script>
+	function doGoodReaction(articleId) {
+		$.ajax({
+            url: '/usr/reactionPoint/doGoodReaction',
+            type: 'POST',
+            data: {relTypeCode: 'article', relId: articleId},
+            dataType: 'json',
+            success: function(data) {
+                if (data.resultCode.startsWith('S-')) {
+                    var likeButton = $('#likeButton');
+                    var likeCount = $('#likeCount');
+
+                    if (data.resultCode == 'S-1') {
+                        likeButton.removeClass('btn-danger').addClass('btn-outline');
+                        likeCount.text(parseInt(likeCount.text()) - 1);
+                    } else {
+                        likeButton.removeClass('btn-outline').addClass('btn-danger');
+                        likeCount.text(parseInt(likeCount.text()) + 1);
+                    }
+                } 
+                else {
+                    alert(data.msg);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('오류가 발생했습니다: ' + textStatus);
+            }
+        });
+	}
 </script>
 
 <div class="mt-8 text-xl mx-auto px-3">
@@ -69,6 +102,13 @@
 
 		<br />
 		<div class="btn_box">
+				<button id="likeButton" class="btn btn-outline" type="button" onclick="doGoodReaction(${param.id})">
+				  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+				  </svg>
+				  <span id="likeCount">${article.goodReactionPoint}</span>
+				</button>
+			
 				<c:if test="${rq.getLoginedMemberId()==article.memberId }">
 						<a class="btn btn-outline" href="../article/modify?id=${article.id }">수정</a>
 						<a class="btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;"

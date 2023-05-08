@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.ReactionPointService;
-import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -20,20 +19,26 @@ public class UsrReactionPointController {
 
 	@RequestMapping("usr/reactionPoint/doGoodReaction")
 	@ResponseBody
-	public String doGoodReaction(String relTypeCode, int relId) {
-		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode,
-				relId);
-		if (actorCanMakeReaction == false) {
-			return rq.jsHistoryBack("F-1", "이미 했음");
+	public ResultData doGoodReaction(String relTypeCode, int relId) {
+		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+		
+		int actorCanMakeReaction = (int) actorCanMakeReactionRd.getData1();
+		
+		if (actorCanMakeReaction == 1) {
+			ResultData rd = reactionPointService.deleteGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+			return ResultData.from("S-1", "좋아요 취소");
+		}
+		else if (actorCanMakeReaction == -1) {
+			return ResultData.from("F-1", "싫어요 누른 상태입니다.");
 		}
 
 		ResultData rd = reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 
 		if (rd.isFail()) {
-			rq.jsHistoryBack(rd.getMsg(), "좋아요 실패");
+			ResultData.from("F-2", rd.getMsg());
 		}
 
-		return rq.jsReplace("좋아요!", Ut.f("../article/detail?id=%d", relId));
+		return ResultData.from("S-2", "좋아요");
 	}
 
 }
