@@ -135,7 +135,7 @@ button.accent {
 
 #chat-page {
     position: relative;
-    height: 1000px;
+    height: 100%;
 }
 
 .chat-container {
@@ -187,22 +187,17 @@ button.accent {
     word-wrap: break-word;
 }
 
-#chat-page .chat-message-me {
-    padding-left: 80%;
-    position: relative;
+#chat-page .chat-message.own-message {
+    padding-right: 68px;
+    text-align: right;
 }
 
-#chat-page .chat-message-other {
-    padding-left: 68px;
-    position: relative;
-}
-
-#chat-page .chat-message-me i {
+#chat-page .chat-message.own-message i {
     position: absolute;
     width: 42px;
     height: 42px;
     overflow: hidden;
-    left: 90%;
+    right: 45px;
     display: inline-block;
     vertical-align: middle;
     font-size: 18px;
@@ -214,7 +209,17 @@ button.accent {
     text-transform: uppercase;
 }
 
-#chat-page .chat-message-other i {
+#chat-page .chat-message.own-message p {
+    color: #43464b;
+    background-color: #f2f2f2;
+}
+
+#chat-page .chat-message.other-message {
+    padding-left: 68px;
+    position: relative;
+}
+
+#chat-page .chat-message.other-message i {
     position: absolute;
     width: 42px;
     height: 42px;
@@ -231,24 +236,14 @@ button.accent {
     text-transform: uppercase;
 }
 
-#chat-page .chat-message-me span {
-	text-align:right;
+#chat-page .chat-message.other-message span {
     color: #333;
     font-weight: 600;
 }
 
-#chat-page .chat-message-other span {
-    color: #333;
-    font-weight: 600;
-}
-
-#chat-page .chat-message-me p {
+#chat-page .chat-message.other-message p {
     color: #43464b;
-}
-
-#chat-page .chat-message-other p {
-	margin-right: 10%;
-    color: #43464b;
+    background-color: #f2f2f2;
 }
 
 #messageForm .input-group input {
@@ -328,4 +323,5 @@ button.accent {
     .chat-header h2 {
         font-size: 1.1em;
     }
+    
 }

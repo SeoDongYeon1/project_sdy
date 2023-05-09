@@ -78,21 +78,8 @@ function onMessageReceived(payload) {
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
-    } else if(message.sender === username) {
-        messageElement.classList.add('chat-message-me');
-        var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(message.sender[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender);
-
-        messageElement.appendChild(avatarElement);
-
-        var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
-        usernameElement.appendChild(usernameText);
-        messageElement.appendChild(usernameElement);
-	} else {
-		messageElement.classList.add('chat-message-other');
+    } else {
+        messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');
         var avatarText = document.createTextNode(message.sender[0]);
@@ -105,13 +92,19 @@ function onMessageReceived(payload) {
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
+
+        var messageTextElement = document.createElement('p');
+        var messageText = document.createTextNode(message.content);
+        messageTextElement.appendChild(messageText);
+
+        if (message.sender === username) {
+            messageElement.classList.add('own-message');
+        } else {
+            messageElement.classList.add('other-message');
+        }
+
+        messageElement.appendChild(messageTextElement);
     }
-
-    var textElement = document.createElement('p');
-    var messageText = document.createTextNode(message.content);
-    textElement.appendChild(messageText);
-
-    messageElement.appendChild(textElement);
 
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
