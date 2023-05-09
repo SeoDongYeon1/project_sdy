@@ -58,7 +58,8 @@ function sendMessage(event) {
         var chatMessage = {
             sender: username,
             content: messageInput.value,
-            type: 'CHAT'
+            type: 'CHAT',
+            time: new Date().toLocaleString() // 시간 정보 추가
         };
         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
@@ -87,15 +88,25 @@ function onMessageReceived(payload) {
         avatarElement.style['background-color'] = getAvatarColor(message.sender);
 
         messageElement.appendChild(avatarElement);
-
+        
         var usernameElement = document.createElement('span');
         var usernameText = document.createTextNode(message.sender);
+        var brtext = document.createElement('br');
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
+        messageElement.appendChild(brtext);
 
         var messageTextElement = document.createElement('p');
         var messageText = document.createTextNode(message.content);
         messageTextElement.appendChild(messageText);
+        
+        var timestampElement = document.createElement('span');
+        timestampElement.classList.add('chat-timestamp');
+        
+        var timestampText = document.createTextNode(formatTimestamp(message.timestamp));
+        timestampElement.appendChild(timestampText);
+        messageElement.appendChild(timestampElement);
+
 
         if (message.sender === username) {
             messageElement.classList.add('own-message');
@@ -108,6 +119,15 @@ function onMessageReceived(payload) {
 
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
+}
+
+function formatTimestamp(timestamp) {
+    var date = new Date(timestamp);
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    var formattedTime = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    return formattedTime;
 }
 
 

@@ -236,14 +236,31 @@ button.accent {
     text-transform: uppercase;
 }
 
+#chat-page .chat-message.own-message span {
+    color: #333;
+    font-weight: 600;
+    font-size: 17px;
+    
+}
+
 #chat-page .chat-message.other-message span {
     color: #333;
     font-weight: 600;
+    font-size: 17px;
+    
 }
 
 #chat-page .chat-message.other-message p {
     color: #43464b;
     background-color: #f2f2f2;
+}
+
+#chat-page .chat-message.own-message .chat-timestamp {
+	font-size: 12px;
+}
+
+#chat-page .chat-message.other-message .chat-timestamp {
+	font-size: 12px;
 }
 
 #messageForm .input-group input {

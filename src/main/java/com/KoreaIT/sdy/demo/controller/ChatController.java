@@ -1,5 +1,7 @@
 package com.KoreaIT.sdy.demo.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -20,8 +22,11 @@ public class ChatController {
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+    	LocalDateTime timestamp = LocalDateTime.now();
+        chatMessage.setTimestamp(timestamp);
         return chatMessage;
     }
+
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")

@@ -1,10 +1,13 @@
 package com.KoreaIT.sdy.demo.model;
 
+import java.time.LocalDateTime;
+
 public class ChatMessage {
 
     private MessageType type;
     private String content;
     private String sender;
+    private LocalDateTime timestamp;
 
     public MessageType getType() {
         return type;
@@ -28,5 +31,13 @@ public class ChatMessage {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }
