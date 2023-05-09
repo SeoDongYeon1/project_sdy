@@ -6,12 +6,12 @@
 <link rel="stylesheet" href="/css/main.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
+<c:if test="${rq.isLogined() }">
 <div id="username-page">
     <div class="username-page-container">
-        <h1 class="title">로그인</h1>
         <form id="usernameForm" name="usernameForm">
             <div class="form-group">
-                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
+                <input type="hidden" value="${rq.loginedMemberLoginId }" id="name" name="loginId"/>
             </div>
             <div class="form-group">
                 <button type="submit" class="accent username-submit">참여하기</button>
@@ -19,6 +19,33 @@
         </form>
     </div>
 </div>
+</c:if>
+
+<c:if test="${!rq.isLogined() }">
+<div id="username-page">
+	<div class="username-page-container">
+	<form id="usernameForm" method="post" action="../member/doLogin">
+		<br /> 
+		<input type="hidden" name="afterLoginUri" value=${param.afterLoginUri } />
+		<div style="display: inline-block; text-align: left;">
+			<div class="form-group" style="font-size: 15px; font-weight: bold;">
+				아이디 <br /> 
+				<input class="form-control" type="text" placeholder="아이디" name="loginId" autocomplete="off" required />
+			</div>
+			<br />
+			<div class="form-group" style="font-size: 15px; font-weight: bold;">
+				비밀번호 <br /> 
+				<input class="form-control" type="password" placeholder="비밀번호" name="loginPw" autocomplete="off" required />
+			</div>
+			<br />
+			<div class="form-group">
+				<button type="submit" class="accent username-submit" style="padding: 0 40px;">로그인</button>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+</c:if>
 
 <div id="chat-page" class="hidden">
     <div class="chat-container">
