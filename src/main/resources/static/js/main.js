@@ -1,5 +1,10 @@
 'use strict';
 
+document.write("<script\n" +
+	"  src=\"https://code.jquery.com/jquery-3.6.1.min.js\"\n" +
+	"  integrity=\"sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=\"\n" +
+	"  crossorigin=\"anonymous\"></script>")
+
 var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
 var usernameForm = document.querySelector('#usernameForm');
@@ -12,8 +17,8 @@ var stompClient = null;
 var username = null;
 
 var colors = [
-    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+	'#2196F3', '#32c787', '#00BCD4', '#ff5652',
+	'#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
 // roomId 파라미터 가져오기
@@ -21,118 +26,160 @@ const url = new URL(location.href).searchParams;
 const roomId = url.get('roomId');
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+	username = document.querySelector('#name').value.trim();
 
-    if(username) {
-        usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
+	isDuplicateName();
 
-        // 연결하고자하는 Socket 의 endPoint
-        var socket = new SockJS('/ws-stomp');
-        stompClient = Stomp.over(socket);
+    usernamePage.classList.add('hidden');
+    chatPage.classList.remove('hidden');
 
-        stompClient.connect({}, onConnected, onError);
-    }
-    event.preventDefault();
+    // 연결하고자하는 Socket 의 endPoint
+    var socket = new SockJS('/ws-stomp');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, onConnected, onError);
+
+	event.preventDefault();
 }
 
 
 function onConnected() {
-    // Subscribe to the Public Topic
-    stompClient.subscribe('/sub/chat/room/'+roomId, onMessageReceived);
+	// Subscribe to the Public Topic
+	stompClient.subscribe('/sub/chat/room/' + roomId, onMessageReceived);
 
-    // Tell your username to the server
-    stompClient.send("/pub/chat/message",
-        {},
-        JSON.stringify({
-            "roomId" : roomId,
-            sender: username,
-            type: 'ENTER'})
-    )
+	// Tell your username to the server
+	stompClient.send("/pub/chat/enterUser",
+		{},
+		JSON.stringify({
+			"roomId": roomId,
+			sender: username,
+			type: 'ENTER'
+		})
+	)
 
-    connectingElement.classList.add('hidden');
+	connectingElement.classList.add('hidden');
 }
 
+// 유저 닉네임 중복 확인
+function isDuplicateName() {
+
+    $.ajax({
+        type: "GET",
+        url: "/chat/duplicateName",
+        data: {
+            "username": username,
+            "roomId": roomId
+        },
+        success: function (data) {
+            console.log("함수 동작 확인 : " + data);
+
+            username = data;
+        }
+    })
+
+}
+
+// 유저 리스트 받기
+function getUserList() {
+    const $list = $("#list");
+
+    $.ajax({
+        type: "GET",
+        url: "/chat/userlist",
+        data: {
+            "roomId": roomId
+        },
+        success: function (data) {
+            var users = "";
+            for (let i = 0; i < data.length; i++) {
+                //console.log("data[i] : "+data[i]);
+                users += "<li class='dropdown-item'>" + data[i] + "</li>"
+            }
+            $list.html(users);
+        }
+    })
+}
 
 function onError(error) {
-    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    connectingElement.style.color = 'red';
+	connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+	connectingElement.style.color = 'red';
 }
 
 
 function sendMessage(event) {
-    var messageContent = messageInput.value.trim();
+	var messageContent = messageInput.value.trim();
 
-    if(messageContent && stompClient) {
-        var chatMessage = {
-            "roomId" : roomId,
-            sender: username,
-            message: messageInput.value,
-            type: 'TALK'
-        };
+	if (messageContent && stompClient) {
+		var chatMessage = {
+			"roomId": roomId,
+			sender: username,
+			message: messageInput.value,
+			type: 'TALK'
+		};
 
-        stompClient.send("/pub/chat/message", {}, JSON.stringify(chatMessage));
-        messageInput.value = '';
-    }
-    event.preventDefault();
+		stompClient.send("/pub/chat/sendMessage", {}, JSON.stringify(chatMessage));
+		messageInput.value = '';
+	}
+	event.preventDefault();
 }
 
 
 function onMessageReceived(payload) {
-    //console.log("payload 들어오냐? :"+payload);
-    var chat = JSON.parse(payload.body);
+	var chat = JSON.parse(payload.body);
 
-    var messageElement = document.createElement('li');
+	var messageElement = document.createElement('li');
 
-    if(chat.type === 'ENTER') {
-        messageElement.classList.add('event-message');
-        chat.content = chat.sender + chat.message;
+	if (chat.type === 'ENTER') {
+		messageElement.classList.add('event-message');
+		chat.content = chat.sender + chat.message;
+		getUserList();
 
-    } else if (chat.type === 'LEAVE') {
-        messageElement.classList.add('event-message');
-        chat.content = chat.sender + chat.message;
+	} else if (chat.type === 'LEAVE') {
+		messageElement.classList.add('event-message');
+		chat.content = chat.sender + chat.message;
+		getUserList();
 
-    } else {
-        messageElement.classList.add('chat-message');
+	} else {
+		messageElement.classList.add('chat-message');
 
-        var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(chat.sender[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(chat.sender);
+		var avatarElement = document.createElement('i');
+		var avatarText = document.createTextNode(chat.sender[0]);
+		avatarElement.appendChild(avatarText);
+		avatarElement.style['background-color'] = getAvatarColor(chat.sender);
 
-        messageElement.appendChild(avatarElement);
+		messageElement.appendChild(avatarElement);
 
-        var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(chat.sender);
-        usernameElement.appendChild(usernameText);
-        messageElement.appendChild(usernameElement);
-    }
+		var usernameElement = document.createElement('span');
+		var usernameText = document.createTextNode(chat.sender);
+		usernameElement.appendChild(usernameText);
+		messageElement.appendChild(usernameElement);
+	}
 
-    var textElement = document.createElement('p');
-    var messageText = document.createTextNode(chat.message);
-    textElement.appendChild(messageText);
-    
-    if (chat.sender === username) {
-			messageElement.classList.add('own-message');
-		} else {
-			messageElement.classList.add('other-message');
-		}
+	var textElement = document.createElement('p');
+	var messageText = document.createTextNode(chat.message);
+	textElement.appendChild(messageText);
 
-    messageElement.appendChild(textElement);
+	if (chat.sender === username) {
+		messageElement.classList.add('own-message');
+	} else {
+		messageElement.classList.add('other-message');
+	}
 
-    messageArea.appendChild(messageElement);
-    messageArea.scrollTop = messageArea.scrollHeight;
+	messageElement.appendChild(textElement);
+
+	messageArea.appendChild(messageElement);
+	messageArea.scrollTop = messageArea.scrollHeight;
 }
 
 
 function getAvatarColor(messageSender) {
-    var hash = 0;
-    for (var i = 0; i < messageSender.length; i++) {
-        hash = 31 * hash + messageSender.charCodeAt(i);
-    }
+	var hash = 0;
+	for (var i = 0; i < messageSender.length; i++) {
+		hash = 31 * hash + messageSender.charCodeAt(i);
+	}
 
-    var index = Math.abs(hash % colors.length);
-    return colors[index];
+	var index = Math.abs(hash % colors.length);
+	return colors[index];
 }
 
 usernameForm.addEventListener('submit', connect, true)
