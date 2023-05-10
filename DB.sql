@@ -220,6 +220,6 @@ INSERT INTO article
 SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
 FROM article;
 
-UPDATE article
-SET hitCount = hitCount + 1
+update article
+set hitCount = hitCount + 1
 WHERE id = 3;
