@@ -7,24 +7,23 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
-@EnableWebSocketMessageBroker//@EnableWebSocketMessageBroker is used to enable our WebSocket server
+@EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").withSockJS();
-        /*
-         * withSockJS()
-         * 는 웹소켓을 지원하지 않는 브라우저에
-         * 폴백 옵션을 활성화하는데 사용됩니다.
-         * */
+        // stomp 접속 주소 url => /ws-stomp
+        registry.addEndpoint("/ws-stomp") // 연결될 엔드포인트
+                .setAllowedOrigins("*") //
+                .withSockJS(); // SocketJS 를 연결한다는 설정
     }
-
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/topic");
+        // 메시지를 구독하는 요청 url => 즉 메시지 받을 때
+        registry.enableSimpleBroker("/sub");
+
+        // 메시지를 발행하는 요청 url => 즉 메시지 보낼 때
+        registry.setApplicationDestinationPrefixes("/pub");
     }
 }
