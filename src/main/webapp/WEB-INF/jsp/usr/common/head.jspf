@@ -54,7 +54,7 @@
 								</c:if>
 								
 
-										<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/chat/chatting"> <span>CHAT</span>
+										<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/chat/chatlist"> <span>CHAT</span>
 										</a></li>
 
 

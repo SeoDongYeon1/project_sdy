@@ -16,6 +16,11 @@ var colors = [
 	'#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
+// roomId 파라미터 가져오기
+const url = new URL(location.href).searchParams;
+const roomId = url.get('roomId');
+
+
 function connect(event) {
 	username = document.querySelector('#name').value.trim();
 
