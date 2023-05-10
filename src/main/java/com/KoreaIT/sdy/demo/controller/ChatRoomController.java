@@ -48,7 +48,7 @@ public class ChatRoomController {
 
         log.info("roomId {}", roomId);
         model.addAttribute("room", chatRepository.findRoomById(roomId));
-        return "/chatroom";
+        return "usr/chat/chatroom";
     }
 
 }
