@@ -4,34 +4,15 @@
 
 <c:set var="pageTitle" value="채팅" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"
-		integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
 		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
 		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/main.css" />
-
-<style>
-#menu {
-	width: 310px;
-}
-
-button#uploadFile {
-	margin-left: 225px;
-	margin-top: -55px;
-}
-
-input {
-	padding-left: 5px;
-	outline: none;
-	width: 250px;
-	margin-top: 15px;
-}
-</style>
 
 <c:if test="${rq.isLogined() }">
 		<div id="username-page">
@@ -52,7 +33,7 @@ input {
 		<div id="username-page">
 				<div class="username-page-container">
 						<form id="usernameForm" method="post" action="../member/doLogin">
-								<br />
+								<br /> 
 								<div style="display: inline-block; text-align: left;">
 										<div class="form-group" style="font-size: 15px; font-weight: bold;">
 												아이디 <br /> <input class="form-control" type="text" placeholder="아이디" name="loginId" autocomplete="off"
@@ -74,19 +55,10 @@ input {
 </c:if>
 
 <div id="chat-page" class="hidden">
-		<div class="btn-group dropend">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="showUserListButton" data-toggle="dropdown"
+		<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">참가한 유저</button>
-				<div id="list" class="dropdown-menu" aria-labelledby="showUserListButton"></div>
-		</div>
-		<div class="btn-group dropend">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="showMenu" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">파일 업로드</button>
-				<div id="menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<input type="file" id="file">
-						<button type="button" class="btn btn-primary" id="uploadFile" onclick="uploadFile()">저장</button>
-
-				</div>
+				<div id="list" class="dropdown-menu" aria-labelledby="dropdownMenuButton"> </div>
 		</div>
 		<div class="chat-container">
 				<div class="chat-header">
