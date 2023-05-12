@@ -16,6 +16,7 @@ public class Article {
 	private int memberId;
 	private int boardId;
 	private int hitCount;
+	private int repliesCount;
 	private int goodReactionPoint;
 	private int badReactionPoint;
 	

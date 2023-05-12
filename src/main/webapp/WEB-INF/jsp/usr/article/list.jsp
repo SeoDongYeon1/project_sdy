@@ -46,7 +46,12 @@ int endPage = startPage + displayPage - 1;
 										</th>
 								</c:if>
 
-								<th><a class="title" href="detail?id=${article.id }">${article.title }</a></th>
+								<th>
+									<a class="title" href="detail?id=${article.id }">${article.title }</a>
+									<c:if test="${article.repliesCount!=0}">
+												<a class="reply" href="detail?id=${article.id }" style="color: red;">[${article.repliesCount }]</a>
+									</c:if>
+								</th>
 								<th>${article.extra__writer }</th>
 								<th>${article.regDate.substring(0,10) }</th>
 								<th>${article.hitCount }</th>
@@ -78,7 +83,8 @@ int endPage = startPage + displayPage - 1;
 
 		for (int i = startPage; i <= endPage; i++) {
 		%>
-		<a class="indigo lighten-5 btn waves-effect waves-light btn-xs <%=cur_Page == i ? "btn-active" : "" %>" href="${baseUri }&page=<%=i%>"><%=i%></a>
+		<a class="indigo lighten-5 btn waves-effect waves-light btn-xs <%=cur_Page == i ? "btn-active" : "" %>"
+				href="${baseUri }&page=<%=i%>"><%=i%></a>
 		<%
 		}
 
@@ -115,22 +121,26 @@ int endPage = startPage + displayPage - 1;
 </form>
 
 <style type="text/css">
-	.title:hover {
-		text-decoration: underline;
-	}
-	
-	form {
-		text-align: center;
-	}
-	.select_box, .search_box, .btn_box{
-		display: inline-block;
-		margin-top: 20px;
-	}
-	.btn_box {
-		 border-radius: 8px;
-	}
-	
+.title:hover {
+	text-decoration: underline;
+}
 
+.reply:hover {
+	text-decoration: underline;
+}
+
+form {
+	text-align: center;
+}
+
+.select_box, .search_box, .btn_box {
+	display: inline-block;
+	margin-top: 20px;
+}
+
+.btn_box {
+	border-radius: 8px;
+}
 </style>
 
 <%@ include file="../common/foot.jspf"%>

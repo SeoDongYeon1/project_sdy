@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KoreaIT.sdy.demo.service.ArticleService;
 import com.KoreaIT.sdy.demo.service.BoardService;
 import com.KoreaIT.sdy.demo.service.ReactionPointService;
+import com.KoreaIT.sdy.demo.service.ReplyService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Board;
+import com.KoreaIT.sdy.demo.vo.Reply;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -25,7 +27,10 @@ public class UsrArticleController {
 
 	@Autowired
 	private BoardService boardService;
-	
+
+	@Autowired
+	private ReplyService replyService;
+
 	@Autowired
 	private ReactionPointService reactionPointService;
 
@@ -40,7 +45,8 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(String title, String body, int boardId) {
+	public String doWrite(String title, String body, int boardId, String replaceUri) {
+		
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력하세요.");
 		}
@@ -48,18 +54,23 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
 		}
 
-		int id = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
+		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
+		
+		int id = (int)writeArticleRd.getData1();
+		
+		if (Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../article/detail?id=%d", id);
+		}
 
-		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 생성되었습니다.", id), Ut.f("../article/detail?id=%d", id));
+		return Ut.jsReplace(writeArticleRd.getMsg(), replaceUri);
 	}
 
 	@RequestMapping("usr/article/list")
-	public String showList(Model model, 
-			@RequestParam(defaultValue = "0") int boardId,
+	public String showList(Model model, @RequestParam(defaultValue = "0") int boardId,
 			@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "title,body") String searchKeywordTypeCode,
 			@RequestParam(defaultValue = "") String searchKeyword) {
-		
+
 		Board board = boardService.getBoardById(boardId);
 
 		if (boardId != 0 && board == null) {
@@ -72,13 +83,25 @@ public class UsrArticleController {
 		int itemsInAPage = 10;
 		int totalPage = (int) Math.ceil(articlesCount / (double) itemsInAPage);
 
-		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode, searchKeyword);
+		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode,
+				searchKeyword);
+
+		List<Article> article_replies = articleService.getRepliesCount();
+
+		for (Article article : articles) {
+			for (Article article1 : article_replies) {
+				if (article.getId() == article1.getId()) {
+					article.setRepliesCount(article1.getRepliesCount());
+				}
+			}
+		}
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
 		model.addAttribute("page", page);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("articlesCount", articlesCount);
+		model.addAttribute("article_replies", article_replies);
 
 		return "usr/article/list";
 	}
@@ -86,32 +109,36 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/detail")
 	public String showDetail(int id, Model model) {
 		Article foundArticle = articleService.getForPrintArticle(id);
-		
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
-		
-		if(actorCanMakeReactionRd.isSuccess()) {
+
+		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),
+				"article", id);
+
+		List<Reply> replies = replyService.getForPrintReplies(id, "article");
+
+		if (actorCanMakeReactionRd.isSuccess()) {
 			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
-			
+
 		}
-		
+
+		model.addAttribute("replies", replies);
 		model.addAttribute("article", foundArticle);
 		model.addAttribute("isAlreadyAddGoodRp", reactionPointService.isAlreadyAddGoodRp(id, "article"));
 		model.addAttribute("isAlreadyAddBadRp", reactionPointService.isAlreadyAddBadRp(id, "article"));
 
 		return "usr/article/detail";
 	}
-	
+
 	@RequestMapping("usr/article/doIncreaseHitCount")
 	@ResponseBody
 	public ResultData doIncreaseHitCount(int id) {
 		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
-		
-		if(increaseHitCountRd.isFail()) {
+
+		if (increaseHitCountRd.isFail()) {
 			return increaseHitCountRd;
 		}
-		
-		ResultData rd =  ResultData.newData(increaseHitCountRd, articleService.getArticleHitCount(id));
-		
+
+		ResultData rd = ResultData.newData(increaseHitCountRd, articleService.getArticleHitCount(id));
+
 		return rd;
 	}
 
@@ -150,7 +177,7 @@ public class UsrArticleController {
 		}
 
 		articleService.modifyArticle(id, title, body);
-
+		
 		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
 

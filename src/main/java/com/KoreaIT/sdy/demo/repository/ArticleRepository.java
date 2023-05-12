@@ -39,5 +39,7 @@ public interface ArticleRepository {
 
 	public int decreaseBadReactionPoint(int id);
 
+	public List<Article> getRepliesCount();
+
 
 }
