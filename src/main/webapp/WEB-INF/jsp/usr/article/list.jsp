@@ -68,7 +68,7 @@ int endPage = startPage + displayPage - 1;
 		<%
 		if (cur_Page > 10) {
 		%>
-		<a class="indigo lighten-5 btn waves-effect waves-light btn-xs first_page" href="${baseUri }&page=1">◀◀</a>
+		<a class="btn btn-outline btn-xs first_page" href="${baseUri }&page=1">◀◀</a>
 		<%
 		}
 		if (endPage > totalPage) {
@@ -77,25 +77,25 @@ int endPage = startPage + displayPage - 1;
 
 		if (startPage > displayPage) {
 		%>
-		<a class="indigo lighten-5 btn waves-effect waves-light btn-xs" href="${baseUri }&page=<%=startPage - 10%>">이전</a>
+		<a class="btn btn-outline btn-xs" href="${baseUri }&page=<%=startPage - 10%>">이전</a>
 		<%
 		}
 
 		for (int i = startPage; i <= endPage; i++) {
 		%>
-		<a class="indigo lighten-5 btn waves-effect waves-light btn-xs <%=cur_Page == i ? "btn-active" : "" %>"
+		<a class="btn btn-outline btn-xs <%=cur_Page == i ? "btn-active" : "" %>"
 				href="${baseUri }&page=<%=i%>"><%=i%></a>
 		<%
 		}
 
 		if (endPage < totalPage) {
 		%>
-		<a class="indigo lighten-5 btn waves-effect waves-light btn-xs" href="${baseUri }&page=<%=startPage + 10 %>">다음</a>
+		<a class="btn btn-outline btn-xs" href="${baseUri }&page=<%=startPage + 10 %>">다음</a>
 		<%
 		}
 		if (cur_Page < totalPage) {
 		%>
-		<a class="last_page indigo lighten-5 btn waves-effect waves-light btn-xs" href="${baseUri }&page=<%=totalPage%>">▶▶</a>
+		<a class="last_page btn btn-outline btn-xs" href="${baseUri }&page=<%=totalPage%>">▶▶</a>
 		<%
 		}
 		%>

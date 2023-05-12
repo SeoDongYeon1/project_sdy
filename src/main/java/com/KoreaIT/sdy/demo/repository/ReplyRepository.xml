@@ -22,4 +22,26 @@
 		AND r.relTypeCode = #{relTypeCode};
 	</select>
 	
+	<select id="getReplyById" resultType="Reply">
+		SELECT r.*, m.name AS 'extra__writer'
+		FROM reply r
+		INNER JOIN `member` m
+		ON r.memberId = m.id
+		WHERE r.id = #{id}
+	</select>
+	
+	<delete id="deleteReply">
+		DELETE FROM reply
+		WHERE id = #{id}
+	</delete>
+	
+	<update id="modifyReply">
+		UPDATE reply
+		<set>
+			updateDate= NOW(),
+			<if test="body != null and body != ''">`body` = #{body}</if>
+		</set>		
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

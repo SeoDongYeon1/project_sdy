@@ -13,11 +13,14 @@ public class Reply {
 	private String regDate;
 	private String updateDate;
 	private String body;
-	private String relTypecode;
+	private String relTypeCode;
 	private int memberId;
 	private int relId;
 
 	private String extra__writer;
+	
+	private boolean actorCanModify;
+	private boolean actorCanDelete;
 	
 	public String getForPrintRegDateType1() {
 		return regDate.substring(0, 16).replace(" ", "<br>");

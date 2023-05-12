@@ -226,21 +226,19 @@
 		<div class="mt-8 text-xl mx-auto px-3">
 				<table class="table-box-type-1 table table-zebra w-full" style="text-align: left;">
 						<c:forEach var="reply" items="${replies }">
-								<div class="reply_top flex justify-between">
+								<div class="reply_top flex justify-between" >
 										<div class="reply_writer">${reply.extra__writer }</div>
 										<div class="reply_regDate">${reply.regDate }</div>
 								</div>
 
 								<c:if test="${reply.memberId == loginedMemberId }">
 										<div class="reply-btn-box">
-												<button>수정</button>
-												<button>삭제</button>
+												<a class="button" href="#" onclick="showModifyForm(${reply.id})">수정</a> <a class="button"
+														href="../reply/doDelete?id=${reply.id }" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;">삭제</a>
 										</div>
 								</c:if>
 
-
-								<br />
-								<div class="reply_bottom flex justify-between">
+								<div class="reply_bottom flex justify-between" id="reply-${reply.id}">
 										<div>${reply.body }</div>
 										<div class="btn-box"></div>
 								</div>
@@ -251,6 +249,7 @@
 		</div>
 </div>
 
+<!-- 댓글 작성 관련 -->
 <script>
 	let ReplyWrite__SubmitFormDone = false;
 	
@@ -272,6 +271,30 @@
 	}
 </script>
 
+<!-- 댓글 수정 관련 -->
+<script>
+function showModifyForm(replyId) {
+	  console.log(`replyId: ${replyId}`);
+	  console.log('replyId:' + replyId);
+
+	  // Ajax 요청 생성
+	  const xhr = new XMLHttpRequest();
+	  xhr.open('GET', '../reply/modify?id=' + encodeURIComponent(replyId));
+	  xhr.onload = function() {
+	    // 요청이 성공적으로 처리된 경우, 가져온 폼을 해당 댓글의 내용이 보이는 영역에 적용함
+	    if (xhr.status === 200) {
+	      const modifyForm = xhr.responseText;
+	      const replyBox = document.querySelector('#reply-' + replyId);
+	      console.log('replyBox:' + replyBox);
+	      if (replyBox !== null) {
+	        replyBox.innerHTML = modifyForm;
+	      }
+	    }
+	  };
+	  xhr.send();
+	}
+</script>
+
 <!-- 커스텀 -->
 <style type="text/css">
 .table-box-type-1 {
@@ -287,35 +310,46 @@
 .btns {
 	text-align: center;
 }
+
 .btns>.btn {
 	width: 100px;
 	height: 40px;
 }
+
 .reply_box {
 	border: 2px solid black;
 	text-align: left;
 	font-weight: bold;
 	width: 700px;
 }
+
 .reply_text {
 	font-size: 25px;
 	margin: 20px 0;
 	text-align: center;
 }
+
 .reply_writer .reply_body {
 	font-size: 20px;
 }
+
 .reply_regDate {
 	font-size: 15px;
 	text-align: right;
 }
+
 .reply-btn-box {
 	text-align: right;
 }
-.reply-btn-box>button {
+
+.reply-btn-box>.button {
 	font-weight: bold;
 	font-size: 13px;
 	text-decoration: underline;
+}
+
+.reply_bottom {
+	position: relative;
 }
 </style>
 
