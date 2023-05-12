@@ -3,7 +3,7 @@
 <c:set var="pageTitle" value="로그인" />
 <%@ include file="../common/head.jspf"%>
 
-<div class="text-center">
+<div class="form-box">
 		<form method="post" action="doLogin">
 				<br /> <input type="hidden" name="afterLoginUri" value=${param.afterLoginUri } />
 				<div style="display: inline-block; text-align: left;">
@@ -26,9 +26,13 @@
 </div>
 
 <style type="text/css">
+.form-box {
+	text-align: center;
+}
+
 form {
 	width: 350px;
-	height: 270px;
+	height: 320px;
 	border: 2px solid black;
 	display: inline-block;
 	border-radius: 8px;
