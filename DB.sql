@@ -201,6 +201,70 @@ relId = 1,
 ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
+# 기존 게시물의 good,bad ReactionPoint 필드의 값을 채운다
+UPDATE article AS A
+INNER JOIN (
+    SELECT RP.relTypeCode, RP.relId,
+    SUM(IF(RP.point > 0, RP.point,0)) AS goodReactionPoint,
+    SUM(IF(RP.point < 0, RP.point * -1,0)) AS badReactionPoint
+    FROM reactionPoint AS RP
+    GROUP BY RP.relTypeCode, RP.relId
+) AS RP_SUM
+ON A.id = RP_SUM.relId
+SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
+A.badReactionPoint = RP_SUM.badReactionPoint;
+
+
+# reply 테이블 생성
+CREATE TABLE reply(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+    `body` TEXT NOT NULL
+);
+
+# reply 테이블의 relTypeCode, relId에 인덱스 걸기
+ALTER TABLE `PJ_SDY`.`reply` ADD KEY `relTypeCodeId` (`relTypeCode` , `relId`);
+
+# 2번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`body` = '댓글 1';
+
+# 2번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`body` = "댓글 2";
+
+# 3번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`body` = "댓글 3";
+
+# 3번 회원이 2번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 2,
+`body` = "댓글 4";
+
 #############################################################################################
 
 # 검색 쿼리
@@ -220,6 +284,6 @@ INSERT INTO article
 SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
 FROM article;
 
-update article
-set hitCount = hitCount + 1
+UPDATE article
+SET hitCount = hitCount + 1
 WHERE id = 3;

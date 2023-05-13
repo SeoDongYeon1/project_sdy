@@ -225,29 +225,37 @@
 
 		<div class="mt-8 text-xl mx-auto px-3">
 				<table class="table-box-type-1 table table-zebra w-full" style="text-align: left;">
-						<c:forEach var="reply" items="${replies }">
-								<div class="reply_top flex justify-between" >
-										<div class="reply_writer">${reply.extra__writer }</div>
-										<div class="reply_regDate">${reply.regDate }</div>
+						<c:forEach var="reply" items="${replies}">
+								<div class="reply_top flex justify-between">
+										<div class="reply_writer">${reply.extra__writer}</div>
+										<div class="reply_regDate">${reply.regDate}</div>
 								</div>
 
-								<c:if test="${reply.memberId == loginedMemberId }">
+								<c:if test="${reply.memberId == loginedMemberId}">
 										<div class="reply-btn-box">
 												<a class="button" href="#" onclick="showModifyForm(${reply.id})">수정</a> <a class="button"
-														href="../reply/doDelete?id=${reply.id }" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;">삭제</a>
+														href="../reply/doDelete?id=${reply.id}" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;">삭제</a>
 										</div>
 								</c:if>
 
 								<div class="reply_bottom flex justify-between" id="reply-${reply.id}">
-										<div>${reply.body }</div>
+										<div class="reply-body">${reply.body}</div>
 										<div class="btn-box"></div>
 								</div>
+
+								<div class="reply_modify_form" id="reply-modify-form-${reply.id}" style="display: none;">
+										<form class="reply_modify_form-inner" method="post" action="../reply/doModify">
+												<input type="hidden" name="id" value="${reply.id}" />
+												<textarea class="textarea" name="body">${reply.body}</textarea>
+												<input type="button" class="button" value="수정" onclick="submitModifyForm(${reply.id})" />
+										</form>
+								</div>
+
 								<hr />
 								<br />
 						</c:forEach>
 				</table>
 		</div>
-</div>
 
 <!-- 댓글 작성 관련 -->
 <script>
@@ -274,29 +282,51 @@
 <!-- 댓글 수정 관련 -->
 <script>
 function showModifyForm(replyId) {
-	  console.log(`replyId: ${replyId}`);
-	  console.log('replyId:' + replyId);
+    document.querySelectorAll('.reply_modify_form').forEach(function(element) {
+      element.style.display = 'none';
+    });
+    document.querySelector(`#reply-modify-form-${replyId}`).style.display = 'block';
+  }
 
-	  // Ajax 요청 생성
-	  const xhr = new XMLHttpRequest();
-	  xhr.open('GET', '../reply/modify?id=' + encodeURIComponent(replyId));
-	  xhr.onload = function() {
-	    // 요청이 성공적으로 처리된 경우, 가져온 폼을 해당 댓글의 내용이 보이는 영역에 적용함
-	    if (xhr.status === 200) {
-	      const modifyForm = xhr.responseText;
-	      const replyBox = document.querySelector('#reply-' + replyId);
-	      console.log('replyBox:' + replyBox);
-	      if (replyBox !== null) {
-	        replyBox.innerHTML = modifyForm;
-	      }
-	    }
-	  };
-	  xhr.send();
-	}
+  function submitModifyForm(replyId) {
+    const form = document.querySelector(`#reply-modify-form-${replyId} form`);
+    const body = form.body.value.trim();
+
+    if (body.length < 2) {
+      alert('내용을 2글자 이상 입력해주세요.');
+      form.body.focus();
+      return false;
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        if (response.success) {
+          document.querySelector(`#reply-${replyId} .reply-body`).innerText = response.body;
+          document.querySelector(`#reply-modify-form-${replyId}`).style.display = 'none';
+        } else {
+          alert(response.msg);
+        }
+      } else {
+        console.error(xhr.responseText);
+        alert('댓글 수정 중 오류가 발생했습니다.');
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error(xhr.responseText);
+      alert('서버와의 통신 중 오류가 발생했습니다.');
+    };
+
+    xhr.open('POST', form.action);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(`id=${replyId}&body=${encodeURIComponent(body)}`);
+  }
 </script>
 
-<!-- 커스텀 -->
-<style type="text/css">
+		<!-- 커스텀 -->
+		<style type="text/css">
 .table-box-type-1 {
 	margin-left: auto;
 	margin-right: auto;
@@ -353,4 +383,4 @@ function showModifyForm(replyId) {
 }
 </style>
 
-<%@ include file="../common/foot.jspf"%>
+		<%@ include file="../common/foot.jspf"%>
