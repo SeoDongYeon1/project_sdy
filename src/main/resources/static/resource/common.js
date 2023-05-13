@@ -12,6 +12,13 @@ const listButton = document.querySelector('.list');
 const productsWrapper = document.querySelector('.products-area-wrapper');
 
 if (gridButton && listButton && productsWrapper) {
+  gridButton.addEventListener('click', function () {
+    listButton.classList.remove('active');
+    gridButton.classList.add('active');
+    productsWrapper.classList.add('gridView');
+    productsWrapper.classList.remove('tableView');
+  });
+
   listButton.addEventListener('click', function () {
     listButton.classList.add('active');
     gridButton.classList.remove('active');
@@ -83,5 +90,25 @@ sidebarList.forEach(item => {
   if (currentPath === itemPath) {
     sidebarList.forEach(sibling => sibling.classList.remove(activeClass));
     item.classList.add(activeClass);
+  }
+});
+
+
+
+
+
+const accountInfoMoreBtn = document.querySelector(".account-info-more");
+const accountInfoMoreContent = document.querySelector(".account-info-more-content");
+
+// 버튼 클릭 시 메뉴 열고 닫기
+accountInfoMoreBtn.addEventListener("click", function () {
+  accountInfoMoreContent.classList.toggle("active");
+});
+
+// 메뉴 외 다른 곳 클릭 시 메뉴 닫기
+document.addEventListener("click", function (event) {
+  const target = event.target;
+  if (!target.closest(".account-info-more-wrapper")) {
+    accountInfoMoreContent.classList.remove("active");
   }
 });

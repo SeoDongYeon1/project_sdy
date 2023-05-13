@@ -33,25 +33,35 @@
 		        </svg>
 				</button>
 				<c:if test="${!rq.isLogined() }">
-					<a href="../member/login" class="app-content-headerButton">로그인</a>
+						<a href="../member/login" class="app-content-headerButton">로그인</a>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
-					<div class="account-info">
-							<div class="account-info-picture">
-									<img
-											src="https://images.unsplash.com/photo-1527736947477-2790e28f3443?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTE2fHx3b21hbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-											alt="Account">
-							</div>
-							<div class="account-info-name">${rq.loginedMember.nickname }</div>
-							<button class="account-info-more">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-											stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-											class="feather feather-more-horizontal">
-													<circle cx="12" cy="12" r="1" />
-													<circle cx="19" cy="12" r="1" />
-													<circle cx="5" cy="12" r="1" /></svg>
-							</button>
-					</div>
+						<div class="account-info">
+								<div class="account-info-picture">
+										<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxOX4mkcW8pH9FbpI9rTBkokiMxSY2GJ3eyw&usqp=CAU"
+												alt="Account">
+								</div>
+								<div class="account-info-name">${rq.loginedMember.nickname }</div>
+								<div class="account-info-more-wrapper">
+										<button class="account-info-more">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-more-horizontal">
+							      <circle cx="12" cy="12" r="1" />
+							      <circle cx="19" cy="12" r="1" />
+							      <circle cx="5" cy="12" r="1" />
+							    </svg>
+										</button>
+
+										<div class="account-info-more-content">
+												<ul>
+														<li><a href="/">프로필</a></li>
+														<hr />
+														<li><a href="../member/doLogout">로그아웃</a></li>
+												</ul>
+										</div>
+								</div>
+						</div>
 				</c:if>
 		</div>
 		<div class="app-container">
@@ -67,22 +77,18 @@
 														<polyline points="9 22 9 12 15 12 15 22" /></svg> <span>HOME</span>
 								</a></li>
 								<li class="sidebar-list-item"><a href="/usr/article/list"> <svg xmlns="http://www.w3.org/2000/svg"
-														width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-														stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
-														<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-														<line x1="3" y1="6" x2="21" y2="6" />
-														<path d="M16 10a4 4 0 0 1-8 0" /></svg> <span>게시글</span>
+														width="24" height="24" viewBox="0 0 24 24">
+														<path fill="currentColor"
+																d="M8 17h5q.425 0 .713-.288T14 16q0-.425-.288-.713T13 15H8q-.425 0-.713.288T7 16q0 .425.288.713T8 17Zm0-4h8q.425 0 .713-.288T17 12q0-.425-.288-.713T16 11H8q-.425 0-.713.288T7 12q0 .425.288.713T8 13Zm0-4h8q.425 0 .713-.288T17 8q0-.425-.288-.713T16 7H8q-.425 0-.713.288T7 8q0 .425.288.713T8 9ZM5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm0-2h14V5H5v14ZM5 5v14V5Z" /></svg>
+												<span>게시글</span>
 								</a>
 										<ul class="z-10 board-list">
 												<li class="hover:underline"><a href="/usr/article/list?boardId=1">공지사항</a></li>
 												<li class="hover:underline"><a href="/usr/article/list?boardId=2">자유게시판</a></li>
 												<li class="hover:underline"><a href="/usr/article/list?boardId=3">QnA</a></li>
 										</ul></li>
-								<li class="sidebar-list-item"><a href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="18"
-														height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round" class="feather feather-pie-chart">
-														<path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
-														<path d="M22 12A10 10 0 0 0 12 2v10z" /></svg> <span>일정</span>
+								<li class="sidebar-list-item"><a href="#"> <d>📆&nbsp;&nbsp;</d>
+												<span>일정</span>
 								</a></li>
 								<li class="sidebar-list-item"><a href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="18"
 														height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -100,5 +106,3 @@
 								</a></li>
 						</ul>
 				</div>
-		</div>
-		<main>

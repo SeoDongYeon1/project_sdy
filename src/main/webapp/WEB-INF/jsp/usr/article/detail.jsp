@@ -59,79 +59,95 @@
 
 <!-- 좋아요, 싫어요 관련 -->
 <script>
-	function doGoodReaction(articleId) {
-		$.ajax({
-            url: '/usr/reactionPoint/doGoodReaction',
-            type: 'POST',
-            data: {relTypeCode: 'article', relId: articleId},
-            dataType: 'json',
-            success: function(data) {
-                if (data.resultCode.startsWith('S-')) {
-                    var likeButton = $('#likeButton');
-                    var likeCount = $('#likeCount');
-                    var DislikeButton = $('#DislikeButton');
-                    var DislikeCount = $('#DislikeCount');
+<!-- 좋아요, 싫어요 관련 -->		
+function doGoodReaction(articleId) {
+	 if(params.memberId==0) {
+	        if(confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?')) {
+	            var currentUri = encodeURIComponent(window.location.href);
+	            window.location.href = '../member/login?afterLoginUri=' + currentUri; // 로그인 페이지 URI에 원래 페이지의 URI를 포함하여 이동
+	        }
+	        return;
+	    }
 
-                    if (data.resultCode == 'S-1') {
-                        likeButton.removeClass('btn-danger').addClass('btn-outline');
-                        likeCount.text(parseInt(likeCount.text()) - 1);
-                    } 
-                    else if (data.resultCode == 'S-2') {
-                    	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
-                        DislikeCount.text(parseInt(DislikeCount.text()) - 1);
-                        likeButton.removeClass('btn-outline').addClass('btn-danger');
-                        likeCount.text(parseInt(likeCount.text()) + 1);
-                    }
-                    else {
-                        likeButton.removeClass('btn-outline').addClass('btn-danger');
-                        likeCount.text(parseInt(likeCount.text()) + 1);
-                    }
-                } 
-                else {
-                    alert(data.msg);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert('오류가 발생했습니다: ' + textStatus);
-            }
-        });
-	}
-	
-	function doBadReaction(articleId) {
-		$.ajax({
-            url: '/usr/reactionPoint/doBadReaction',
-            type: 'POST',
-            data: {relTypeCode: 'article', relId: articleId},
-            dataType: 'json',
-            success: function(data) {
-                if (data.resultCode.startsWith('S-')) {
-                	var likeButton = $('#likeButton');
-                    var likeCount = $('#likeCount');                	
-                    var DislikeButton = $('#DislikeButton');
-                    var DislikeCount = $('#DislikeCount');
+	$.ajax({
+        url: '/usr/reactionPoint/doGoodReaction',
+        type: 'POST',
+        data: {relTypeCode: 'article', relId: articleId},
+        dataType: 'json',
+        success: function(data) {
+            if (data.resultCode.startsWith('S-')) {
+                var likeButton = $('#likeButton');
+                var likeCount = $('#likeCount');
+                var DislikeButton = $('#DislikeButton');
+                var DislikeCount = $('#DislikeCount');
 
-                    if (data.resultCode == 'S-1') {
-                    	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
-                    	DislikeCount.text(parseInt(DislikeCount.text()) - 1);
-                    } else if (data.resultCode == 'S-2') {
-                    	likeButton.removeClass('btn-danger').addClass('btn-outline');
-                    	likeCount.text(parseInt(likeCount.text()) - 1);
-                    	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
-                        DislikeCount.text(parseInt(DislikeCount.text()) + 1);
-                    } else {
-                    	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
-                        DislikeCount.text(parseInt(DislikeCount.text()) + 1);
-                    }
+                if (data.resultCode == 'S-1') {
+                    likeButton.removeClass('btn-danger').addClass('btn-outline');
+                    likeCount.text(parseInt(likeCount.text()) - 1);
                 } 
-                else {
-                    alert(data.msg);
+                else if (data.resultCode == 'S-2') {
+                	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
+                    DislikeCount.text(parseInt(DislikeCount.text()) - 1);
+                    likeButton.removeClass('btn-outline').addClass('btn-danger');
+                    likeCount.text(parseInt(likeCount.text()) + 1);
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert('오류가 발생했습니다: ' + textStatus);
+                else {
+                    likeButton.removeClass('btn-outline').addClass('btn-danger');
+                    likeCount.text(parseInt(likeCount.text()) + 1);
+                }
+            } 
+            else {
+                alert(data.msg);
             }
-        });
-	}
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('오류가 발생했습니다: ' + textStatus);
+        }
+    });
+}
+
+function doBadReaction(articleId) {
+	 if(params.memberId==0) {
+	        if(confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?')) {
+	            var currentUri = encodeURIComponent(window.location.href);
+	            window.location.href = '../member/login?afterLoginUri=' + currentUri; // 로그인 페이지 URI에 원래 페이지의 URI를 포함하여 이동
+	        }
+	        return;
+	    }
+	$.ajax({
+        url: '/usr/reactionPoint/doBadReaction',
+        type: 'POST',
+        data: {relTypeCode: 'article', relId: articleId},
+        dataType: 'json',
+        success: function(data) {
+            if (data.resultCode.startsWith('S-')) {
+            	var likeButton = $('#likeButton');
+                var likeCount = $('#likeCount');                	
+                var DislikeButton = $('#DislikeButton');
+                var DislikeCount = $('#DislikeCount');
+
+                if (data.resultCode == 'S-1') {
+                	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
+                	DislikeCount.text(parseInt(DislikeCount.text()) - 1);
+                } else if (data.resultCode == 'S-2') {
+                	likeButton.removeClass('btn-danger').addClass('btn-outline');
+                	likeCount.text(parseInt(likeCount.text()) - 1);
+                	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
+                    DislikeCount.text(parseInt(DislikeCount.text()) + 1);
+                } else {
+                	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
+                    DislikeCount.text(parseInt(DislikeCount.text()) + 1);
+                }
+            } 
+            else {
+                alert(data.msg);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('오류가 발생했습니다: ' + textStatus);
+        }
+    });
+}
 </script>
 
 <div class="mt-8 text-xl mx-auto px-3">
@@ -280,57 +296,14 @@
 </script>
 
 <!-- 댓글 수정 관련 -->
-<script>
-function showModifyForm(replyId) {
-    document.querySelectorAll('.reply_modify_form').forEach(function(element) {
-      element.style.display = 'none';
-    });
-    document.querySelector(`#reply-modify-form-${replyId}`).style.display = 'block';
-  }
 
-  function submitModifyForm(replyId) {
-    const form = document.querySelector(`#reply-modify-form-${replyId} form`);
-    const body = form.body.value.trim();
-
-    if (body.length < 2) {
-      alert('내용을 2글자 이상 입력해주세요.');
-      form.body.focus();
-      return false;
-    }
-
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
-        if (response.success) {
-          document.querySelector(`#reply-${replyId} .reply-body`).innerText = response.body;
-          document.querySelector(`#reply-modify-form-${replyId}`).style.display = 'none';
-        } else {
-          alert(response.msg);
-        }
-      } else {
-        console.error(xhr.responseText);
-        alert('댓글 수정 중 오류가 발생했습니다.');
-      }
-    };
-
-    xhr.onerror = function() {
-      console.error(xhr.responseText);
-      alert('서버와의 통신 중 오류가 발생했습니다.');
-    };
-
-    xhr.open('POST', form.action);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(`id=${replyId}&body=${encodeURIComponent(body)}`);
-  }
-</script>
 
 		<!-- 커스텀 -->
 		<style type="text/css">
 .table-box-type-1 {
 	margin-left: auto;
 	margin-right: auto;
-	width: 500px;
+	width: 1000px;
 }
 
 .btn_box {

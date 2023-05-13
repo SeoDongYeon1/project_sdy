@@ -9,58 +9,105 @@ int displayPage = 10;
 int startPage = ((cur_Page - 1) / displayPage) * displayPage + 1;
 int endPage = startPage + displayPage - 1;
 %>
-<c:set var="pageTitle" value="전체 게시글 보기" />
+<style type="text/css">
+.title:hover {
+	text-decoration: underline;
+}
 
+.reply:hover {
+	text-decoration: underline;
+}
+
+form {
+	text-align: center;
+}
+
+.select_box, .search_box, .btn_box {
+	display: inline-block;
+	margin-top: 20px;
+}
+
+.btn_box {
+	border-radius: 8px;
+}
+
+.articlesCount{
+	font-size: 20px;
+}
+</style>
+
+<c:set var="pageTitle" value="전체 게시글 보기" />
 <c:if test="${board!=null }">
-		<c:set var="pageTitle" value="${board.name }" />
+	<c:set var="pageTitle" value="${board.name }" />
 </c:if>
+
 <%@ include file="../common/head.jspf"%>
 
-<div class="mt-8 text-xl mx-auto px-3">
-		<div>게시글 갯수 : ${articlesCount }</div>
-		<table class="table-box-type-1 table w-full" style="text-align: center;">
-
-				<tr>
-						<c:if test="${board!=null }">
-								<th>번호</th>
-						</c:if>
-						<c:if test="${board==null }">
-								<th>게시판</th>
-						</c:if>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성날짜</th>
-						<th>조회수</th>
-				</tr>
-				<c:forEach var="article" items="${articles }">
-						<tr>
-								<c:if test="${board!=null }">
-										<th>
-												<div class="badge badge-outline">${article.id }</div>
-										</th>
-								</c:if>
-
-								<c:if test="${board==null }">
-										<th>
-												<div>${article.board_name }</div>
-										</th>
-								</c:if>
-
-								<th>
-									<a class="title" href="detail?id=${article.id }">${article.title }</a>
-									<c:if test="${article.repliesCount!=0}">
-												<a class="reply" href="detail?id=${article.id }" style="color: red;">[${article.repliesCount }]</a>
-									</c:if>
-								</th>
-								<th>${article.extra__writer }</th>
-								<th>${article.regDate.substring(0,10) }</th>
-								<th>${article.hitCount }</th>
-						</tr>
-
-				</c:forEach>
-		</table>
-</div>
-
+<div class="app-content">
+						<div>
+							<div class="pageTitle">
+								${pageTitle }
+							</div>
+						</div>
+						<br />
+						<br />
+						
+						<div>
+							<div class="common-color articlesCount">
+								게시물 갯수: ${articlesCount }
+							</div>
+						</div>
+						
+						<div class="products-area-wrapper tableView">
+								<div class="list-header">
+										<div class="item">
+												게시판
+										</div>
+										<div class="item">
+												번호
+										</div>
+										<div class="item">
+												제목
+										</div>
+										<div class="item">
+												작성자
+										</div>
+										<div class="item">
+												작성일
+										</div>
+										<div class="item">
+												조회수
+										</div>
+										<div class="item">
+												좋아요
+										</div>
+								</div>
+								<c:forEach var="article" items="${articles }">
+									<div class="row">
+											<div class="item image">
+												<span></span>
+											</div>
+											<div class="item category">
+													<span class="">${article.id }</span>
+											</div>
+											<div class="item status-cell">
+													<a href="../article/detail?id=?${article.id }" class="">${article.title }</a>
+											</div>
+											<div class="item sales">
+													<span class="">${article.extra__writer }</span>
+											</div>
+											<div class="item stock">
+													<span class="">${article.regDate.substring(0,10) }</span>
+											</div>
+											<div class="item price">
+													<span class="">${article.hitCount }</span>
+											</div>
+											<div class="item price">
+													<span class="">${article.goodReactionPoint }</span>
+											</div>
+									</div>
+								</c:forEach>
+						</div>	
 <div class="pagenation" style="text-align: center; margin-top: 20px;">
 		<c:set var="baseUri" value="?boardId=${board.id }" />
 		<c:set var="baseUri" value="${baseUri }&searchKeywordTypeCode=${searchKeywordTypeCode }" />
@@ -112,35 +159,16 @@ int endPage = startPage + displayPage - 1;
 				</select>
 		</div>
 		<div class="search_box">
-				<input type="text" value="${param.searchKeyword }" max-length="20" name="searchKeyword" class="input input-bordered"
+				<input type="text" value="${param.searchKeyword }" max-length="20" name="searchKeyword" class=" search-bar input input-bordered"
 						placeholder="검색어를 입력해주세요" />
 		</div>
 		<div class="btn_box">
 				<button class="btn btn-outline" onclick="Search() return false;" type="submit">검색</button>
 		</div>
 </form>
+</div>
 
-<style type="text/css">
-.title:hover {
-	text-decoration: underline;
-}
 
-.reply:hover {
-	text-decoration: underline;
-}
 
-form {
-	text-align: center;
-}
-
-.select_box, .search_box, .btn_box {
-	display: inline-block;
-	margin-top: 20px;
-}
-
-.btn_box {
-	border-radius: 8px;
-}
-</style>
 
 <%@ include file="../common/foot.jspf"%>
