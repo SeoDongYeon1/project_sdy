@@ -445,6 +445,8 @@ th {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232869ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-search'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
 }
 
+
+
 .action-button {
 	border-radius: 4px;
 	height: 32px;
@@ -474,6 +476,24 @@ th {
 
 .filter-button-wrapper {
   position: relative;
+}
+
+.input {
+	color: var(--app-content-main-color);
+	background-color: var(--app-content-secondary-color);
+}
+
+.btn {
+	color: var(--app-content-main-color);
+}
+
+.select {
+	color: var(--app-content-main-color);
+	border: 1px solid black;
+	border-radius: 8px;
+}
+.select > option{
+	color: var(--app-content-main-color);
 }
 
 .filter-menu {
@@ -577,7 +597,8 @@ th {
 }
 
 .products-area-wrapper {
-  width: 100%;
+  margin: 0 auto;
+  width: 90%;
   max-height: 100%;
   overflow: auto;
   padding: 0 4px;
@@ -611,7 +632,7 @@ th {
   flex: 1;
   padding: 8px 16px;
   color: var(--app-content-main-color);
-  font-size: 12px;
+  font-size: 18px;
   display: flex;
   align-items: center;
 }
@@ -728,7 +749,7 @@ th {
   }
 }
 
-.gridView .products-header {
+.gridView .list-header {
   display: none;
 }
 
@@ -818,3 +839,28 @@ th {
 .gridView .cell-label {
   opacity: 0.6;
 }
+
+
+.article .item:nth-child(1) {
+  flex: 0 0 130px; /* 넓이가 작은 번호 부분 */
+  justify-content: center;
+}
+
+.article .item:nth-child(2) {
+  flex: 1; /* 최대화될 title 부분 */
+  justify-content: center;
+}
+
+.article .item:nth-child(3),
+.article .item:nth-child(4) {
+  flex: 0 0 300px; /* 넓이가 작은 작성자와 작성일 부분 */
+  justify-content: center;
+}
+
+.article .item:nth-child(5),
+.article .item:nth-child(6) {
+	flex: 0 0 100px; /* 넓이가 작은 작성자와 작성일 부분 */
+	justify-content: center;
+}
+
+

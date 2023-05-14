@@ -34,6 +34,7 @@ form {
 .articlesCount{
 	font-size: 20px;
 }
+
 </style>
 
 <c:set var="pageTitle" value="전체 게시글 보기" />
@@ -52,20 +53,24 @@ form {
 						<br />
 						<br />
 						
+						
+						<div class="products-area-wrapper tableView">
 						<div>
 							<div class="common-color articlesCount">
 								게시물 갯수: ${articlesCount }
 							</div>
 						</div>
-						
-						<div class="products-area-wrapper tableView">
-								<div class="list-header">
-										<div class="item">
-												게시판
-										</div>
-										<div class="item">
+								<div class="list-header article">
+										<c:if test="${board!=null }">
+											<div class="item">
 												번호
-										</div>
+											</div>
+										</c:if>
+										<c:if test="${board==null }">
+											<div class="item">
+												게시판
+											</div>
+										</c:if>
 										<div class="item">
 												제목
 										</div>
@@ -83,15 +88,24 @@ form {
 										</div>
 								</div>
 								<c:forEach var="article" items="${articles }">
-									<div class="row">
-											<div class="item image">
-												<span></span>
-											</div>
-											<div class="item category">
-													<span class="">${article.id }</span>
-											</div>
+									<div class="row article">
+											<c:if test="${board!=null }">
+												<div class="item category">
+														<div style="width: 50px;"class="badge badge-outline">${article.id }</div>
+												</div>
+											</c:if>
+		
+											<c:if test="${board==null }">
+												<div class="item category">
+														<div>${article.board_name }</div>
+												</div>
+											</c:if>
+											
 											<div class="item status-cell">
-													<a href="../article/detail?id=?${article.id }" class="">${article.title }</a>
+													<a class="title" href="../article/detail?id=${article.id }">${article.title }</a>
+													<c:if test="${article.repliesCount!=0}">
+														<a class="reply" href="detail?id=${article.id }" style="color: red;">&nbsp;[${article.repliesCount }]</a>
+													</c:if>
 											</div>
 											<div class="item sales">
 													<span class="">${article.extra__writer }</span>
@@ -159,7 +173,7 @@ form {
 				</select>
 		</div>
 		<div class="search_box">
-				<input type="text" value="${param.searchKeyword }" max-length="20" name="searchKeyword" class=" search-bar input input-bordered"
+				<input type="text" value="${param.searchKeyword }" max-length="20" name="searchKeyword" class="input input-bordered"
 						placeholder="검색어를 입력해주세요" />
 		</div>
 		<div class="btn_box">
