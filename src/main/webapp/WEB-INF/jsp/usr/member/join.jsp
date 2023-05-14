@@ -3,7 +3,7 @@
 <c:set var="pageTitle" value="JOIN" />
 <%@ include file="../common/head.jspf"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" referrerpolicy="no-referrer"></script>
-
+<c:set var="pageTitle" value="회원가입"/>
 <script>
 	let submitJoinFormDone = false;
 	let validLoginId = "";
@@ -462,7 +462,6 @@ form {
 	display: inline-block;
 	padding: 50px;
 	width: 100%;
-	text-align: left;
 	text-align: center;
 }
 

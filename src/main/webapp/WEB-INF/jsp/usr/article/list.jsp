@@ -54,7 +54,7 @@ form {
 						<br />
 						
 						
-						<div class="products-area-wrapper tableView">
+						<div class="products-area-wrapper2 tableView">
 						<div>
 							<div class="common-color articlesCount">
 								게시물 갯수: ${articlesCount }
