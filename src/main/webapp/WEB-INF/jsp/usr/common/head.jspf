@@ -33,7 +33,11 @@
 		        </svg>
 				</button>
 				<c:if test="${!rq.isLogined() }">
-						<a href="../member/login" class="app-content-headerButton">로그인</a>
+						<a href="../member/login" class="btn btn-outline btn-xs">로그인</a>
+				</c:if>
+				&nbsp;
+				<c:if test="${!rq.isLogined() }">
+						<a href="../member/join" class="btn btn-outline btn-xs">회원가입</a>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
 						<div class="account-info">

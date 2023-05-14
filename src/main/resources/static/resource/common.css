@@ -78,9 +78,6 @@ html{
 	white-space: nowrap;
 }
 
-
-
-
 /* 테마 */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
@@ -135,6 +132,7 @@ body {
   background-color: var(--app-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--app-content-main-color);
 }
 
 .app-container {
@@ -286,7 +284,7 @@ body {
   top: 90%;
   left: -180%;
   background-color: white;
-  border: 1px solid gray;
+  border: 2px solid black;
   z-index: 10;
   border-radius: 5px;
 }

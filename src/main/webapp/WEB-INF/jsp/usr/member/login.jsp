@@ -6,6 +6,7 @@
 <div class="form-box">
 		<form method="post" action="doLogin">
 				<br /> <input type="hidden" name="afterLoginUri" value=${param.afterLoginUri } />
+				<div>로그인</div>
 				<div style="display: inline-block; text-align: left;">
 						<div style="font-size: 15px; font-weight: bold;">
 								아이디 <br /> 
@@ -27,7 +28,6 @@
 
 <style type="text/css">
 .form-box {
-	text-align: center;
 }
 
 form {
@@ -36,6 +36,11 @@ form {
 	border: 2px solid black;
 	display: inline-block;
 	border-radius: 8px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
 }
 
 .input {
