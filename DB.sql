@@ -273,6 +273,7 @@ CREATE TABLE club(
     updateDate DATETIME NOT NULL,
     leaderId INT(10) UNSIGNED NOT NULL,
     `name` CHAR(100) NOT NULL COMMENT '동호회 이름',
+    purpose TEXT NOT NULL COMMENT '동호회 목표',
     categoryId INT(10) UNSIGNED NOT NULL COMMENT '(1=운동/스포츠, 2=아웃도어/여행, 3=공예/만들기, ...)',
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
     delDate DATETIME COMMENT '삭제 날짜',
@@ -284,6 +285,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 leaderId = 1,
 `name`= '축구좋아',
+purpose = '재밌게 축구 하실 분 모집해요',
 categoryId = 1,
 region = '대전광역시';
 
@@ -292,6 +294,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 leaderId = 2,
 `name`= '등산가자!',
+purpose = '매주 일요일에 등산하실 분 들어오세요!',
 categoryId = 2,
 region = '서울특별시';
 
@@ -299,7 +302,8 @@ INSERT INTO club
 SET regDate = NOW(),
 updateDate = NOW(),
 leaderId = 2,
-`name`= '도자기 제작하자!!',
+`name`= '도제(도자기 제작)',
+purpose = '매일 같이 공방에 나와서 도자기 만드실 분 모집해요!',
 categoryId = 3,
 region = '전라북도';
 
@@ -392,13 +396,10 @@ updateDate = NOW(),
 `name` = '자유주제';
 
 #############################################################################################
-# club/member 조인
+# 동호회 갯수 조회
 SELECT COUNT(c.id)
 FROM club c
-INNER JOIN `member` m
-ON c.id = m.clubId
-WHERE c.category = '운동/스포츠';
-
+WHERE c.categoryId = '1';
 
 
 # 검색 쿼리

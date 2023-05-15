@@ -51,8 +51,6 @@
 	<select id="getClubsCount" resultType="int">
 		SELECT COUNT(c.id)
 		FROM club c
-		INNER JOIN `member` m
-		ON c.id = m.clubId
 		WHERE 1
 		<if test='categoryId != "" and categoryId != null'>		
 			AND c.categoryId = #{categoryId};

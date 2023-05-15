@@ -43,8 +43,7 @@ public class UsrHomeController {
 		int totalPage = (int) Math.ceil(clubsCount / (double) itemsInAPage);
 
 		List<Club> clubs = clubService.getForPrintClubs(categoryId, itemsInAPage, page, searchKeyword);
-
-
+		
 		model.addAttribute("page", page);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("clubsCount", clubsCount);
