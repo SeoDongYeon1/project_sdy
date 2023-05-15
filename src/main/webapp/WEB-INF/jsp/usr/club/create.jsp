@@ -4,36 +4,71 @@
 <%@ include file="../common/head.jspf"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" referrerpolicy="no-referrer"></script>
 
-<form method="POST" action="../member/doJoin" onsubmit="submitJoinForm(this); return false;">
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#category').on('change', function() {
+			$('input[name="category"]').val($(this).val());
+		});
+
+		$('#region').on('change', function() {
+			$('input[name="region"]').val($(this).val());
+		});
+	});
+
+	function ClubCreate__submit(form) {
+		var region = $('input[name="region"]').val().trim();
+		var category = $('input[name="category"]').val().trim();
+		var name = form.name.value.trim();
+
+		if (region.length == 0) {
+			alert('지역을 선택해주세요.');
+			return false;
+		}
+
+		if (category.length == 0) {
+			alert('카테고리를 선택해주세요.');
+			return false;
+		}
+
+		if (name.length == 0) {
+			alert('동호회 이름을 입력해주세요.');
+			form.name.focus();
+			return false;
+		}
+
+		form.submit();
+	}
+</script>
+<form method="POST" action="../club/doCreate" onsubmit="ClubCreate__submit(this); return false;">
 		<div class="form-menu">
 				<h1>동호회 개설</h1>
 				<br />
 				<div style="display: inline-block;">
 						<div style="text-align: center; width: 90%;">
-								<select style="border-color: black; width: 200px;" id="category" class="select select-ghost">
+								<select style="border-color: black; width: 200px;" id="region" class="select select-ghost">
 										<option disabled selected>지역 선택</option>
-										<option value="1">서울특별시</option>
-										<option value="2">부산광역시</option>
-										<option value="3">대구광역시</option>
-										<option value="4">인천광역시</option>
-										<option value="5">광주광역시</option>
-										<option value="6">대전광역시</option>
-										<option value="7">울산광역시</option>
-										<option value="8">세종특별자치시</option>
-										<option value="9">경기도</option>
-										<option value="10">강원도</option>
-										<option value="11">충청북도</option>
-										<option value="12">충청남도</option>
-										<option value="13">전라북도</option>
-										<option value="14">전라남도</option>
-										<option value="15">경상북도</option>
-										<option value="16">경상남도</option>
-										<option value="17">제주특별자치도</option>
+										<option value="서울특별시">서울특별시</option>
+										<option value="부산광역시">부산광역시</option>
+										<option value="대구광역시">대구광역시</option>
+										<option value="인천광역시">인천광역시</option>
+										<option value="광주광역시">광주광역시</option>
+										<option value="대전광역시">대전광역시</option>
+										<option value="울산광역시">울산광역시</option>
+										<option value="세종특별자치시">세종특별자치시</option>
+										<option value="경기도">경기도</option>
+										<option value="강원도">강원도</option>
+										<option value="충청북도">충청북도</option>
+										<option value="충청남도">충청남도</option>
+										<option value="전라북도">전라북도</option>
+										<option value="전라남도">전라남도</option>
+										<option value="경상북도">경상북도</option>
+										<option value="경상남도">경상남도</option>
+										<option value="제주특별자치도">제주특별자치도</option>
 								</select>
 						</div>
 				</div>
-				<div style="display: inline-block; width: 50px;" ></div>
-				<div style="display: inline-block; ">
+				<div style="display: inline-block; width: 50px;"></div>
+				<div style="display: inline-block;">
 						<div style="text-align: center; width: 90%;">
 								<select style="border-color: black; width: 200px;" id="category" class="select select-ghost">
 										<option disabled selected>카테고리 선택</option>
@@ -53,10 +88,9 @@
 								</select>
 						</div>
 				</div>
-				<br />
-				<br />
-				<br />
+				<br /> <br /> <br />
 				<div style="display: inline-block;">
+						<input class="region" type="hidden" name="region" /> <input class="category" type="hidden" name="category" />
 						<div class="form-name">동호회 이름</div>
 						<div>
 								<input autocomplete="off" name="name" class="input input-bordered" placeholder="동호회 이름을 입력해주세요." />

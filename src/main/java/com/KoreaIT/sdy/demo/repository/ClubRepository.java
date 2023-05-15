@@ -7,7 +7,7 @@ public interface ClubRepository {
 	
 	public int getLastInsertId();
 
-	public void create(int loginedMemberId, String name, String category);
+	public void create(int loginedMemberId, String name, String region, String category);
 
 
 }

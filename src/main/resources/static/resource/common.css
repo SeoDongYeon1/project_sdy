@@ -489,9 +489,12 @@ th {
 	color: var(--app-content-main-color);
 	border: 1px solid black;
 	border-radius: 8px;
+	background-color: transparent;
+	
 }
 .select > option{
 	color: var(--app-content-main-color);
+	background-color: var(--app-content-secondary-color);
 }
 
 .filter-menu {
