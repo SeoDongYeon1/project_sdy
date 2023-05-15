@@ -36,5 +36,9 @@ public class ClubService {
 	public List<Club> getClubs() {
 		return clubRepository.getClubs();
 	}
+	
+	public int getClubsCount(String category) {
+		return clubRepository.getClubsCount(category);
+	}
 
 }

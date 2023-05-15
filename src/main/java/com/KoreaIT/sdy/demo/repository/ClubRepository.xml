@@ -28,4 +28,44 @@
 		FROM club;
 	</select>
 	
+	<select id="getForPrintClubs" resultType="Club">
+		SELECT c.*, m.nickname AS 'extra__writer', b.name AS board_name
+		FROM club c
+		INNER JOIN `member` m
+		ON a.memberId = m.id
+		WHERE 1
+		<if test='category != "" and category != null'>		
+			AND c.category = #{category};
+		</if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'" >
+					AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'" >
+					AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<otherwise>
+					AND (a.title LIKE CONCAT('%',#{searchKeyword},'%')
+					OR a.body LIKE CONCAT('%',#{searchKeyword},'%'))
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY a.id DESC
+		<if test="limitFrom >= 0">
+			LIMIT #{limitFrom}, #{limitTake}
+		</if>
+	</select>
+	
+	<select id="getClubsCount" resultType="int">
+		SELECT COUNT(c.id)
+		FROM club c
+		INNER JOIN `member` m
+		ON c.id = m.clubId
+		WHERE 1
+		<if test='category != "" and category != null'>		
+			AND c.category = #{category};
+		</if>
+	</select>
+	
 </mapper>

@@ -122,7 +122,7 @@ form {
 									</div>
 								</c:forEach>
 						</div>	
-<div class="pagenation" style="text-align: center; margin-top: 20px;">
+<div class="pagenation" style="text-align: center; margin-top: 20px; width: 90%;">
 		<c:set var="baseUri" value="?boardId=${board.id }" />
 		<c:set var="baseUri" value="${baseUri }&searchKeywordTypeCode=${searchKeywordTypeCode }" />
 		<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword }" />
@@ -162,7 +162,7 @@ form {
 		%>
 </div>
 
-<form action="">
+<form action="" style="width: 90%;">
 		<input type="hidden" name="boardId" value="${param.boardId }" />
 		<div class="select_box">
 				<select data-value="${param.searchKeywordTypeCode } " name="searchKeywordTypeCode" class="select select-ghost">

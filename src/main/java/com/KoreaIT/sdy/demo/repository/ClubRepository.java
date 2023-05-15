@@ -16,5 +16,7 @@ public interface ClubRepository {
 	public Club getClubById(int id);
 	
 	public List<Club> getClubs();
+	
+	public int getClubsCount(String category);
 
 }

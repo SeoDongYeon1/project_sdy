@@ -24,7 +24,7 @@ public class UsrClubController {
 	
 	
 	@RequestMapping("/usr/club/list")
-	public String showClubList(Model model) {
+	public String showClubList(Model model, String category) {
 		List<Club> clubs = clubService.getClubs();
 		
 		model.addAttribute("clubs", clubs);

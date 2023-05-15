@@ -272,8 +272,8 @@ CREATE TABLE club(
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     leaderId INT(10) UNSIGNED NOT NULL,
-    `name` CHAR(100) NOT NULL UNIQUE COMMENT '동호회 이름',
-    category CHAR(100) NOT NULL UNIQUE COMMENT '운동/스포츠, 아웃도어/여행, 공예/만들기, ...',
+    `name` CHAR(100) NOT NULL COMMENT '동호회 이름',
+    categoryId INT(10) UNSIGNED NOT NULL COMMENT '(1=운동/스포츠, 2=아웃도어/여행, 3=공예/만들기, ...)',
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
     delDate DATETIME COMMENT '삭제 날짜',
     region VARCHAR(255) NOT NULL
@@ -284,12 +284,122 @@ SET regDate = NOW(),
 updateDate = NOW(),
 leaderId = 1,
 `name`= '축구좋아',
-category = '운동/스포츠',
-region = '대전';
+categoryId = 1,
+region = '대전광역시';
 
+INSERT INTO club
+SET regDate = NOW(),
+updateDate = NOW(),
+leaderId = 2,
+`name`= '등산가자!',
+categoryId = 2,
+region = '서울특별시';
+
+INSERT INTO club
+SET regDate = NOW(),
+updateDate = NOW(),
+leaderId = 2,
+`name`= '도자기 제작하자!!',
+categoryId = 3,
+region = '전라북도';
+
+# 테스트 member에 clubId 추가
 ALTER TABLE `member` ADD COLUMN clubId INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+UPDATE `member`
+SET clubId = 1
+WHERE id = 1;
+
+UPDATE `member`
+SET clubId = 2
+WHERE id = 2;
+
+UPDATE `member`
+SET clubId = 3
+WHERE id = 3;
+
+# category 테이블 생성
+CREATE TABLE category(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `name` CHAR(100) NOT NULL UNIQUE 
+);
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '운동/스포츠';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '아웃도어/여행';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '문화/공연/축제';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '음악/악기';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '공예/만들기';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '댄스/무용';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '봉사활동';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '차/오토바이';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '사진/영상';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '게임/오락';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '요리/제조';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '반려동물';
+
+INSERT INTO category 
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '자유주제';
+
 #############################################################################################
 # club/member 조인
+SELECT COUNT(c.id)
+FROM club c
+INNER JOIN `member` m
+ON c.id = m.clubId
+WHERE c.category = '운동/스포츠';
+
+
 
 # 검색 쿼리
 SELECT * FROM article;
@@ -297,6 +407,7 @@ SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
 SELECT * FROM club;
+SELECT * FROM category;
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
