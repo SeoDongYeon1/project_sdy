@@ -41,7 +41,7 @@ CREATE TABLE `member`(
     updateDate DATETIME NOT NULL,
     loginId CHAR(50) NOT NULL,
     loginPw CHAR(100) NOT NULL,
-    `authLevel` SMALLINT(2) UNSIGNED DEFAULT 1 COMMENT '권한 레벨 (1=일반 회원, 2=동호회 매니저, 3=동호회 회장, 7=관리자)',
+    `authLevel` SMALLINT(2) UNSIGNED DEFAULT 1 COMMENT '권한 레벨 (1=일반 회원, 7=관리자)',
     `name` CHAR(20) NOT NULL,
     nickname CHAR(20) NOT NULL,
     cellphoneNum CHAR(20) NOT NULL,
@@ -265,13 +265,38 @@ relTypeCode = 'article',
 relId = 2,
 `body` = "댓글 4";
 
+
+# club 테이블 생성
+CREATE TABLE club(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    leaderId INT(10) UNSIGNED NOT NULL,
+    `name` CHAR(100) NOT NULL UNIQUE COMMENT '동호회 이름',
+    category CHAR(100) NOT NULL UNIQUE COMMENT '운동/스포츠, 아웃도어/여행, 공예/만들기, ...',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
+    delDate DATETIME COMMENT '삭제 날짜',
+    region VARCHAR(255) NOT NULL
+);
+
+INSERT INTO club
+SET regDate = NOW(),
+updateDate = NOW(),
+leaderId = 1,
+`name`= '축구좋아',
+category = '운동/스포츠',
+region = '대전';
+
+ALTER TABLE `member` ADD COLUMN clubId INT(10) UNSIGNED NOT NULL DEFAULT 0;
 #############################################################################################
+# club/member 조인
 
 # 검색 쿼리
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
+SELECT * FROM club;
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
@@ -284,8 +309,8 @@ INSERT INTO article
 SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
 FROM article;
 
-update article
-set hitCount = hitCount + 1
+UPDATE article
+SET hitCount = hitCount + 1
 WHERE id = 3;
 
-update `member` set nickname = 'qweqweqweqweqwe' where id = 2;
+UPDATE `member` SET nickname = 'qweqweqweqweqwe' WHERE id = 2;

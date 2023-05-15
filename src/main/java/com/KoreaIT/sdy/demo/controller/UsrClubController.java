@@ -35,6 +35,10 @@ public class UsrClubController {
 	@ResponseBody
 	public String doCreate(String name, String category) {
 		
+		if(rq.getLoginedMemberId()==0) {
+			return Ut.jsHistoryBack("F-L", "로그인 후 이용해주세요.");
+		}
+		
 		ResultData createRd = clubService.create(rq.getLoginedMemberId(), name, category);
 		
 		int id = (int)createRd.getData1();
