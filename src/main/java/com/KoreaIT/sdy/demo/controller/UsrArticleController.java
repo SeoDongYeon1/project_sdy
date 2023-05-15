@@ -109,6 +109,10 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/detail")
 	public String showDetail(int id, Model model) {
 		Article foundArticle = articleService.getForPrintArticle(id);
+		
+		if(foundArticle==null) {
+			return rq.jsHistoryBackOnView("존재하지 않는 페이지입니다.");
+		}
 
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),
 				"article", id);

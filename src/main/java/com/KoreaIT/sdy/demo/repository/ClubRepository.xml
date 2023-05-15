@@ -17,4 +17,15 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 	
+	<select id="getClubById" resultType="Club">
+		SELECT *
+		FROM club
+		WHERE id = #{id};
+	</select>
+	
+	<select id="getClubs" resultType="Club">
+		SELECT *
+		FROM club;
+	</select>
+	
 </mapper>
