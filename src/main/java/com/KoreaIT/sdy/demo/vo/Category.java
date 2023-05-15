@@ -7,17 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Club {
+public class Category {
 	private int id; 
 	private String regDate; 
 	private String updateDate; 
-	private int leaderId;
 	private String name; 
-	private int categoryId;
-	private boolean delStatus;
-	private String delDate;
-	private String region;
-	
-	
-	private String category_name;
+
 }

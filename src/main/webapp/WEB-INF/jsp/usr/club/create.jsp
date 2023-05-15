@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#category').on('change', function() {
-			$('input[name="category"]').val($(this).val());
+			$('input[name="categoryId"]').val($(this).val());
 		});
 
 		$('#region').on('change', function() {
@@ -17,7 +17,7 @@
 
 	function ClubCreate__submit(form) {
 		var region = $('input[name="region"]').val().trim();
-		var category = $('input[name="category"]').val().trim();
+		var categoryId = $('input[name="categoryId"]').val().trim();
 		var name = form.name.value.trim();
 
 		if (region.length == 0) {
@@ -25,12 +25,18 @@
 			return false;
 		}
 
-		if (category.length == 0) {
+		if (categoryId.length == 0) {
 			alert('카테고리를 선택해주세요.');
 			return false;
 		}
 
 		if (name.length == 0) {
+			alert('동호회 이름을 입력해주세요.');
+			form.name.focus();
+			return false;
+		}
+		
+		if (purpose.length == 0) {
 			alert('동호회 이름을 입력해주세요.');
 			form.name.focus();
 			return false;
@@ -70,31 +76,38 @@
 				<div style="display: inline-block; width: 50px;"></div>
 				<div style="display: inline-block;">
 						<div style="text-align: center; width: 90%;">
-								<select style="border-color: black; width: 200px;" id="category" class="select select-ghost">
+								<select style="border-color: black; width: 200px;" id="categoryId" class="select select-ghost">
 										<option disabled selected>카테고리 선택</option>
-										<option value="운동/스포츠">운동/스포츠</option>
-										<option value="아웃도어/여행">아웃도어/여행</option>
-										<option value="문화/공연/축제">문화/공연/축제</option>
-										<option value="음악/악기">음악/악기</option>
-										<option value="공예/만들기">공예/만들기</option>
-										<option value="댄스/무용">댄스/무용</option>
-										<option value="봉사활동">봉사활동</option>
-										<option value="차/오토바이">차/오토바이</option>
-										<option value="사진/영상">사진/영상</option>
-										<option value="게임/오락">게임/오락</option>
-										<option value="요리/제조">요리/제조</option>
-										<option value="반려동물">반려동물</option>
-										<option value="자유주제">자유주제</option>
+										<option value="1">운동/스포츠</option>
+										<option value="2">아웃도어/여행</option>
+										<option value="3">문화/공연/축제</option>
+										<option value="4">음악/악기</option>
+										<option value="5">공예/만들기</option>
+										<option value="6">댄스/무용</option>
+										<option value="7">봉사활동</option>
+										<option value="8">차/오토바이</option>
+										<option value="9">사진/영상</option>
+										<option value="10">게임/오락</option>
+										<option value="11">요리/제조</option>
+										<option value="12">반려동물</option>
+										<option value="13">자유주제</option>
 								</select>
 						</div>
 				</div>
 				<br /> <br /> <br />
 				<div style="display: inline-block;">
-						<input class="region" type="hidden" name="region" /> <input class="category" type="hidden" name="category" />
+						<input class="region" type="hidden" name="region" /> 
+						<input class="category" type="hidden" name="categoryId" />
 						<div class="form-name">동호회 이름</div>
 						<div>
 								<input autocomplete="off" name="name" class="input input-bordered" placeholder="동호회 이름을 입력해주세요." />
 								<div class="checkName-msg"></div>
+						</div>
+						
+						<div class="form-name">동호회 목표</div>
+						<div>
+							<textarea type="text" autocomplete="off" name="purpose" class="input input-bordered" placeholder="동호회 목표를 입력해주세요." />
+							</textarea>
 						</div>
 				</div>
 

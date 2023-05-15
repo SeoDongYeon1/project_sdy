@@ -70,7 +70,7 @@ int endPage = startPage + displayPage - 1;
 						</button>
 				</div>
 		</div>
-		
+
 		<div class="products-area-wrapper tableView">
 				<div class="list-header">
 						<div class="item image">
@@ -142,7 +142,7 @@ int endPage = startPage + displayPage - 1;
 										<span class="cell-label">지역:</span>${club.region }
 								</div>
 								<div class="item status-cell">
-										<span class="cell-label">카테고리:</span> ${club.category }
+										<span class="cell-label">카테고리:</span> ${club.category_name }
 								</div>
 								<div class="item sales">
 										<span class="cell-label">회원수:</span>11
@@ -156,5 +156,72 @@ int endPage = startPage + displayPage - 1;
 						</a>
 				</c:forEach>
 		</div>
+		<div class="pagenation" style="text-align: center; margin-top: 20px; width: 90%;">
+				<c:set var="baseUri" value="?searchKeyword=${searchKeyword }" />
+				<%
+				if (cur_Page > 10) {
+				%>
+				<a class="btn btn-outline btn-xs first_page" href="${baseUri }&page=1">◀◀</a>
+				<%
+				}
+				if (endPage > totalPage) {
+				endPage = totalPage;
+				}
+
+				if (startPage > displayPage) {
+				%>
+				<a class="btn btn-outline btn-xs" href="${baseUri }&page=<%=startPage - 10%>">이전</a>
+				<%
+				}
+
+				for (int i = startPage; i <= endPage; i++) {
+				%>
+				<a class="btn btn-outline btn-xs <%=cur_Page == i ? "btn-active" : "" %>" href="${baseUri }&page=<%=i%>"><%=i%></a>
+				<%
+				}
+
+				if (endPage < totalPage) {
+				%>
+				<a class="btn btn-outline btn-xs" href="${baseUri }&page=<%=startPage + 10 %>">다음</a>
+				<%
+				}
+				if (cur_Page < totalPage) {
+				%>
+				<a class="last_page btn btn-outline btn-xs" href="${baseUri }&page=<%=totalPage%>">▶▶</a>
+				<%
+				}
+				%>
+		</div>
+
+		<form action="" style="width: 90%;">
+				<input type="hidden" name="categoryId" value="${param.categoryId }" />
+				<div class="select_box">
+						<select name="categoryId" class="select select-ghost">
+								<option disabled selected>카테고리 선택</option>
+								<option value="1">운동/스포츠</option>
+								<option value="2">아웃도어/여행</option>
+								<option value="3">문화/공연/축제</option>
+								<option value="4">음악/악기</option>
+								<option value="5">공예/만들기</option>
+								<option value="6">댄스/무용</option>
+								<option value="7">봉사활동</option>
+								<option value="8">차/오토바이</option>
+								<option value="9">사진/영상</option>
+								<option value="10">게임/오락</option>
+								<option value="11">요리/제조</option>
+								<option value="12">반려동물</option>
+								<option value="13">자유주제</option>
+						</select>
+				</div>
+				<div class="search_box">
+						<input type="text" value="${param.searchKeyword }" max-length="20" name="searchKeyword"
+								class="input input-bordered" placeholder="검색어를 입력해주세요" />
+				</div>
+				<div class="btn_box">
+						<button class="btn btn-outline" onclick="Search() return false;" type="submit">검색</button>
+				</div>
+		</form>
 </div>
+
+
 <%@ include file="../common/foot.jspf"%>

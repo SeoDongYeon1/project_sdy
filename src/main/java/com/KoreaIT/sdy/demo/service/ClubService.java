@@ -20,9 +20,9 @@ public class ClubService {
 	}
 
 	// 동호회 생성
-	public ResultData create(int loginedMemberId, String name, String region, String category) {
+	public ResultData create(int loginedMemberId, String name, String region, int categoryId) {
 		
-		clubRepository.create(loginedMemberId, name, region,category);
+		clubRepository.create(loginedMemberId, name, region,categoryId);
 
 		int id = clubRepository.getLastInsertId();
 
@@ -37,8 +37,15 @@ public class ClubService {
 		return clubRepository.getClubs();
 	}
 	
-	public int getClubsCount(String category) {
-		return clubRepository.getClubsCount(category);
+	public int getClubsCount(int categoryId, String searchKeyword) {
+		return clubRepository.getClubsCount(categoryId, searchKeyword);
+	}
+
+	public List<Club> getForPrintClubs(int categoryId, int itemsInAPage, int page, String searchKeyword) {
+		int limitFrom = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+
+		return clubRepository.getForPrintClubs(categoryId, limitFrom, limitTake, searchKeyword);
 	}
 
 }

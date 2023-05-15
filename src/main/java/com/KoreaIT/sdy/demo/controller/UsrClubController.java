@@ -52,13 +52,13 @@ public class UsrClubController {
 	
 	@RequestMapping("/usr/club/doCreate")
 	@ResponseBody
-	public String doCreate(String name, String region, String category) {
+	public String doCreate(String name, String region, int categoryId) {
 		
 		if(rq.getLoginedMemberId()==0) {
 			return Ut.jsHistoryBack("F-L", "로그인 후 이용해주세요.");
 		}
 		
-		ResultData createRd = clubService.create(rq.getLoginedMemberId(), name, region ,category);
+		ResultData createRd = clubService.create(rq.getLoginedMemberId(), name, region ,categoryId);
 		
 		int id = (int)createRd.getData1();
 		

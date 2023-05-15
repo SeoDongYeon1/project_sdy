@@ -10,7 +10,7 @@
 		leaderId = #{loginedMemberId},
 		`name`= #{name},
 		region = #{region},
-		category = #{category};
+		categoryId = #{categoryId};
 	</insert>
 	
 	<select id="getLastInsertId" resultType="int">
@@ -29,29 +29,20 @@
 	</select>
 	
 	<select id="getForPrintClubs" resultType="Club">
-		SELECT c.*, m.nickname AS 'extra__writer', b.name AS board_name
+		SELECT c.*, ca.name AS category_name
 		FROM club c
-		INNER JOIN `member` m
-		ON a.memberId = m.id
+		INNER JOIN category ca
+		ON c.categoryId = ca.id
 		WHERE 1
-		<if test='category != "" and category != null'>		
-			AND c.category = #{category};
+		<if test='categoryId != "" and categoryId != null'>		
+			AND c.categoryId = #{categoryId};
 		</if>
-		<if test="searchKeyword != ''">
-			<choose>
-				<when test="searchKeywordTypeCode == 'title'" >
-					AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
-				</when>
-				<when test="searchKeywordTypeCode == 'body'" >
-					AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
-				</when>
-				<otherwise>
-					AND (a.title LIKE CONCAT('%',#{searchKeyword},'%')
-					OR a.body LIKE CONCAT('%',#{searchKeyword},'%'))
-				</otherwise>
-			</choose>
+		
+		<if test="searchKeyword != '' and searchKeyword != null">
+			AND (c.name LIKE CONCAT('%',#{searchKeyword},'%')
+			OR c.purpose LIKE CONCAT('%',#{searchKeyword},'%'))
 		</if>
-		ORDER BY a.id DESC
+		ORDER BY c.id DESC
 		<if test="limitFrom >= 0">
 			LIMIT #{limitFrom}, #{limitTake}
 		</if>
@@ -63,8 +54,8 @@
 		INNER JOIN `member` m
 		ON c.id = m.clubId
 		WHERE 1
-		<if test='category != "" and category != null'>		
-			AND c.category = #{category};
+		<if test='categoryId != "" and categoryId != null'>		
+			AND c.categoryId = #{categoryId};
 		</if>
 	</select>
 	

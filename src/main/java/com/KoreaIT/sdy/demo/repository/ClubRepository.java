@@ -11,12 +11,14 @@ public interface ClubRepository {
 	
 	public int getLastInsertId();
 
-	public void create(int loginedMemberId, String name, String region, String category);
+	public void create(int loginedMemberId, String name, String region, int categoryId);
 
 	public Club getClubById(int id);
 	
 	public List<Club> getClubs();
 	
-	public int getClubsCount(String category);
+	public List<Club> getForPrintClubs(int categoryId, int limitFrom, int limitTake, String searchKeyword);
+	
+	public int getClubsCount(int categoryId, String searchKeyword);
 
 }

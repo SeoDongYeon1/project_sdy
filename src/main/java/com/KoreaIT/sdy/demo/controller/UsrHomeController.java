@@ -8,67 +8,49 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.KoreaIT.sdy.demo.service.CategoryService;
 import com.KoreaIT.sdy.demo.service.ClubService;
-import com.KoreaIT.sdy.demo.vo.Article;
-import com.KoreaIT.sdy.demo.vo.Board;
+import com.KoreaIT.sdy.demo.vo.Category;
 import com.KoreaIT.sdy.demo.vo.Club;
+import com.KoreaIT.sdy.demo.vo.Rq;
 
 @Controller
 public class UsrHomeController {
 	@Autowired
 	ClubService clubService;
 	
-	@RequestMapping("/usr/home/main")
-	public String showMain(Model model, String category) {
-		List<Club> clubs = clubService.getClubs();
-		
-		int clubsCount = clubService.getClubsCount(category);
-		
-		model.addAttribute("clubsCount", clubsCount);
-		model.addAttribute("clubs", clubs);
-		
-		return "usr/home/main";
-	}
+	@Autowired
+	CategoryService categoryService;
 	
-	@RequestMapping("usr/article/list")
-	public String showList(Model model, String category,
+	@Autowired
+	Rq rq;
+	
+	@RequestMapping("/usr/home/main")
+	public String showList(Model model, @RequestParam(defaultValue = "0") int categoryId,
 			@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "title,body") String searchKeywordTypeCode,
 			@RequestParam(defaultValue = "") String searchKeyword) {
+		
+		Category category = categoryService.getCategoryById(categoryId);
 
-		Board board = boardService.getBoardById(boardId);
-
-		if (boardId != 0 && board == null) {
-			return rq.jsHistoryBackOnView("존재하지 않는 게시판입니다.");
+		if (categoryId != 0 && category == null) {
+			return rq.jsHistoryBackOnView("존재하지 않는 카테고리입니다.");
 		}
 
-		int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
+		int clubsCount = clubService.getClubsCount(categoryId, searchKeyword);
 
 		// 페이지 네이션
 		int itemsInAPage = 10;
-		int totalPage = (int) Math.ceil(articlesCount / (double) itemsInAPage);
+		int totalPage = (int) Math.ceil(clubsCount / (double) itemsInAPage);
 
-		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode,
-				searchKeyword);
+		List<Club> clubs = clubService.getForPrintClubs(categoryId, itemsInAPage, page, searchKeyword);
 
-		List<Article> article_replies = articleService.getRepliesCount();
 
-		for (Article article : articles) {
-			for (Article article1 : article_replies) {
-				if (article.getId() == article1.getId()) {
-					article.setRepliesCount(article1.getRepliesCount());
-				}
-			}
-		}
-
-		model.addAttribute("articles", articles);
-		model.addAttribute("board", board);
 		model.addAttribute("page", page);
 		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("articlesCount", articlesCount);
-		model.addAttribute("article_replies", article_replies);
+		model.addAttribute("clubsCount", clubsCount);
+		model.addAttribute("clubs", clubs);
 
-		return "usr/article/list";
+		return "usr/home/main";
 	}
 	
 	@RequestMapping("/")
