@@ -395,11 +395,35 @@ SET regDate = NOW(),
 updateDate = NOW(),
 `name` = '자유주제';
 
+# member 테이블에 나이 추가
+ALTER TABLE `member` ADD COLUMN age INT(10) UNSIGNED NOT NULL AFTER email;
+
+# member 테이블에 나이가 0인것 나이 넣어주기
+UPDATE `member`
+SET age = 21
+WHERE id = 1;
+
+UPDATE `member`
+SET age = 31
+WHERE id = 2;
+
+UPDATE `member`
+SET age = 25
+WHERE id = 3;
+
+
 #############################################################################################
 # 동호회 갯수 조회
 SELECT COUNT(c.id)
 FROM club c
 WHERE c.categoryId = '1';
+
+# 회원 평균 나이 조회
+SELECT AVG(m.age)
+FROM `member` m
+INNER JOIN club c
+ON m.clubId = c.id
+GROUP BY c.id;
 
 
 # 검색 쿼리
