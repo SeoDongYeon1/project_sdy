@@ -11,21 +11,52 @@ const gridButton = document.querySelector('.grid');
 const listButton = document.querySelector('.list');
 const productsWrapper = document.querySelector('.products-area-wrapper');
 
-if (gridButton && listButton && productsWrapper) {
-  gridButton.addEventListener('click', function () {
+// 뷰 모드를 변경하는 함수
+function changeViewMode(viewMode) {
+  if (viewMode === 'grid') {
     listButton.classList.remove('active');
     gridButton.classList.add('active');
     productsWrapper.classList.add('gridView');
     productsWrapper.classList.remove('tableView');
-  });
-
-  listButton.addEventListener('click', function () {
+  } else if (viewMode === 'list') {
     listButton.classList.add('active');
     gridButton.classList.remove('active');
     productsWrapper.classList.remove('gridView');
     productsWrapper.classList.add('tableView');
-  });
+  }
 }
+
+// 뷰 모드 정보를 세션 스토리지에 저장
+function saveViewModeToSessionStorage(viewMode) {
+  sessionStorage.setItem('viewMode', viewMode);
+}
+
+// 세션 스토리지에서 뷰 모드 정보를 읽어와 설정
+function setViewModeFromSessionStorage() {
+  const viewMode = sessionStorage.getItem('viewMode');
+  if (viewMode) {
+    changeViewMode(viewMode);
+  }
+}
+
+// 클릭 이벤트 리스너 등록
+gridButton.addEventListener('click', function () {
+  changeViewMode('grid');
+  saveViewModeToSessionStorage('grid');
+});
+
+listButton.addEventListener('click', function () {
+  changeViewMode('list');
+  saveViewModeToSessionStorage('list');
+});
+
+// 페이지 로드 시 뷰 모드 설정
+window.addEventListener('load', setViewModeFromSessionStorage);
+
+
+
+
+
 
 var modeSwitch = document.querySelector('.mode-switch');
 
@@ -53,12 +84,12 @@ if (savedMode) {
 
 // 페이지가 로드될 때 실행
 window.addEventListener('load', () => {
-  // 로컬 스토리지에서 테마 값을 읽어옴
-  const theme = localStorage.getItem('theme');
+  // 로컬 스토리지에서 모드 값을 읽어옴
+  const savedMode = localStorage.getItem('mode');
   
-  // 테마 값이 있으면 해당 값을 변수에 할당
-  if (theme) {
-    document.documentElement.setAttribute('data-theme', theme);
+  // 모드 값이 있으면 해당 값을 변수에 할당
+  if (savedMode) {
+    document.documentElement.classList.add(savedMode);
   }
 });
 

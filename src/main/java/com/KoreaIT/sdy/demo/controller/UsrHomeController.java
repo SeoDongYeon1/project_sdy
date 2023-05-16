@@ -39,7 +39,7 @@ public class UsrHomeController {
 		int clubsCount = clubService.getClubsCount(categoryId, searchKeyword);
 
 		// 페이지 네이션
-		int itemsInAPage = 10;
+		int itemsInAPage = 12;
 		int totalPage = (int) Math.ceil(clubsCount / (double) itemsInAPage);
 
 		List<Club> clubs = clubService.getForPrintClubs(categoryId, itemsInAPage, page, searchKeyword);
@@ -48,6 +48,7 @@ public class UsrHomeController {
 
 		List<Club> membersCount = clubService.getmembersCount();
 		
+		// 평균 나이 결합
 		for(Club club: clubs) {
 			for(Club clubAge: avgAge) {
 				if(club.getId()==clubAge.getId()) {
@@ -56,6 +57,7 @@ public class UsrHomeController {
 			}
 		}
 		
+		// 회원수 결합
 		for(Club club: clubs) {
 			for(Club clubMembers: membersCount) {
 				if(club.getId()==clubMembers.getId()) {

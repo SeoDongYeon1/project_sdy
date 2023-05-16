@@ -419,12 +419,18 @@ FROM club c
 WHERE c.categoryId = '1';
 
 # 회원 평균 나이 조회
-SELECT AVG(m.age)
+SELECT c.id, AVG(m.age) AS 'avgAge'
 FROM `member` m
 INNER JOIN club c
 ON m.clubId = c.id
 GROUP BY c.id;
 
+# 동호회별 회원수
+SELECT c.id, COUNT(m.id) AS 'membersCount'
+FROM club c
+INNER JOIN `member` m
+ON c.id = m.clubId
+GROUP BY c.id;
 
 # 검색 쿼리
 SELECT * FROM article;
