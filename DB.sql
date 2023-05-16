@@ -48,6 +48,7 @@ CREATE TABLE `member`(
     email CHAR(50) NOT NULL,
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0=탈퇴 전, 1=탈퇴 후)',
     delDate DATETIME COMMENT '탈퇴 날짜'
+
 );
 
 # 한글 에러
@@ -307,21 +308,6 @@ purpose = '매일 같이 공방에 나와서 도자기 만드실 분 모집해�
 categoryId = 3,
 areacode = '4500000000';
 
-# 테스트 member에 clubId 추가
-ALTER TABLE `member` ADD COLUMN clubId INT(10) UNSIGNED NOT NULL DEFAULT 0;
-
-UPDATE `member`
-SET clubId = 1
-WHERE id = 1;
-
-UPDATE `member`
-SET clubId = 2
-WHERE id = 2;
-
-UPDATE `member`
-SET clubId = 3
-WHERE id = 3;
-
 # category 테이블 생성
 CREATE TABLE category(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -432,7 +418,22 @@ COMMENT='Excel 파일의 값들을 DB화 한 테이블'
 COLLATE='utf8_general_ci'
 ENGINE=INNODB;
 
+# 동호회에 가입한 회원을 관리하기 위해서 member_club 테이블 생성 
+CREATE TABLE member_club (
+  memberId INT(10) UNSIGNED NOT NULL,
+  clubId INT(10) UNSIGNED NOT NULL,
+  regDate DATETIME NOT NULL
 
+);
+
+INSERT INTO member_club (memberId, clubId, regDate)
+VALUES (1, 3, NOW());
+
+INSERT INTO member_club (memberId, clubId, regDate)
+VALUES (2, 2, NOW());
+
+INSERT INTO member_club (memberId, clubId, regDate)
+VALUES (3, 1, NOW());
 
 
 #############################################################################################
@@ -443,16 +444,19 @@ WHERE c.categoryId = '1';
 
 # 회원 평균 나이 조회
 SELECT c.id, AVG(m.age) AS 'avgAge'
-FROM `member` m
+FROM member_club mc
 INNER JOIN club c
-ON m.clubId = c.id
+ON mc.clubId = c.id
+INNER JOIN `member` m
+ON mc.memberId = m.id
 GROUP BY c.id;
 
 # 동호회별 회원수
-SELECT c.id, COUNT(m.id) AS 'membersCount'
+SELECT c.id AS 'id',
+COUNT(mc.memberId) AS 'membersCount'
 FROM club c
-INNER JOIN `member` m
-ON c.id = m.clubId
+INNER JOIN member_club mc
+ON c.id = mc.clubId
 GROUP BY c.id;
 
 SELECT *
@@ -467,6 +471,7 @@ SELECT * FROM reactionPoint;
 SELECT * FROM club;
 SELECT * FROM category;
 SELECT * FROM region;
+SELECT * FROM member_club;
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
@@ -488,5 +493,12 @@ SELECT c.*, ca.name AS category_name, r.step1
 FROM club c
 INNER JOIN category ca
 ON c.categoryId = ca.id
-LEFT JOIN region r
+INNER JOIN region r
+ON c.areacode = r.areacode;
+
+SELECT c.*, ca.name AS category_name, r.step1 AS 'region_name'
+FROM club c
+INNER JOIN category ca
+ON c.categoryId = ca.id
+INNER JOIN region r
 ON c.areacode = r.areacode;

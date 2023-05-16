@@ -69,20 +69,21 @@
 	</select>
 
 	<select id="getavgAge" resultType="Club">
-		SELECT c.id AS 'id',
-		AVG(m.age) AS 'avgAge'
-		FROM `member` m
+		SELECT c.id, AVG(m.age) AS 'avgAge'
+		FROM member_club mc
 		INNER JOIN club c
-		ON m.clubId = c.id
+		ON mc.clubId = c.id
+		INNER JOIN `member` m
+		ON mc.memberId = m.id
 		GROUP BY c.id;
 	</select>
 
 	<select id="getmembersCount" resultType="Club">
 		SELECT c.id AS 'id',
-		COUNT(m.id) AS 'membersCount'
+		COUNT(mc.memberId) AS 'membersCount'
 		FROM club c
-		INNER JOIN `member` m
-		ON c.id = m.clubId
+		INNER JOIN member_club mc
+		ON c.id = mc.clubId
 		GROUP BY c.id;
 	</select>
 
