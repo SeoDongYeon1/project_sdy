@@ -31,9 +31,11 @@ public class ClubService {
 		
 		clubRepository.create(loginedMemberId, name, areacode,categoryId, purpose);
 
-		int id = clubRepository.getLastInsertId();
+		int clubId = clubRepository.getLastInsertId();
+		
+		clubRepository.join(clubId, loginedMemberId);
 
-		return ResultData.from("S-1", "동호회가 생성되었습니다.", id);
+		return ResultData.from("S-1", "동호회가 생성되었습니다.", clubId);
 	}
 
 	public Club getClubById(int id) {

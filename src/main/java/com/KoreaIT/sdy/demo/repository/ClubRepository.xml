@@ -116,5 +116,12 @@
 			</when>
 		</choose>
 	</select>
+	
+	<insert id="join">
+		INSERT INTO member_club 
+		SET memberId = #{memberId},
+		clubId = #{clubId},
+		regDate = NOW();
+	</insert>
 
 </mapper>

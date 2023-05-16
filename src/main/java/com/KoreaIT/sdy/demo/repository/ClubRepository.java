@@ -29,4 +29,6 @@ public interface ClubRepository {
 
 	public List<AreaRequestDTO> selectArea(Map<String, String> params);
 
+	public void join(int clubId, int memberId);
+
 }
