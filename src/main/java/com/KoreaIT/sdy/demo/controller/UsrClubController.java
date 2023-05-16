@@ -1,15 +1,19 @@
 package com.KoreaIT.sdy.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.util.Ut;
+import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
@@ -43,6 +47,14 @@ public class UsrClubController {
 
 		return "usr/club/detail";
 	}
+	
+	
+	@PostMapping(value = "/usr/club/getArea")
+    @ResponseBody
+    public List<AreaRequestDTO> getAreaStep(@RequestParam Map<String, String> params)
+    {
+        return clubService.getArea(params);
+    }
 	
 	@RequestMapping("/usr/club/create")
 	public String create() {

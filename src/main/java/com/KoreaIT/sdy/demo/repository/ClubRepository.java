@@ -1,9 +1,11 @@
 package com.KoreaIT.sdy.demo.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
 
 @Mapper
@@ -24,5 +26,7 @@ public interface ClubRepository {
 	public List<Club> getavgAge();
 
 	public List<Club> getmembersCount();
+
+	public List<AreaRequestDTO> selectArea(Map<String, String> params);
 
 }

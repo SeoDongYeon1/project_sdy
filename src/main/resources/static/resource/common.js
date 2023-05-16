@@ -13,17 +13,33 @@ const productsWrapper = document.querySelector('.products-area-wrapper');
 
 // 뷰 모드를 변경하는 함수
 function changeViewMode(viewMode) {
-  if (viewMode === 'grid') {
-    listButton.classList.remove('active');
-    gridButton.classList.add('active');
-    productsWrapper.classList.add('gridView');
-    productsWrapper.classList.remove('tableView');
-  } else if (viewMode === 'list') {
-    listButton.classList.add('active');
-    gridButton.classList.remove('active');
-    productsWrapper.classList.remove('gridView');
-    productsWrapper.classList.add('tableView');
+  if (gridButton && listButton && productsWrapper) {
+    if (viewMode === 'grid') {
+      listButton.classList.remove('active');
+      gridButton.classList.add('active');
+      productsWrapper.classList.add('gridView');
+      productsWrapper.classList.remove('tableView');
+    } else if (viewMode === 'list') {
+      listButton.classList.add('active');
+      gridButton.classList.remove('active');
+      productsWrapper.classList.remove('gridView');
+      productsWrapper.classList.add('tableView');
+    }
   }
+}
+
+// 필요한 페이지에서만 실행되도록 조건식으로 감싸기
+if (gridButton && listButton && productsWrapper) {
+  // 클릭 이벤트 리스너 등록
+  gridButton.addEventListener('click', function () {
+    changeViewMode('grid');
+    saveViewModeToSessionStorage('grid');
+  });
+
+  listButton.addEventListener('click', function () {
+    changeViewMode('list');
+    saveViewModeToSessionStorage('list');
+  });
 }
 
 // 뷰 모드 정보를 세션 스토리지에 저장
@@ -40,15 +56,18 @@ function setViewModeFromSessionStorage() {
 }
 
 // 클릭 이벤트 리스너 등록
-gridButton.addEventListener('click', function () {
-  changeViewMode('grid');
-  saveViewModeToSessionStorage('grid');
-});
+if (gridButton && listButton) {
+  // 클릭 이벤트 리스너 등록
+  gridButton.addEventListener('click', function () {
+    changeViewMode('grid');
+    saveViewModeToSessionStorage('grid');
+  });
 
-listButton.addEventListener('click', function () {
-  changeViewMode('list');
-  saveViewModeToSessionStorage('list');
-});
+  listButton.addEventListener('click', function () {
+    changeViewMode('list');
+    saveViewModeToSessionStorage('list');
+  });
+}
 
 // 페이지 로드 시 뷰 모드 설정
 window.addEventListener('load', setViewModeFromSessionStorage);

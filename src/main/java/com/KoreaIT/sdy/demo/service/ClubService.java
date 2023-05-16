@@ -1,11 +1,13 @@
 package com.KoreaIT.sdy.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.ClubRepository;
+import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
@@ -13,10 +15,15 @@ import com.KoreaIT.sdy.demo.vo.ResultData;
 public class ClubService {
 	@Autowired
 	ClubRepository clubRepository;
+	
 
 	// 생성자
 	public ClubService(ClubRepository clubRepository) {
 		this.clubRepository = clubRepository;
+	}
+	
+	public List<AreaRequestDTO> getArea(Map<String, String> params) {
+		return clubRepository.selectArea(params);
 	}
 
 	// 동호회 생성

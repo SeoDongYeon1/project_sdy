@@ -35,7 +35,7 @@
 			form.name.focus();
 			return false;
 		}
-		
+
 		if (purpose.length == 0) {
 			alert('동호회 이름을 입력해주세요.');
 			form.name.focus();
@@ -44,6 +44,63 @@
 
 		form.submit();
 	}
+
+	window.onload = function() {
+		// 추가된 코드
+		loadArea('city');
+
+		// 지역 DB AJAX로 가져오기
+		$('#step1').on("change", function() {
+			loadArea('county', $(this));
+		});
+
+		$('#step2').on("change", function() {
+			loadArea('town', $(this));
+		});
+
+		function loadArea(type, element) {
+			var value = $(element).find('option:selected').text();
+			var data = {
+				type : type,
+				keyword : value
+			};
+
+			console.log(data);
+			$.ajax({
+				url : "../club/getArea",
+				data : data,
+				dataType : "JSON",
+				method : "POST",
+				success : function(res) {
+					if (type == 'city') {
+						res.forEach(function(city) {
+							$('#step1').append(
+									'<option value="'+city.areacode+'">'
+											+ city.step1 + '</option>')
+						});
+					} else if (type == 'county') {
+						$('#county').siblings().remove();
+						$('#town').siblings().remove();
+						res.forEach(function(county) {
+							$('#step2').append(
+									'<option value="'+county.areacode+'">'
+											+ county.step2 + '</option>')
+						});
+					} else {
+						$('#town').siblings().remove();
+						res.forEach(function(town) {
+							$('#step3').append(
+									'<option value="'+town.areacode+'">'
+											+ town.step3 + '</option>')
+						});
+					}
+				},
+				error : function(xhr) {
+					alert(xhr.responseText);
+				}
+			});
+		}
+	};
 </script>
 <form method="POST" action="../club/doCreate" onsubmit="ClubCreate__submit(this); return false;">
 		<div class="form-menu">
@@ -94,21 +151,34 @@
 								</select>
 						</div>
 				</div>
+				<div class="form-group">
+						<select class="select" id="step1" title="시/도">
+								<option id="city" value="">시/도</option>
+						</select> 
+						
+						<select id="step2" class="select">
+								<option id="county" value="">시/군/구</option>
+						</select> 
+						
+						<select id="step3" class="select">
+								<option id="town" value="">읍/면/동</option>
+						</select>
+				</div>
+
+
 				<br /> <br /> <br />
 				<div style="display: inline-block;">
-						<input class="region" type="hidden" name="region" /> 
-						<input class="category" type="hidden" name="categoryId" />
+						<input class="region" type="hidden" name="region" /> <input class="category" type="hidden" name="categoryId" />
 						<div class="form-name">동호회 이름</div>
 						<div>
 								<input autocomplete="off" name="name" class="input input-bordered" placeholder="동호회 이름을 입력해주세요." />
 								<div class="checkName-msg"></div>
 						</div>
-						
+						<br />
 						<div class="form-name">동호회 목표</div>
-						<div>
-							<textarea type="text" autocomplete="off" name="purpose" class="input input-bordered" placeholder="동호회 목표를 입력해주세요." />
-							</textarea>
-						</div>
+
+						<textarea style="width: 500px; height: 300px;" autocomplete="off" name="purpose" class="input input-bordered" placeholder="동호회 목표를 입력해주세요."></textarea>
+
 				</div>
 
 				<br /> <br />
