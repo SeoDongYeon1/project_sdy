@@ -44,6 +44,26 @@ public class UsrHomeController {
 
 		List<Club> clubs = clubService.getForPrintClubs(categoryId, itemsInAPage, page, searchKeyword);
 		
+		List<Club> avgAge = clubService.getavgAge();
+
+		List<Club> membersCount = clubService.getmembersCount();
+		
+		for(Club club: clubs) {
+			for(Club clubAge: avgAge) {
+				if(club.getId()==clubAge.getId()) {
+					club.setAvgAge(clubAge.getAvgAge());
+				}
+			}
+		}
+		
+		for(Club club: clubs) {
+			for(Club clubMembers: membersCount) {
+				if(club.getId()==clubMembers.getId()) {
+					club.setMembersCount(clubMembers.getMembersCount());
+				}
+			}
+		}
+		
 		model.addAttribute("page", page);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("clubsCount", clubsCount);

@@ -871,3 +871,54 @@ th {
 	flex: 0 0 100px; /* 넓이가 작은 작성자와 작성일 부분 */
 	justify-content: center;
 }
+
+
+
+
+
+
+
+
+.club .item:nth-child(1) {
+  flex: 0 0 250px; /* 넓이가 작은 번호 부분 */
+  justify-content: center;
+}
+
+.club .item:nth-child(4) {
+  flex: 1; /* 최대화될 title 부분 */
+  justify-content: center;
+}
+
+.club .item:nth-child(2),
+.club .item:nth-child(3) {
+  flex: 0 0 250px; /* 넓이가 작은 작성자와 작성일 부분 */
+  justify-content: center;
+}
+
+.club .item:nth-child(5),
+.club .item:nth-child(6) {
+	flex: 0 0 120px; /* 넓이가 작은 작성자와 작성일 부분 */
+	justify-content: center;
+}
+
+
+.club-row .item:nth-child(2) {
+  flex: 0 0 250px; /* 넓이가 작은 번호 부분 */
+}
+
+.club-row .item:nth-child(5) {
+  flex: 1; /* 최대화될 title 부분 */
+  justify-content: center;
+}
+
+.club-row .item:nth-child(3),
+.club-row .item:nth-child(4) {
+  flex: 0 0 250px; /* 넓이가 작은 작성자와 작성일 부분 */
+  justify-content: center;
+}
+
+.club-row .item:nth-child(6),
+.club-row .item:nth-child(7) {
+	flex: 0 0 120px; /* 넓이가 작은 작성자와 작성일 부분 */
+	justify-content: center;
+}

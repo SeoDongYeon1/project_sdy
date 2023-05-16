@@ -21,4 +21,8 @@ public interface ClubRepository {
 	
 	public int getClubsCount(int categoryId, String searchKeyword);
 
+	public List<Club> getavgAge();
+
+	public List<Club> getmembersCount();
+
 }

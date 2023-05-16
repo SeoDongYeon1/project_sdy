@@ -19,6 +19,7 @@ public class Club {
 	private String region;
 	private String purpose;
 	
-	
+	private int avgAge;
+	private int membersCount;
 	private String category_name;
 }

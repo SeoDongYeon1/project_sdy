@@ -61,4 +61,20 @@
 		</if>
 	</select>
 	
+	<select id="getavgAge" resultType="Club">
+		SELECT c.id AS 'id', AVG(m.age) AS 'avgAge' 
+		FROM `member` m
+		INNER JOIN club c
+		ON m.clubId = c.id
+		GROUP BY c.id;
+	</select>
+	
+	<select id="getmembersCount" resultType="Club">
+		SELECT c.id AS 'id', COUNT(m.id) AS 'membersCount'
+		FROM club c
+		INNER JOIN `member` m
+		ON c.id = m.clubId
+		GROUP BY c.id;
+	</select>
+	
 </mapper>

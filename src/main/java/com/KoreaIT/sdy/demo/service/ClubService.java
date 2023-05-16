@@ -48,4 +48,12 @@ public class ClubService {
 		return clubRepository.getForPrintClubs(categoryId, limitFrom, limitTake, searchKeyword);
 	}
 
+	public List<Club> getavgAge() {
+		return clubRepository.getavgAge();
+	}
+
+	public List<Club> getmembersCount() {
+		return clubRepository.getmembersCount();
+	}
+
 }
