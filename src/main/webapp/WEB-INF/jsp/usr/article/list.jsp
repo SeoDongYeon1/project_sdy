@@ -129,7 +129,7 @@ form {
 		<%
 		if (cur_Page > 10) {
 		%>
-		<a class="btn btn-outline btn-xs first_page" href="${baseUri }&page=1">◀◀</a>
+		<a class="btn btn-outline btn-sm first_page" href="${baseUri }&page=1">◀◀</a>
 		<%
 		}
 		if (endPage > totalPage) {
@@ -138,25 +138,25 @@ form {
 
 		if (startPage > displayPage) {
 		%>
-		<a class="btn btn-outline btn-xs" href="${baseUri }&page=<%=startPage - 10%>">이전</a>
+		<a class="btn btn-outline btn-sm" href="${baseUri }&page=<%=startPage - 10%>">이전</a>
 		<%
 		}
 
 		for (int i = startPage; i <= endPage; i++) {
 		%>
-		<a class="btn btn-outline btn-xs <%=cur_Page == i ? "btn-active" : "" %>"
+		<a class="btn btn-outline btn-sm <%=cur_Page == i ? "btn-active" : "" %>"
 				href="${baseUri }&page=<%=i%>"><%=i%></a>
 		<%
 		}
 
 		if (endPage < totalPage) {
 		%>
-		<a class="btn btn-outline btn-xs" href="${baseUri }&page=<%=startPage + 10 %>">다음</a>
+		<a class="btn btn-outline btn-sm" href="${baseUri }&page=<%=startPage + 10 %>">다음</a>
 		<%
 		}
 		if (cur_Page < totalPage) {
 		%>
-		<a class="last_page btn btn-outline btn-xs" href="${baseUri }&page=<%=totalPage%>">▶▶</a>
+		<a class="last_page btn btn-outline btn-sm" href="${baseUri }&page=<%=totalPage%>">▶▶</a>
 		<%
 		}
 		%>

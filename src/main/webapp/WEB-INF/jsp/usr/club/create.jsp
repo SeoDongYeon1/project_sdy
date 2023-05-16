@@ -6,21 +6,21 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#category').on('change', function() {
+		$('#categoryId').on('change', function() {
 			$('input[name="categoryId"]').val($(this).val());
 		});
 
-		$('#region').on('change', function() {
-			$('input[name="region"]').val($(this).val());
-		});
+		$('#step1, #step2, #step3').on('change', function() {
+			  $('input[name="areacode"]').val($(this).val());
+			});
 	});
 
 	function ClubCreate__submit(form) {
-		var region = $('input[name="region"]').val().trim();
+		var areacode = $('input[name="areacode"]').val().trim();
 		var categoryId = $('input[name="categoryId"]').val().trim();
 		var name = form.name.value.trim();
 
-		if (region.length == 0) {
+		if (areacode.length == 0) {
 			alert('지역을 선택해주세요.');
 			return false;
 		}
@@ -74,24 +74,18 @@
 				success : function(res) {
 					if (type == 'city') {
 						res.forEach(function(city) {
-							$('#step1').append(
-									'<option value="'+city.areacode+'">'
-											+ city.step1 + '</option>')
+							$('#step1').append('<option value="'+city.areacode+'">' + city.step1 + '</option>')
 						});
 					} else if (type == 'county') {
 						$('#county').siblings().remove();
 						$('#town').siblings().remove();
 						res.forEach(function(county) {
-							$('#step2').append(
-									'<option value="'+county.areacode+'">'
-											+ county.step2 + '</option>')
+							$('#step2').append('<option value="'+county.areacode+'">' + county.step2 + '</option>')
 						});
 					} else {
 						$('#town').siblings().remove();
 						res.forEach(function(town) {
-							$('#step3').append(
-									'<option value="'+town.areacode+'">'
-											+ town.step3 + '</option>')
+							$('#step3').append('<option value="'+town.areacode+'">'	+ town.step3 + '</option>')
 						});
 					}
 				},
@@ -106,32 +100,21 @@
 		<div class="form-menu">
 				<h1>동호회 개설</h1>
 				<br />
-				<div style="display: inline-block;">
-						<div style="text-align: center; width: 90%;">
-								<select style="border-color: black; width: 200px;" id="region" class="select select-ghost">
-										<option disabled selected>지역 선택</option>
-										<option value="서울특별시">서울특별시</option>
-										<option value="부산광역시">부산광역시</option>
-										<option value="대구광역시">대구광역시</option>
-										<option value="인천광역시">인천광역시</option>
-										<option value="광주광역시">광주광역시</option>
-										<option value="대전광역시">대전광역시</option>
-										<option value="울산광역시">울산광역시</option>
-										<option value="세종특별자치시">세종특별자치시</option>
-										<option value="경기도">경기도</option>
-										<option value="강원도">강원도</option>
-										<option value="충청북도">충청북도</option>
-										<option value="충청남도">충청남도</option>
-										<option value="전라북도">전라북도</option>
-										<option value="전라남도">전라남도</option>
-										<option value="경상북도">경상북도</option>
-										<option value="경상남도">경상남도</option>
-										<option value="제주특별자치도">제주특별자치도</option>
-								</select>
-						</div>
+				<div class="form-group">
+						<select class="select" id="step1" title="시/도">
+								<option id="city" value="">시/도</option>
+						</select> 
+						
+						<select id="step2" class="select">
+								<option id="county" value="">시/군/구</option>
+						</select> 
+						
+						<select id="step3" class="select">
+								<option id="town" value="">읍/면/동</option>
+						</select>
 				</div>
-				<div style="display: inline-block; width: 50px;"></div>
-				<div style="display: inline-block;">
+
+				<div>
 						<div style="text-align: center; width: 90%;">
 								<select style="border-color: black; width: 200px;" id="categoryId" class="select select-ghost">
 										<option disabled selected>카테고리 선택</option>
@@ -151,24 +134,11 @@
 								</select>
 						</div>
 				</div>
-				<div class="form-group">
-						<select class="select" id="step1" title="시/도">
-								<option id="city" value="">시/도</option>
-						</select> 
-						
-						<select id="step2" class="select">
-								<option id="county" value="">시/군/구</option>
-						</select> 
-						
-						<select id="step3" class="select">
-								<option id="town" value="">읍/면/동</option>
-						</select>
-				</div>
-
 
 				<br /> <br /> <br />
 				<div style="display: inline-block;">
-						<input class="region" type="hidden" name="region" /> <input class="category" type="hidden" name="categoryId" />
+						<input class="areacode" type="hidden" name="areacode" /> 
+						<input class="categoryId" type="hidden" name="categoryId" />
 						<div class="form-name">동호회 이름</div>
 						<div>
 								<input autocomplete="off" name="name" class="input input-bordered" placeholder="동호회 이름을 입력해주세요." />

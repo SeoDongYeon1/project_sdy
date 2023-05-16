@@ -7,13 +7,12 @@
 	<insert id="create">
 		INSERT INTO club
 		SET regDate = NOW(),
-		updateDate =
-		NOW(),
+		updateDate = NOW(),
 		leaderId = #{loginedMemberId},
 		`name`= #{name},
-		region =
-		#{region},
-		categoryId = #{categoryId};
+		areacode = #{areacode},
+		categoryId = #{categoryId},
+		purpose = #{purpose};
 	</insert>
 
 	<select id="getLastInsertId" resultType="int">
@@ -33,10 +32,12 @@
 	</select>
 
 	<select id="getForPrintClubs" resultType="Club">
-		SELECT c.*, ca.name AS category_name
+		SELECT c.*, ca.name AS category_name, r.step1 AS 'region_name'
 		FROM club c
 		INNER JOIN category ca
 		ON c.categoryId = ca.id
+		INNER JOIN region r
+		ON c.areacode = r.areacode
 		WHERE 1
 		<if test='categoryId != "" and categoryId != null'>
 			AND c.categoryId = #{categoryId}

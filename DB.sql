@@ -277,7 +277,7 @@ CREATE TABLE club(
     categoryId INT(10) UNSIGNED NOT NULL COMMENT '(1=운동/스포츠, 2=아웃도어/여행, 3=공예/만들기, ...)',
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
     delDate DATETIME COMMENT '삭제 날짜',
-    region VARCHAR(255) NOT NULL
+    areacode VARCHAR(50) NOT NULL
 );
 
 INSERT INTO club
@@ -287,7 +287,7 @@ leaderId = 1,
 `name`= '축구좋아',
 purpose = '재밌게 축구 하실 분 모집해요',
 categoryId = 1,
-region = '대전광역시';
+areacode = '3000000000';
 
 INSERT INTO club
 SET regDate = NOW(),
@@ -296,7 +296,7 @@ leaderId = 2,
 `name`= '등산가자!',
 purpose = '매주 일요일에 등산하실 분 들어오세요!',
 categoryId = 2,
-region = '서울특별시';
+areacode = '﻿1100000000';
 
 INSERT INTO club
 SET regDate = NOW(),
@@ -305,7 +305,7 @@ leaderId = 2,
 `name`= '도제(도자기 제작)',
 purpose = '매일 같이 공방에 나와서 도자기 만드실 분 모집해요!',
 categoryId = 3,
-region = '전라북도';
+areacode = '4500000000';
 
 # 테스트 member에 clubId 추가
 ALTER TABLE `member` ADD COLUMN clubId INT(10) UNSIGNED NOT NULL DEFAULT 0;
@@ -411,6 +411,29 @@ UPDATE `member`
 SET age = 25
 WHERE id = 3;
 
+# 지역 조회
+CREATE TABLE region (
+	`areacode` VARCHAR(50) NOT NULL COMMENT '행정구역코드' COLLATE 'utf8_general_ci',
+	`step1` VARCHAR(50) NOT NULL COMMENT '시도' COLLATE 'utf8_general_ci',
+	`step2` VARCHAR(50) NULL DEFAULT NULL COMMENT '시군구' COLLATE 'utf8_general_ci',
+	`step3` VARCHAR(50) NULL DEFAULT NULL COMMENT '읍면동' COLLATE 'utf8_general_ci',
+	`gridX` VARCHAR(50) NOT NULL COMMENT '격자X' COLLATE 'utf8_general_ci',
+	`gridY` VARCHAR(50) NOT NULL COMMENT '격자Y' COLLATE 'utf8_general_ci',
+	`longitudeHour` VARCHAR(50) NOT NULL COMMENT '경도(시)' COLLATE 'utf8_general_ci',
+	`longitudeMin` VARCHAR(50) NOT NULL COMMENT '경도(분)' COLLATE 'utf8_general_ci',
+	`longitudeSec` VARCHAR(50) NOT NULL COMMENT '경도(초)' COLLATE 'utf8_general_ci',
+	`latitudeHour` VARCHAR(50) NOT NULL COMMENT '위도(시)' COLLATE 'utf8_general_ci',
+	`latitudeMin` VARCHAR(50) NOT NULL COMMENT '위도(분)' COLLATE 'utf8_general_ci',
+	`latitudeSec` VARCHAR(50) NOT NULL COMMENT '위도(초)' COLLATE 'utf8_general_ci',
+	`longitudeMs` VARCHAR(50) NOT NULL COMMENT '경도(초/100)' COLLATE 'utf8_general_ci',
+	`latitudeMs` VARCHAR(50) NOT NULL COMMENT '위도(초/100)' COLLATE 'utf8_general_ci'
+)
+COMMENT='Excel 파일의 값들을 DB화 한 테이블'
+COLLATE='utf8_general_ci'
+ENGINE=INNODB;
+
+
+
 
 #############################################################################################
 # 동호회 갯수 조회
@@ -432,6 +455,10 @@ INNER JOIN `member` m
 ON c.id = m.clubId
 GROUP BY c.id;
 
+SELECT *
+FROM region
+WHERE step1='전라북도';
+
 # 검색 쿼리
 SELECT * FROM article;
 SELECT * FROM `member`;
@@ -439,6 +466,7 @@ SELECT * FROM board;
 SELECT * FROM reactionPoint;
 SELECT * FROM club;
 SELECT * FROM category;
+SELECT * FROM region;
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
@@ -455,4 +483,10 @@ UPDATE article
 SET hitCount = hitCount + 1
 WHERE id = 3;
 
-UPDATE `member` SET nickname = 'qweqweqweqweqwe' WHERE id = 2;
+# 지역 이름 검색 조건
+SELECT c.*, ca.name AS category_name, r.step1
+FROM club c
+INNER JOIN category ca
+ON c.categoryId = ca.id
+LEFT JOIN region r
+ON c.areacode = r.areacode;

@@ -16,10 +16,11 @@ public class Club {
 	private int categoryId;
 	private boolean delStatus;
 	private String delDate;
-	private String region;
+	private String areacode;
 	private String purpose;
 	
 	private int avgAge;
 	private int membersCount;
+	private String region_name;
 	private String category_name;
 }

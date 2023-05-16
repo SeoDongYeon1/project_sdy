@@ -27,9 +27,9 @@ public class ClubService {
 	}
 
 	// 동호회 생성
-	public ResultData create(int loginedMemberId, String name, String region, int categoryId) {
+	public ResultData create(int loginedMemberId, String name, String areacode, int categoryId, String purpose) {
 		
-		clubRepository.create(loginedMemberId, name, region,categoryId);
+		clubRepository.create(loginedMemberId, name, areacode,categoryId, purpose);
 
 		int id = clubRepository.getLastInsertId();
 
