@@ -17,6 +17,7 @@ public class Club {
 	private boolean delStatus;
 	private String delDate;
 	private String region;
+	private String purpose;
 	
 	
 	private String category_name;

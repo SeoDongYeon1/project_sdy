@@ -11,6 +11,7 @@
 	let validNickname = "";
 	let validCellphoneNum = "";
 	let validName = "";
+	let validAge = 0;
 
 	function submitJoinForm(form) {
 		if (submitJoinFormDone) {
@@ -42,6 +43,12 @@
 			return;
 		}
 		
+		if (form.age.value != validAge) {
+			alert('사용할 수 없는 나이입니다.');
+			form.name.focus();
+			return;
+		}
+		
 		if (form.nickname.value != validNickname) {
 			alert('사용할 수 없는 닉네임입니다.');
 			form.nickname.focus();
@@ -61,13 +68,13 @@
 		}
 		
 		form.loginPw.value = form.loginPw.value.trim();
-		if (form.loginPw.value == 0) {
+		if (form.loginPw.value.length == 0) {
 			alert('비밀번호를 입력해주세요');
 			form.loginPw.focus();
 			return;
 		}
 		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-		if (form.loginPwConfirm.value == 0) {
+		if (form.loginPwConfirm.value.length == 0) {
 			alert('비밀번호 확인을 입력해주세요');
 			form.loginPwConfirm.focus();
 			return;
@@ -77,28 +84,37 @@
 			form.loginPw.focus();
 			return;
 		}
+		
 		form.name.value = form.name.value.trim();
-		if (form.name.value == 0) {
+		if (form.name.value.length == 0) {
 			alert('이름을 입력해주세요');
 			form.name.focus();
 			return;
 		}
+		
+		form.age.value = form.age.value.trim();
+		if (form.age.value == 0 || form.age.value.length == 0) {
+			alert('나이를 입력해주세요');
+			form.name.focus();
+			return;
+		}
+		
 		form.nickname.value = form.nickname.value.trim();
-		if (form.nickname.value == 0) {
+		if (form.nickname.value.length == 0) {
 			alert('닉네임을 입력해주세요');
 			form.nickname.focus();
 			return;
 		}
-		form.email.value = form.email.value.trim();
-		if (form.email.value == 0) {
-			alert('이메일을 입력해주세요');
-			form.email.focus();
-			return;
-		}
 		form.cellphoneNum.value = form.cellphoneNum.value.trim();
-		if (form.cellphoneNum.value == 0) {
+		if (form.cellphoneNum.value.length == 0) {
 			alert('전화번호를 입력해주세요');
 			form.cellphoneNum.focus();
+			return;
+		}
+		form.email.value = form.email.value.trim();
+		if (form.email.value.length == 0) {
+			alert('이메일을 입력해주세요');
+			form.email.focus();
 			return;
 		}
 		submitJoinFormDone = true;
@@ -283,6 +299,28 @@
 	    
 	}
 	
+	// 나이 체크
+	const CheckAge_Debounce = _.debounce(checkAge, 600);
+	
+	function checkAge(el) {
+	    $('.checkAge-msg').empty();
+	    const form = $(el).closest('form').get(0);
+	    const age = form.age.value.trim();
+
+	    if(age.length == 0) {
+	    	$('.checkAge-msg').html('<div class="mt-2 text-red-500 text-sm">나이를 입력해주세요.</div>');
+	    	validAge = "";
+	    	return;
+	    }
+	    
+	    if (age == validAge) {
+			return;
+		}
+	    
+	    validAge = age;
+	    
+	}
+	
 	// 전화번호 체크
 	const CheckCellphoneNum_Debounce = _.debounce(CheckCellphoneNum, 600);
 
@@ -406,6 +444,19 @@
 						</div>
 				</div>
 				<br />
+				
+				<div style="display: inline-block;">
+						<div>
+								<div class="form-name mt-5">나이</div>
+						</div>
+						<div>
+								<input onkeyup="CheckAge_Debounce(this);" name="age" class="input input-bordered "
+										placeholder="나이를 입력해주세요" />
+								<div class="checkAge-msg"></div>
+						</div>
+				</div>
+				<br />
+				
 				<div style="display: inline-block;">
 						<div>
 								<div class="form-name mt-5">닉네임</div>
@@ -417,6 +468,7 @@
 						</div>
 				</div>
 				<br />
+				
 				<div style="display: inline-block;">
 						<div>
 								<div class="form-name mt-5">전화번호</div>

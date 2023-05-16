@@ -3,5 +3,5 @@
 <c:set var="pageTitle" value="${club.name }" />
 <%@ include file="../common/head.jspf"%>
 
-
+<div>${club.purpose }</div>
 <%@ include file="../common/foot.jspf"%>

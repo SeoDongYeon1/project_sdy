@@ -12,7 +12,8 @@
 		`name` = #{name},
 		`nickname` = #{nickname},
 		cellphoneNum = #{cellphoneNum},
-		email = #{email};
+		email = #{email},
+		age = #{age};
 	</insert>
 	
 	<select id="getMemberByLoginId" resultType="Member">

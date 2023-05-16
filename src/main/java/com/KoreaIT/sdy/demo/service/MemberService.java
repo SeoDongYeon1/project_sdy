@@ -18,7 +18,7 @@ public class MemberService {
 	}
 	
 	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email) {
+			String email, int age) {
 		// 로그인 아이디 중복체크
 		Member member = getMemberByLoginId(loginId);
 
@@ -33,7 +33,7 @@ public class MemberService {
 			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
 		}
 
-		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email, age);
 
 		return ResultData.from("S-1", "회원가입이 완료되었습니다");
 	}

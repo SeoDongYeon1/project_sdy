@@ -7,7 +7,7 @@ import com.KoreaIT.sdy.demo.vo.Member;
 @Mapper
 public interface MemberRepository {
 
-	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
+	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email, int age);
 
 	public Member getMemberByLoginId(String loginId);
 

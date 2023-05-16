@@ -26,7 +26,7 @@ public class UsrMemberController {
 
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,	String email) {
+	public String doJoin(String loginId, String loginPw, String name, Integer age, String nickname, String cellphoneNum, String email) {
 		if (Ut.empty(loginId)) {
 			return Ut.jsHistoryBack("F-1", "아이디를 입력해주세요");
 		}
@@ -45,8 +45,12 @@ public class UsrMemberController {
 		if (Ut.empty(email)) {
 			return Ut.jsHistoryBack("F-6", "이메일을 입력해주세요");
 		}
+		if (age==0 || age == null) {
+			System.out.println(age);
+			return Ut.jsHistoryBack("F-7", "나이를 입력해주세요");
+		}
 		
-		ResultData joinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData joinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email, age);
 		
 		if(joinRd.isFail()) {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
