@@ -296,16 +296,16 @@ updateDate = NOW(),
 leaderId = 2,
 `name`= '등산가자!',
 purpose = '매주 일요일에 등산하실 분 들어오세요!',
-categoryId = 2,
+categoryId = 3,
 areacode = '﻿1100000000';
 
 INSERT INTO club
 SET regDate = NOW(),
 updateDate = NOW(),
-leaderId = 2,
+leaderId = 3,
 `name`= '도제(도자기 제작)',
 purpose = '매일 같이 공방에 나와서 도자기 만드실 분 모집해요!',
-categoryId = 3,
+categoryId = 2,
 areacode = '4500000000';
 
 # category 테이블 생성
@@ -435,8 +435,48 @@ VALUES (2, 2, NOW());
 INSERT INTO member_club (memberId, clubId, regDate)
 VALUES (3, 1, NOW());
 
+# chat 테이블 추가
+CREATE TABLE chat (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    TYPE VARCHAR(255) NOT NULL,
+    room_id VARCHAR(255) NOT NULL,
+    sender VARCHAR(255) NOT NULL,
+    message VARCHAR(255) NOT NULL,
+    TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 #############################################################################################
+# 검색 쿼리
+SELECT * FROM article;
+SELECT * FROM `member`;
+SELECT * FROM board;
+SELECT * FROM reactionPoint;
+SELECT * FROM club;
+SELECT * FROM category;
+SELECT * FROM region;
+SELECT * FROM member_club;
+SELECT * FROM chat;
+
+# 마지막으로 삽입된 id 검색
+SELECT LAST_INSERT_ID();
+
+# 게시물 갯수 늘리기
+INSERT INTO article 
+( 
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
+FROM article;
+
+# 지역 이름 검색 조건
+SELECT c.*, ca.name AS category_name, r.step1 AS 'region_name'
+FROM club c
+INNER JOIN category ca
+ON c.categoryId = ca.id
+INNER JOIN region r
+ON c.areacode = r.areacode;
+
 # 동호회 갯수 조회
 SELECT COUNT(c.id)
 FROM club c
@@ -459,46 +499,7 @@ INNER JOIN member_club mc
 ON c.id = mc.clubId
 GROUP BY c.id;
 
+# region 검색
 SELECT *
 FROM region
 WHERE step1='전라북도';
-
-# 검색 쿼리
-SELECT * FROM article;
-SELECT * FROM `member`;
-SELECT * FROM board;
-SELECT * FROM reactionPoint;
-SELECT * FROM club;
-SELECT * FROM category;
-SELECT * FROM region;
-SELECT * FROM member_club;
-
-# 마지막으로 삽입된 id 검색
-SELECT LAST_INSERT_ID();
-
-# 게시물 갯수 늘리기
-INSERT INTO article 
-( 
-    regDate, updateDate, memberId, boardId, title, `body`
-)
-SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
-FROM article;
-
-UPDATE article
-SET hitCount = hitCount + 1
-WHERE id = 3;
-
-# 지역 이름 검색 조건
-SELECT c.*, ca.name AS category_name, r.step1
-FROM club c
-INNER JOIN category ca
-ON c.categoryId = ca.id
-INNER JOIN region r
-ON c.areacode = r.areacode;
-
-SELECT c.*, ca.name AS category_name, r.step1 AS 'region_name'
-FROM club c
-INNER JOIN category ca
-ON c.categoryId = ca.id
-INNER JOIN region r
-ON c.areacode = r.areacode;
