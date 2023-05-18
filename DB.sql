@@ -447,9 +447,9 @@ VALUES (3, 1, NOW());
 
 # chat 테이블 추가
 CREATE TABLE chat (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `type` VARCHAR(255) NOT NULL,
-    roomId VARCHAR(255) NOT NULL,
+    roomId INT(10) UNSIGNED NOT NULL,
     sender VARCHAR(255) NOT NULL,
     memberId INT(11) UNSIGNED NOT NULL,
     message VARCHAR(255) NOT NULL,
@@ -459,23 +459,26 @@ CREATE TABLE chat (
 ALTER TABLE chat CONVERT TO CHARSET UTF8;
 
 
+# chatRoom 테이블 생성
 CREATE TABLE chatRoom (
-  roomId VARCHAR(255) NOT NULL,
+  id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   roomName VARCHAR(255) NOT NULL,
-  userCount BIGINT DEFAULT 0,
-  PRIMARY KEY (roomId)
-);
+  userCount BIGINT DEFAULT 0
 
+);
 ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
 
+# chat_user 테이블 생성
 CREATE TABLE chat_user (
   id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  roomId VARCHAR(255) NOT NULL,
-  userName VARCHAR(255) NOT NULL
-
+  roomId INT(10) UNSIGNED NOT NULL,
+  userName VARCHAR(255) NOT NULL,
+  memberId INT(11) UNSIGNED NOT NULL
 );
 
 ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
+
+
 #############################################################################################
 # 검색 쿼리
 SELECT * FROM article;
@@ -489,6 +492,7 @@ SELECT * FROM member_club;
 SELECT * FROM chat;
 SELECT * FROM chatRoom;
 SELECT * FROM chat_user;
+
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
