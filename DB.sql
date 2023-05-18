@@ -477,6 +477,7 @@ SELECT * FROM category;
 SELECT * FROM region;
 SELECT * FROM member_club;
 SELECT * FROM chat;
+SELECT * FROM chatRoom;
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();

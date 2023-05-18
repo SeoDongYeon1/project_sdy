@@ -9,11 +9,17 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.dto.ChatRoom;
+import com.KoreaIT.sdy.demo.repository.ChatRepository;
 
 @Service
 public class ChatRoomService {
 
     private Map<String, ChatRoom> chatRooms = new HashMap<>();
+    private ChatRepository chatRepository;
+
+    public ChatRoomService(ChatRepository chatRepository) {
+        this.chatRepository = chatRepository;
+    }
 
     public List<ChatRoom> getAllChatRooms() {
         return new ArrayList<>(chatRooms.values());
@@ -26,6 +32,10 @@ public class ChatRoomService {
         chatRoom.setUserCount(0);
         chatRoom.setUserlist(new HashMap<>());
         chatRooms.put(chatRoom.getRoomId(), chatRoom);
+        
+        // ChatRepository를 통해 생성된 채팅방 정보를 DB에 저장
+        chatRepository.createChatRoom(chatRoom);
+        
         return chatRoom;
     }
 

@@ -39,6 +39,9 @@ public class ChatService {
         log.info("CHAT {}", chat);
         chat.setMessage(chat.getMessage());
         template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
+
+        // ChatRepository를 통해 메시지 정보를 DB에 저장
+        chatRepository.saveChat(chat);
     }
 
     public void handleDisconnectEvent(SessionDisconnectEvent event) {

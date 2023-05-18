@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.KoreaIT.sdy.demo.dto.Chat;
+import com.KoreaIT.sdy.demo.dto.Chat.MessageType;
 import com.KoreaIT.sdy.demo.dto.ChatRoom;
 
 
@@ -15,7 +17,7 @@ public interface ChatRepository {
 
     ChatRoom findRoomById(String roomId);
 
-    ChatRoom createChatRoom(String roomName);
+    void createChatRoom(ChatRoom chatRoom);
 
     void plusUserCnt(String roomId);
 
@@ -30,4 +32,6 @@ public interface ChatRepository {
     String getUserName(String roomId, String userUUID);
 
     ArrayList<String> getUserList(String roomId);
+
+	void saveChat(Chat chat);
 }
