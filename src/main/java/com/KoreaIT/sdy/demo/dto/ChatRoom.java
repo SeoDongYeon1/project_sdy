@@ -1,29 +1,26 @@
 package com.KoreaIT.sdy.demo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.HashMap;
+import java.util.UUID;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Data;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "chat_room")
+// pub/sub 를 사용하면 구독자 관리가 알아서 된다!!
+// 따라서 따로 세션 관리를 하는 코드를 작성할 필도 없고,
+// 메시지를 다른 세션의 클라이언트에게 발송하는 것도 구현 필요가 없다!
+@Data
 public class ChatRoom {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private String roomId; // 채팅방 아이디
+	private String roomName; // 채팅방 이름
+	private long userCount; // 채팅방 인원수
 
-    @Column(nullable = false, unique = true)
-    private String roomId;
+	private HashMap<String, String> userlist = new HashMap<String, String>();
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<Chat> chats = new ArrayList<>();
+	public ChatRoom create(String roomName) {
+		ChatRoom chatRoom = new ChatRoom();
+		chatRoom.roomId = UUID.randomUUID().toString();
+		chatRoom.roomName = roomName;
 
-    public void addChat(Chat chat) {
-        chats.add(chat);
-        chat.setRoom(this);
-    }
+		return chatRoom;
+	}
 }

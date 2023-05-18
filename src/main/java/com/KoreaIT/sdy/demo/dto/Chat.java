@@ -1,34 +1,23 @@
 package com.KoreaIT.sdy.demo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
-@Getter
-@Setter
+@Data
 @Builder
-@Entity
-@Table(name = "chat")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Chat {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    private ChatRoom room;
-
-    @Column(nullable = false)
-    private String sender;
-
-    @Column(nullable = false)
-    private String message;
-
-    public enum MessageType {
-        CHAT,
-        JOIN,
-        LEAVE
+    // 메시지  타입 : 입장, 채팅
+    public enum MessageType{
+        ENTER, TALK, LEAVE;
     }
+
+    private MessageType type; // 메시지 타입
+    private String roomId; // 방 번호
+    private String sender; // 채팅을 보낸 사람
+    private String message; // 메시지
+    private String time; // 채팅 발송 시간간
 }

@@ -1,6 +1,9 @@
 server:
   port: 8081
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
   mvc:
     view:
       prefix: /WEB-INF/jsp/
