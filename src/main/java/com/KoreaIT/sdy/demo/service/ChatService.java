@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.KoreaIT.sdy.demo.dto.Chat;
+import com.KoreaIT.sdy.demo.dto.Chat.MessageType;
 import com.KoreaIT.sdy.demo.repository.ChatRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -41,13 +42,17 @@ public class ChatService {
         template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
 
         // ChatRepository를 통해 메시지 정보를 DB에 저장
-        chatRepository.saveChat(chat);
+        chatRepository.saveChat(chat.getType(), chat.getRoomId(), chat.getSender(), chat.getMessage(), chat.getTime());
+        
+
     }
 
     public void handleDisconnectEvent(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+        
         String userUUID = (String) headerAccessor.getSessionAttributes().get("userUUID");
         String roomId = (String) headerAccessor.getSessionAttributes().get("roomId");
+        
         chatRepository.minusUserCnt(roomId);
         String username = chatRepository.getUserName(roomId, userUUID);
         chatRepository.delUser(roomId, userUUID);
@@ -66,9 +71,4 @@ public class ChatService {
         return chatRepository.getUserList(roomId);
     }
 
-    public String isDuplicateName(String roomId, String username) {
-        String userName = chatRepository.isDuplicateName(roomId, username);
-        log.info("동작확인 {}", userName);
-        return userName;
-    }
 }

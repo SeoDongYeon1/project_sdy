@@ -25,13 +25,11 @@ public interface ChatRepository {
 
     String addUser(String roomId, String userName);
 
-    String isDuplicateName(String roomId, String username);
-
     void delUser(String roomId, String userUUID);
 
     String getUserName(String roomId, String userUUID);
 
     ArrayList<String> getUserList(String roomId);
 
-	void saveChat(Chat chat);
+	void saveChat(MessageType type, String roomId, String sender, String message, String time);
 }

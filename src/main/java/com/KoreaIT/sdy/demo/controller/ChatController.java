@@ -38,6 +38,7 @@ public class ChatController {
     @MessageMapping("/chat/sendMessage")
     public void sendMessage(@Payload Chat chat) {
         log.info("CHAT {}", chat);
+        System.out.println(chat.getMessage() + "==================");
         chatService.sendMessage(chat);
     }
 
@@ -52,9 +53,4 @@ public class ChatController {
         return chatService.getUserList(roomId);
     }
 
-    @GetMapping("/chat/duplicateName")
-    @ResponseBody
-    public String isDuplicateName(@RequestParam("roomId") String roomId, @RequestParam("username") String username) {
-        return chatService.isDuplicateName(roomId, username);
-    }
 }

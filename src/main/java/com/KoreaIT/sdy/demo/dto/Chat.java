@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Chat {
     // 메시지  타입 : 입장, 채팅
     public enum MessageType{

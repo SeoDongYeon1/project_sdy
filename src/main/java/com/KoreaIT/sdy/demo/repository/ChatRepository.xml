@@ -41,6 +41,15 @@
 		userId = #{userUUID},
 		userName = #{userName};
 	</insert>
+	
+	<insert id="saveChat">
+		INSERT INTO chat 
+		SET `type` = #{type},
+		roomId = #{roomId},
+		sender = #{sender},
+		message = #{message},
+		`time` = #{time};
+	</insert>
 
 	<delete id="delUser">
 		DELETE FROM chat_user
@@ -62,13 +71,5 @@
 		FROM chat_user
 		WHERE roomId = #{roomId};
 	</select>
-	
-	<insert id="addUser">
-		INSERT INTO Chat
-		SET roomId = #{roomId},
-		sender = #{sender},
-		message = #{message}
-		`TIME` = #{sentAt};
-	</insert>
 	
 </mapper>
