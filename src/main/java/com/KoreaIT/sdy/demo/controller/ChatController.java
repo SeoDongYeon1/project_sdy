@@ -1,6 +1,6 @@
 package com.KoreaIT.sdy.demo.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -10,7 +10,6 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
@@ -32,6 +31,7 @@ public class ChatController {
 
     @MessageMapping("/chat/enterUser")
     public void enterUser(@Payload Chat chat, SimpMessageHeaderAccessor headerAccessor) {
+    	System.out.println(chat);
         chatService.enterUser(chat, headerAccessor);
     }
 
@@ -49,7 +49,7 @@ public class ChatController {
 
     @GetMapping("/chat/userlist")
     @ResponseBody
-    public ArrayList<String> userList(String roomId) {
+    public List<String> userList(int roomId) {
         return chatService.getUserList(roomId);
     }
 

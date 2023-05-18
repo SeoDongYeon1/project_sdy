@@ -1,10 +1,6 @@
 package com.KoreaIT.sdy.demo.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -14,32 +10,27 @@ import com.KoreaIT.sdy.demo.repository.ChatRepository;
 @Service
 public class ChatRoomService {
 
-    private Map<String, ChatRoom> chatRooms = new HashMap<>();
     private ChatRepository chatRepository;
 
     public ChatRoomService(ChatRepository chatRepository) {
         this.chatRepository = chatRepository;
     }
 
-    public List<ChatRoom> getAllChatRooms() {
-        return new ArrayList<>(chatRooms.values());
+    public List<ChatRoom> getRooms() {
+        return chatRepository.getRooms();
     }
 
     public ChatRoom createChatRoom(String roomName) {
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.setRoomId(UUID.randomUUID().toString());
-        chatRoom.setRoomName(roomName);
-        chatRoom.setUserCount(0);
-        chatRoom.setUserlist(new HashMap<>());
-        chatRooms.put(chatRoom.getRoomId(), chatRoom);
-        
-        // ChatRepository를 통해 생성된 채팅방 정보를 DB에 저장
-        chatRepository.createChatRoom(chatRoom);
-        
-        return chatRoom;
+    	chatRepository.createChatRoom(roomName);
+    	
+    	int id = chatRepository.getLastInsertId();
+    	
+    	ChatRoom room = chatRepository.getRoomById(id);
+    	
+    	return room;
     }
 
-    public ChatRoom getChatRoomById(String roomId) {
-        return chatRooms.get(roomId);
+    public ChatRoom getRoomById(int id) {
+        return chatRepository.getRoomById(id);
     }
 }

@@ -24,7 +24,7 @@ var colors = [
 
 // roomId 파라미터 가져오기
 const url = new URL(location.href).searchParams;
-const roomId = url.get('roomId');
+const id = url.get('id');
 
 function connect(event) {
 	username = document.querySelector('#name').value.trim();
@@ -45,13 +45,13 @@ function connect(event) {
 
 function onConnected() {
 	// Subscribe to the Public Topic
-	stompClient.subscribe('/sub/chat/room/' + roomId, onMessageReceived);
+	stompClient.subscribe('/sub/chat/room/' + id, onMessageReceived);
 
 	// Tell your username to the server
 	stompClient.send("/pub/chat/enterUser",
 		{},
 		JSON.stringify({
-			"roomId": roomId,
+			"roomId": id,
 			sender: username,
 			memberId: memberId,
 			type: 'ENTER'
@@ -69,7 +69,7 @@ function getUserList() {
         type: "GET",
         url: "/chat/userlist",
         data: {
-            "roomId": roomId
+            "roomId": id
         },
         success: function (data) {
             var users = "";
@@ -93,7 +93,7 @@ function sendMessage(event) {
 
 	if (messageContent && stompClient) {
 		var chatMessage = {
-			"roomId": roomId,
+			"roomId": id,
 			sender: username,
 			memberId: memberId,
 			message: messageInput.value,

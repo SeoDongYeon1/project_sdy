@@ -1,11 +1,9 @@
 package com.KoreaIT.sdy.demo.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.KoreaIT.sdy.demo.dto.Chat;
 import com.KoreaIT.sdy.demo.dto.Chat.MessageType;
 import com.KoreaIT.sdy.demo.dto.ChatRoom;
 
@@ -13,23 +11,25 @@ import com.KoreaIT.sdy.demo.dto.ChatRoom;
 @Mapper
 public interface ChatRepository {
 
-    List<ChatRoom> findAllRoom();
+	public List<ChatRoom> getRooms();
 
-    ChatRoom findRoomById(String roomId);
+    public ChatRoom getRoomById(int id);
 
-    void createChatRoom(ChatRoom chatRoom);
+    public void createChatRoom(String roomName);
 
-    void plusUserCnt(String roomId);
+    public void plusUserCnt(int id);
 
-    void minusUserCnt(String roomId);
+    public void minusUserCnt(int id);
 
-    String addUser(String roomId, String userName);
+    public void addUser(int roomId, String userName, int memberId);
 
-    void delUser(String roomId, String userUUID);
+    public void delUser(int roomId, int memberId);
 
-    String getUserName(String roomId, String userUUID);
+    public String getUserName(int roomId, int memberId);
 
-    ArrayList<String> getUserList(String roomId);
+    public List<String> getUserList(int roomId);
 
-	void saveChat(MessageType type, String roomId, String sender, int memberId, String message, String time);
+    public void saveChat(MessageType type, int roomId, String sender, int memberId, String message, String time);
+
+	public int getLastInsertId();
 }

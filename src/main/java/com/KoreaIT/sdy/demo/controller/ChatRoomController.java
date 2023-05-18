@@ -23,8 +23,8 @@ public class ChatRoomController {
     // 채팅 리스트 화면
     @GetMapping("/usr/chat/list")
     public String goChatRoom(Model model){
-        model.addAttribute("list", chatRoomService.getAllChatRooms());
-        log.info("SHOW ALL ChatList {}", chatRoomService.getAllChatRooms());
+        model.addAttribute("list", chatRoomService.getRooms());
+        log.info("SHOW ALL ChatList {}", chatRoomService.getRooms());
         return "usr/chat/chatlist";
     }
 
@@ -32,6 +32,7 @@ public class ChatRoomController {
     @PostMapping("/usr/chat/createroom")
     public String createRoom(@RequestParam String roomName, RedirectAttributes rttr) {
         ChatRoom room = chatRoomService.createChatRoom(roomName);
+        
         log.info("CREATE Chat Room {}", room);
         rttr.addFlashAttribute("roomName", room);
         return "redirect:/usr/chat/list";
@@ -39,9 +40,9 @@ public class ChatRoomController {
 
     // 채팅방 입장 화면
     @GetMapping("/usr/chat/room")
-    public String roomDetail(Model model, @RequestParam String roomId){
-        log.info("roomId {}", roomId);
-        model.addAttribute("room", chatRoomService.getChatRoomById(roomId));
+    public String roomDetail(Model model, @RequestParam int id){
+        log.info("id {}", id);
+        model.addAttribute("room", chatRoomService.getRoomById(id));
         return "usr/chat/chatroom";
     }
 }
