@@ -227,6 +227,8 @@ CREATE TABLE reply(
     `body` TEXT NOT NULL
 );
 
+ALTER TABLE reply CONVERT TO CHARSET UTF8;
+
 # reply 테이블의 relTypeCode, relId에 인덱스 걸기
 ALTER TABLE `PJ_SDY`.`reply` ADD KEY `relTypeCodeId` (`relTypeCode` , `relId`);
 
@@ -281,6 +283,8 @@ CREATE TABLE club(
     areacode VARCHAR(50) NOT NULL
 );
 
+ALTER TABLE club CONVERT TO CHARSET UTF8;
+
 INSERT INTO club
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -315,6 +319,8 @@ CREATE TABLE category(
     updateDate DATETIME NOT NULL,
     `name` CHAR(100) NOT NULL UNIQUE 
 );
+
+ALTER TABLE category CONVERT TO CHARSET UTF8;
 
 INSERT INTO category 
 SET regDate = NOW(),
@@ -418,6 +424,8 @@ COMMENT='Excel 파일의 값들을 DB화 한 테이블'
 COLLATE='utf8_general_ci'
 ENGINE=INNODB;
 
+
+
 # 동호회에 가입한 회원을 관리하기 위해서 member_club 테이블 생성 
 CREATE TABLE member_club (
   memberId INT(10) UNSIGNED NOT NULL,
@@ -425,6 +433,8 @@ CREATE TABLE member_club (
   regDate DATETIME NOT NULL
 
 );
+
+ALTER TABLE member_club CONVERT TO CHARSET UTF8;
 
 INSERT INTO member_club (memberId, clubId, regDate)
 VALUES (1, 3, NOW());
@@ -439,13 +449,23 @@ VALUES (3, 1, NOW());
 CREATE TABLE chat (
     id INT PRIMARY KEY AUTO_INCREMENT,
     TYPE VARCHAR(255) NOT NULL,
-    room_id VARCHAR(255) NOT NULL,
+    roomId VARCHAR(255) NOT NULL,
     sender VARCHAR(255) NOT NULL,
     message VARCHAR(255) NOT NULL,
     TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+ALTER TABLE chat CONVERT TO CHARSET UTF8;
 
+
+CREATE TABLE chatRoom (
+  roomId VARCHAR(255) NOT NULL,
+  roomName VARCHAR(255) NOT NULL,
+  userCount BIGINT DEFAULT 0,
+  PRIMARY KEY (roomId)
+);
+
+ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
 #############################################################################################
 # 검색 쿼리
 SELECT * FROM article;

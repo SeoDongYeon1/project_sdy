@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.KoreaIT.sdy.demo.dto.ChatRoom;
-import com.KoreaIT.sdy.demo.repository.ChatRepository;
+import com.KoreaIT.sdy.demo.service.ChatRoomService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,35 +18,30 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatRoomController {
 
     @Autowired
-    private ChatRepository chatRepository;
+    private ChatRoomService chatRoomService;
 
     // 채팅 리스트 화면
-    @GetMapping("usr/chat/list")
+    @GetMapping("/usr/chat/list")
     public String goChatRoom(Model model){
-
-        model.addAttribute("list", chatRepository.findAllRoom());
-        log.info("SHOW ALL ChatList {}", chatRepository.findAllRoom());
+        model.addAttribute("list", chatRoomService.getAllChatRooms());
+        log.info("SHOW ALL ChatList {}", chatRoomService.getAllChatRooms());
         return "usr/chat/chatlist";
     }
 
     // 채팅방 생성
-    @PostMapping("usr/chat/createroom")
+    @PostMapping("/usr/chat/createroom")
     public String createRoom(@RequestParam String roomName, RedirectAttributes rttr) {
-        ChatRoom room = chatRepository.createChatRoom(roomName);
+        ChatRoom room = chatRoomService.createChatRoom(roomName);
         log.info("CREATE Chat Room {}", room);
         rttr.addFlashAttribute("roomName", room);
-        return "redirect:../chat/list";
+        return "redirect:/usr/chat/list";
     }
 
     // 채팅방 입장 화면
-    // @PathVariable : url 에 넘어오는 변수를 매개변수로 받을 수 있게 하는 어노테이션
-    // {roomId} 가 url 변수 -> String 타입 roomId 로 받게됨
-    @GetMapping("usr/chat/room")
-    public String roomDetail(Model model, String roomId){
-
+    @GetMapping("/usr/chat/room")
+    public String roomDetail(Model model, @RequestParam String roomId){
         log.info("roomId {}", roomId);
-        model.addAttribute("room", chatRepository.findRoomById(roomId));
+        model.addAttribute("room", chatRoomService.getChatRoomById(roomId));
         return "usr/chat/chatroom";
     }
-
 }

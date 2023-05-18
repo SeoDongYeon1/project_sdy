@@ -28,6 +28,8 @@ const roomId = url.get('roomId');
 function connect(event) {
 	username = document.querySelector('#name').value.trim();
 
+	isDuplicateName();
+
     usernamePage.classList.add('hidden');
     chatPage.classList.remove('hidden');
 
@@ -56,6 +58,25 @@ function onConnected() {
 	)
 
 	connectingElement.classList.add('hidden');
+}
+
+// 유저 닉네임 중복 확인
+function isDuplicateName() {
+
+    $.ajax({
+        type: "GET",
+        url: "/chat/duplicateName",
+        data: {
+            "username": username,
+            "roomId": roomId
+        },
+        success: function (data) {
+            console.log("함수 동작 확인 : " + data);
+
+            username = data;
+        }
+    })
+
 }
 
 // 유저 리스트 받기

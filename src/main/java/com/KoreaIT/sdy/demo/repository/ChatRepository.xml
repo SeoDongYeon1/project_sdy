@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.KoreaIT.sdy.demo.repository.ChatRepository">
+
+	<select id="findAllRoom"
+		resultType="com.KoreaIT.sdy.demo.dto.ChatRoom">
+		SELECT *
+		FROM ChatRoom
+	</select>
+
+	<select id="findRoomById"
+		resultType="com.KoreaIT.sdy.demo.dto.ChatRoom">
+		SELECT *
+		FROM chatRoom
+		WHERE roomId = #{roomId}
+	</select>
+	
+	<insert id="createChatRoom">
+		INSERT INTO chatRoom
+		SET roomId = #{roomId},
+		roomName = #{roomName};
+	</insert>
+
+	<update id="plusUserCnt">
+		UPDATE chatRoom
+		SET userCount = userCount + 1
+		WHERE roomId = #{roomId};
+	</update>
+
+	<update id="minusUserCnt">
+		UPDATE chatRoom
+		SET userCount = userCount - 1
+		WHERE roomId = #{roomId};
+	</update>
+
+	<insert id="addUser">
+		INSERT INTO chat_user
+		SET roomId = #{roomId},
+		userId = #{userUUID},
+		userName = #{userName};
+	</insert>
+
+	<select id="isDuplicateName" parameterType="map"
+		resultType="String">
+		SELECT userName
+		FROM chat_user
+		WHERE roomId = #{roomId}
+		AND userName = #{username};
+	</select>
+
+	<delete id="delUser">
+		DELETE FROM chat_user
+		WHERE roomId = #{roomId}
+		AND userId = #{userUUID};
+	</delete>
+
+	<select id="getUserName" parameterType="map" resultType="String">
+		SELECT
+		userName
+		FROM chat_user
+		WHERE roomId = #{roomId}
+		AND userId = #{userUUID};
+	</select>
+
+	<select id="getUserList" parameterType="String"
+		resultType="String">
+		SELECT userName
+		FROM chat_user
+		WHERE roomId = #{roomId};
+	</select>
+
+</mapper>
