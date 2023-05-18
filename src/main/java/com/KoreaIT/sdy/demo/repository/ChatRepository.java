@@ -31,5 +31,5 @@ public interface ChatRepository {
 
     ArrayList<String> getUserList(String roomId);
 
-	void saveChat(MessageType type, String roomId, String sender, String message, String time);
+	void saveChat(MessageType type, String roomId, String sender, int memberId, String message, String time);
 }

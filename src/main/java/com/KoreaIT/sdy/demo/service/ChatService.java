@@ -42,7 +42,7 @@ public class ChatService {
         template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
 
         // ChatRepository를 통해 메시지 정보를 DB에 저장
-        chatRepository.saveChat(chat.getType(), chat.getRoomId(), chat.getSender(), chat.getMessage(), chat.getTime());
+        chatRepository.saveChat(chat.getType(), chat.getRoomId(), chat.getSender(), chat.getMemberId(), chat.getMessage(), chat.getTime());
         
 
     }

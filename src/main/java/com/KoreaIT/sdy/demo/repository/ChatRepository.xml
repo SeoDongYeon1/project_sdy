@@ -47,6 +47,7 @@
 		SET `type` = #{type},
 		roomId = #{roomId},
 		sender = #{sender},
+		memberId = #{memberId},
 		message = #{message},
 		`time` = #{time};
 	</insert>
@@ -58,8 +59,7 @@
 	</delete>
 
 	<select id="getUserName" parameterType="map" resultType="String">
-		SELECT
-		userName
+		SELECT 	userName
 		FROM chat_user
 		WHERE roomId = #{roomId}
 		AND userId = #{userUUID};

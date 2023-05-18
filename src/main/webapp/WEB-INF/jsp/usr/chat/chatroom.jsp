@@ -20,6 +20,7 @@
 						<form id="usernameForm" name="usernameForm">
 								<div class="form-group">
 										<input type="hidden" value="${rq.loginedMemberLoginId }" id="name" name="loginId" />
+										<input type="hidden" value="${rq.loginedMemberId }" id="memberId" name="memberId" />
 								</div>
 								<div class="form-group">
 										<button type="submit" class="accent username-submit">참여하기</button>

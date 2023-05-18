@@ -15,6 +15,7 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
+var memberId = 0;
 
 var colors = [
 	'#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -27,6 +28,7 @@ const roomId = url.get('roomId');
 
 function connect(event) {
 	username = document.querySelector('#name').value.trim();
+	memberId = document.querySelector('#memberId').value.trim();
 
     usernamePage.classList.add('hidden');
     chatPage.classList.remove('hidden');
@@ -51,6 +53,7 @@ function onConnected() {
 		JSON.stringify({
 			"roomId": roomId,
 			sender: username,
+			memberId: memberId,
 			type: 'ENTER'
 		})
 	)
@@ -92,6 +95,7 @@ function sendMessage(event) {
 		var chatMessage = {
 			"roomId": roomId,
 			sender: username,
+			memberId: memberId,
 			message: messageInput.value,
 			type: 'TALK'
 		};
@@ -138,9 +142,10 @@ function onMessageReceived(payload) {
 	var messageText = document.createTextNode(chat.message);
 	textElement.appendChild(messageText);
 
-	if (chat.sender === username) {
+	if (parseInt(chat.memberId) === parseInt(memberId)) {
 		messageElement.classList.add('own-message');
 	} else {
+		console.log(memberId + '+' +chat.memberId);
 		messageElement.classList.add('other-message');
 	}
 
