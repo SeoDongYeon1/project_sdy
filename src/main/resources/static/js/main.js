@@ -74,7 +74,7 @@ function getUserList() {
         success: function (data) {
             var users = "";
             for (let i = 0; i < data.length; i++) {
-                //console.log("data[i] : "+data[i]);
+				
                 users += "<li class='dropdown-item'>" + data[i] + "</li>"
             }
             $list.html(users);

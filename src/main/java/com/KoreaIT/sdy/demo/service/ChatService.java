@@ -3,6 +3,7 @@ package com.KoreaIT.sdy.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -52,25 +53,28 @@ public class ChatService {
 
 	}
 
+	@EventListener
 	public void handleDisconnectEvent(SessionDisconnectEvent event) {
+		log.info("DisConnEvent {}", event);
+		
 		StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
 		int memberId = (int) headerAccessor.getSessionAttributes().get("memberId");
-		int id = (int) headerAccessor.getSessionAttributes().get("id");
+		int roomId = (int) headerAccessor.getSessionAttributes().get("roomId");
 
 		log.info("headAccessor {}", headerAccessor);
 
-		chatRepository.minusUserCnt(id);
+		chatRepository.minusUserCnt(roomId);
 
-		String username = chatRepository.getUserName(id, memberId);
+		String username = chatRepository.getUserName(roomId, memberId);
 
-		chatRepository.delUser(id, memberId);
+		chatRepository.delUser(roomId, memberId);
 
 		if (username != null) {
 			log.info("User Disconnected: " + username);
 			Chat chat = Chat.builder().type(Chat.MessageType.LEAVE).sender(username).message(username + " 님 퇴장!!")
 					.build();
-			template.convertAndSend("/sub/chat/room/" + id, chat);
+			template.convertAndSend("/sub/chat/room/" + roomId, chat);
 		}
 	}
 

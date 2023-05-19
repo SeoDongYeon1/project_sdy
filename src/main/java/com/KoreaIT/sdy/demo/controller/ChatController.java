@@ -25,28 +25,35 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
     @Autowired
     private SimpMessageSendingOperations template;
+    // Spring WebSocket 메시지 전송을 담당하는 인터페이스
     
     @Autowired
     private ChatService chatService;
 
+    // StompHeaderAccessor [headers={simpMessageType=MESSAGE, stompCommand=SEND, nativeHeaders={destination=[/pub/chat/enterUser], content-length=[61]}, simpSessionAttributes={}, simpHeartbeat=[J@659a17ed, lookupDestination=/chat/enterUser, simpSessionId=kn10dphs, simpDestination=/pub/chat/enterUser}
     @MessageMapping("/chat/enterUser")
     public void enterUser(@Payload Chat chat, SimpMessageHeaderAccessor headerAccessor) {
     	System.out.println(chat);
+    	System.out.println(headerAccessor + "====================================================");
         chatService.enterUser(chat, headerAccessor);
     }
-
+    
+    // 페이로드 : 데이터 전송 프로토콜에서 실제로 전송되는 데이터
+    // 아래 경로로 들어오는 WebSocket 메시지의 페이로드를 Chat 객체로 수신
     @MessageMapping("/chat/sendMessage")
     public void sendMessage(@Payload Chat chat) {
         log.info("CHAT {}", chat);
-        System.out.println(chat.getMessage() + "==================");
+        
         chatService.sendMessage(chat);
     }
-
+    
+    // WebSocket 연결 종료(SessionDisconnectEvent) 이벤트를 처리하는 메소드
     @EventListener
     public void webSocketDisconnectListener(SessionDisconnectEvent event) {
         chatService.handleDisconnectEvent(event);
     }
 
+    // 유저 목록을 받아오는 메소드
     @GetMapping("/chat/userlist")
     @ResponseBody
     public List<String> userList(int roomId) {
