@@ -403,7 +403,7 @@ UPDATE `member`
 SET age = 25
 WHERE id = 3;
 
-# 지역 조회
+# 지역 테이블 추가
 CREATE TABLE region (
 	`areacode` VARCHAR(50) NOT NULL COMMENT '행정구역코드' COLLATE 'utf8_general_ci',
 	`step1` VARCHAR(50) NOT NULL COMMENT '시도' COLLATE 'utf8_general_ci',
@@ -463,7 +463,7 @@ ALTER TABLE chat CONVERT TO CHARSET UTF8;
 CREATE TABLE chatRoom (
   id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   roomName VARCHAR(255) NOT NULL,
-  userCount BIGINT DEFAULT 0
+  memberId INT(11) UNSIGNED NOT NULL
 
 );
 ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
@@ -472,11 +472,11 @@ ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
 CREATE TABLE chat_user (
   id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   roomId INT(10) UNSIGNED NOT NULL,
-  userName VARCHAR(255) NOT NULL,
   memberId INT(11) UNSIGNED NOT NULL
 );
 
 ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
+
 
 
 #############################################################################################
@@ -492,6 +492,21 @@ SELECT * FROM member_club;
 SELECT * FROM chat;
 SELECT * FROM chatRoom;
 SELECT * FROM chat_user;
+
+# 채팅방 멤버수 구하기
+SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
+FROM chatRoom cr
+LEFT JOIN chat_user cu
+ON cr.id = cu.roomId
+GROUP BY cr.id
+
+# 채팅방 유저 이름 가져오기
+SELECT m.name AS 'userName'
+FROM chat_user cu
+INNER JOIN `member` m
+ON m.id = cu.memberId
+WHERE roomId = 1
+AND memberId = 2;
 
 
 # 마지막으로 삽입된 id 검색
