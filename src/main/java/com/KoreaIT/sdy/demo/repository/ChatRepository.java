@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.KoreaIT.sdy.demo.dto.Chat.MessageType;
 import com.KoreaIT.sdy.demo.dto.ChatRoom;
+import com.KoreaIT.sdy.demo.dto.Chat_User;
 
 
 @Mapper
@@ -28,4 +29,6 @@ public interface ChatRepository {
     public void saveChat(MessageType type, int roomId, String sender, int memberId, String message, String time);
 
 	public int getLastInsertId();
+
+	public Chat_User getChat_UserByRoomIdAndMemberId(int roomId, int memberId);
 }

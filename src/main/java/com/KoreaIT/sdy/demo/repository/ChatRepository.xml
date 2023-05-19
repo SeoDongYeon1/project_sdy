@@ -58,17 +58,22 @@
 	</select>
 	
 	<select id="getUserList" resultType="String">
-		SELECT cr.id, m.name AS 'userName'
+		SELECT m.name AS 'userName'
 		FROM chat_user cu
-		INNER JOIN chatRoom cr
-		ON cu.roomId = cr.id
 		INNER JOIN `member` m
 		ON m.id = cu.memberId
-		WHERE roomId = #{roomId};
+		WHERE cu.roomId = #{roomId};
 	</select>
 
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="getChat_UserByRoomIdAndMemberId" resultType="com.KoreaIT.sdy.demo.dto.Chat_User">
+		SELECT *
+		FROM chat_user
+		WHERE memberId = #{memberId}
+		AND roomId = #{roomId};
 	</select>
 	
 </mapper>

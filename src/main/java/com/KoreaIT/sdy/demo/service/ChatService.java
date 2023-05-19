@@ -29,6 +29,12 @@ public class ChatService {
 
 	public void enterUser(Chat chat, SimpMessageHeaderAccessor headerAccessor) {
 		System.out.println(chat.getRoomId());
+		
+		boolean isMemberIdUnique = isMemberIdUnique(chat.getRoomId(), chat.getMemberId());
+		
+		if(!isMemberIdUnique) {
+			return;
+		}
 
 		chatRepository.addUser(chat.getRoomId(), chat.getMemberId());
 
@@ -79,5 +85,13 @@ public class ChatService {
 	public List<String> getUserList(int roomId) {
 		return chatRepository.getUserList(roomId);
 	}
+	
+	public boolean isMemberIdUnique(int roomId, int memberId) {
+        // 해당 방(roomId)에서 memberId가 중복되는지 확인하는 로직을 구현합니다.
+        // 예를 들어, userRepository를 활용하여 데이터베이스에서 중복 여부를 확인할 수 있습니다.
+        boolean isUnique = chatRepository.getChat_UserByRoomIdAndMemberId(roomId, memberId) == null;
+        
+        return isUnique;
+    }
 
 }
