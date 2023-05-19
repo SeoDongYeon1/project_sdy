@@ -452,7 +452,7 @@ CREATE TABLE chat (
     roomId INT(10) UNSIGNED NOT NULL,
     sender VARCHAR(255) NOT NULL,
     memberId INT(11) UNSIGNED NOT NULL,
-    message VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
     `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -477,7 +477,14 @@ CREATE TABLE chat_user (
 
 ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
 
+SELECT *
+FROM chat_user
+WHERE memberId = 2
+AND roomId = 1
 
+SELECT *
+FROM chat
+WHERE roomId = 1;
 
 #############################################################################################
 # 검색 쿼리
@@ -507,6 +514,12 @@ INNER JOIN `member` m
 ON m.id = cu.memberId
 WHERE roomId = 1
 AND memberId = 2;
+
+SELECT m.name AS 'userName'
+FROM chat_user cu
+INNER JOIN `member` m
+ON m.id = cu.memberId
+WHERE roomId = 1;
 
 
 # 마지막으로 삽입된 id 검색

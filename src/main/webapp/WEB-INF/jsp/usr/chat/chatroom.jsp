@@ -55,13 +55,13 @@
 		</div>
 </c:if>
 
-<div id="chat-page" class="hidden">
+<div id="chat-page" class="hidden" >
 		<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">참가한 유저</button>
 				<div id="list" class="dropdown-menu" aria-labelledby="dropdownMenuButton"> </div>
 		</div>
-		<div class="chat-container">
+		<div class="chat-container" style="width: 600px;">
 				<div class="chat-header">
 						<h2>${room.roomName}</h2>
 				</div>
