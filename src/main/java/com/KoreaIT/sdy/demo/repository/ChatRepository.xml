@@ -76,4 +76,10 @@
 		AND roomId = #{roomId};
 	</select>
 	
+	<select id="getChatHistory" resultType="com.KoreaIT.sdy.demo.dto.Chat">
+		SELECT *
+		FROM chat
+		WHERE roomId = #{roomId};
+	</select>
+	
 </mapper>

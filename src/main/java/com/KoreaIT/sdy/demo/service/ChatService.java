@@ -93,5 +93,9 @@ public class ChatService {
         
         return isUnique;
     }
+	
+	public List<Chat> getChatHistory(int roomId) {
+        return chatRepository.getChatHistory(roomId);
+    }
 
 }

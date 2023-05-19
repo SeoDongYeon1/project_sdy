@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.KoreaIT.sdy.demo.dto.Chat;
 import com.KoreaIT.sdy.demo.dto.Chat.MessageType;
 import com.KoreaIT.sdy.demo.dto.ChatRoom;
 import com.KoreaIT.sdy.demo.dto.Chat_User;
@@ -31,4 +32,6 @@ public interface ChatRepository {
 	public int getLastInsertId();
 
 	public Chat_User getChat_UserByRoomIdAndMemberId(int roomId, int memberId);
+
+	public List<Chat> getChatHistory(int roomId);
 }
