@@ -29,9 +29,8 @@ public class ChatService {
 
 	public void enterUser(Chat chat, SimpMessageHeaderAccessor headerAccessor) {
 		System.out.println(chat.getRoomId());
-		chatRepository.plusUserCnt(chat.getRoomId());
 
-		chatRepository.addUser(chat.getRoomId(), chat.getSender(), chat.getMemberId());
+		chatRepository.addUser(chat.getRoomId(), chat.getMemberId());
 
 		int memberId = chat.getMemberId();
 
@@ -55,6 +54,7 @@ public class ChatService {
 
 	@EventListener
 	public void handleDisconnectEvent(SessionDisconnectEvent event) {
+		log.info("SessionDisconnectEvent occurred.");
 		log.info("DisConnEvent {}", event);
 		
 		StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
@@ -63,8 +63,6 @@ public class ChatService {
 		int roomId = (int) headerAccessor.getSessionAttributes().get("roomId");
 
 		log.info("headAccessor {}", headerAccessor);
-
-		chatRepository.minusUserCnt(roomId);
 
 		String username = chatRepository.getUserName(roomId, memberId);
 

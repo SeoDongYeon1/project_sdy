@@ -15,13 +15,9 @@ public interface ChatRepository {
 
     public ChatRoom getRoomById(int id);
 
-    public void createChatRoom(String roomName);
+    public void createChatRoom(String roomName, int memberId);
 
-    public void plusUserCnt(int id);
-
-    public void minusUserCnt(int id);
-
-    public void addUser(int roomId, String userName, int memberId);
+    public void addUser(int roomId, int memberId);
 
     public void delUser(int roomId, int memberId);
 

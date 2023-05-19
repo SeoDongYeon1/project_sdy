@@ -29,7 +29,7 @@ const id = url.get('id');
 function connect(event) {
 	username = document.querySelector('#name').value.trim();
 	memberId = document.querySelector('#memberId').value.trim();
-
+	
     usernamePage.classList.add('hidden');
     chatPage.classList.remove('hidden');
 

@@ -30,8 +30,8 @@ public class ChatRoomController {
 
     // 채팅방 생성
     @PostMapping("/usr/chat/createroom")
-    public String createRoom(@RequestParam String roomName, RedirectAttributes rttr) {
-        ChatRoom room = chatRoomService.createChatRoom(roomName);
+    public String createRoom(@RequestParam String roomName, @RequestParam int memberId, RedirectAttributes rttr) {
+        ChatRoom room = chatRoomService.createChatRoom(roomName, memberId);
         
         log.info("CREATE Chat Room {}", room);
         rttr.addFlashAttribute("roomName", room);

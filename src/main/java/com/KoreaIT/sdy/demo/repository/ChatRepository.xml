@@ -5,37 +5,30 @@
 	namespace="com.KoreaIT.sdy.demo.repository.ChatRepository">
 
 	<select id="getRooms" resultType="com.KoreaIT.sdy.demo.dto.ChatRoom">
-		SELECT *
-		FROM ChatRoom
+		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
+		FROM chatRoom cr
+		LEFT JOIN chat_user cu
+		ON cr.id = cu.roomId
+		GROUP BY cr.id
 	</select>
 
 	<select id="getRoomById" resultType="com.KoreaIT.sdy.demo.dto.ChatRoom">
-		SELECT *
-		FROM chatRoom
-		WHERE id = #{id}
+		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
+		FROM chatRoom cr
+		INNER JOIN chat_user cu
+		ON cr.id = cu.roomId
+		WHERE cr.id = #{id};
 	</select>
 	
 	<insert id="createChatRoom">
 		INSERT INTO chatRoom
-		SET roomName = #{roomName};
+		SET roomName = #{roomName},
+		memberId = #{memberId};
 	</insert>
-
-	<update id="plusUserCnt">
-		UPDATE chatRoom
-		SET userCount = userCount + 1
-		WHERE id = #{id};
-	</update>
-
-	<update id="minusUserCnt">
-		UPDATE chatRoom
-		SET userCount = userCount - 1
-		WHERE id = #{id};
-	</update>
 
 	<insert id="addUser">
 		INSERT INTO chat_user
 		SET roomId = #{roomId},
-		userName = #{userName},
 		memberId = #{memberId};
 	</insert>
 	
@@ -56,15 +49,22 @@
 	</insert>
 
 	<select id="getUserName" resultType="String">
-		SELECT userName
-		FROM chat_user
+		SELECT m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
 		WHERE roomId = #{roomId}
 		AND memberId = #{memberId};
 	</select>
 	
 	<select id="getUserList" resultType="String">
-		SELECT userName
-		FROM chat_user;
+		SELECT cr.id, m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN chatRoom cr
+		ON cu.roomId = cr.id
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
+		WHERE roomId = #{roomId};
 	</select>
 
 	<select id="getLastInsertId" resultType="int">
