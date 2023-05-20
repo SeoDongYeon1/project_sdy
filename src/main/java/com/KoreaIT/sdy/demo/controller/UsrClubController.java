@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.KoreaIT.sdy.demo.service.ChatRoomService;
 import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
+import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -22,6 +24,9 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrClubController {
 	@Autowired
 	private ClubService clubService;
+	
+	@Autowired
+	private ChatRoomService chatRoomService;
 	
 	@Autowired
 	private Rq rq;
@@ -43,7 +48,10 @@ public class UsrClubController {
 			return rq.jsHistoryBackOnView("존재하지 않는 페이지입니다.");
 		}
 		
+		Boolean actorCanChat = clubService.actorCanChat(rq.getLoginedMemberId(), id);
+		
 		model.addAttribute("club", club);
+		model.addAttribute("actorCanChat", actorCanChat);
 
 		return "usr/club/detail";
 	}
@@ -73,6 +81,8 @@ public class UsrClubController {
 		ResultData createRd = clubService.create(rq.getLoginedMemberId(), name, areacode ,categoryId, purpose);
 		
 		int id = (int)createRd.getData1();
+		
+		chatRoomService.createChatRoom(name, rq.getLoginedMemberId(), id);
 		
 		return Ut.jsReplace(createRd.getMsg(), Ut.f("../club/detail?id=%d", id));
 	}

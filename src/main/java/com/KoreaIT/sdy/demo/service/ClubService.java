@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.KoreaIT.sdy.demo.repository.ClubRepository;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
+import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
 @Service
@@ -63,6 +64,16 @@ public class ClubService {
 
 	public List<Club> getmembersCount() {
 		return clubRepository.getmembersCount();
+	}
+
+	public Boolean actorCanChat(int actorId, int id) {
+		int count = clubRepository.actorCanChat(actorId, id);
+		
+		if(count!=1) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }

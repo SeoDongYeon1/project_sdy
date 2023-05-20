@@ -31,4 +31,6 @@ public interface ClubRepository {
 
 	public void join(int clubId, int memberId);
 
+	public int actorCanChat(int actorId, int id);
+
 }

@@ -123,5 +123,12 @@
 		clubId = #{clubId},
 		regDate = NOW();
 	</insert>
+	
+	<select id="actorCanChat" resultType="int">
+		SELECT COUNT(*)
+		FROM member_club
+		WHERE clubId = #{id}
+		AND memberId = #{actorId};
+	</select>
 
 </mapper>

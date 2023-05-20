@@ -22,13 +22,17 @@
 	
 	<insert id="createChatRoom">
 		INSERT INTO chatRoom
-		SET roomName = #{roomName},
-		memberId = #{memberId};
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		roomName = #{roomName},
+		memberId = #{memberId},
+		clubId = #{clubId};
 	</insert>
 
 	<insert id="addUser">
 		INSERT INTO chat_user
-		SET roomId = #{roomId},
+		SET regDate = NOW(),
+		roomId = #{roomId},
 		memberId = #{memberId};
 	</insert>
 	

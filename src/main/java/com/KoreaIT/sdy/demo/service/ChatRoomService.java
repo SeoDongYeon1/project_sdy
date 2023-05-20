@@ -20,8 +20,8 @@ public class ChatRoomService {
         return chatRepository.getRooms();
     }
 
-    public ChatRoom createChatRoom(String roomName, int memberId) {
-    	chatRepository.createChatRoom(roomName, memberId);
+    public ChatRoom createChatRoom(String roomName, int memberId, int clubId) {
+    	chatRepository.createChatRoom(roomName, memberId, clubId);
     	
     	int id = chatRepository.getLastInsertId();
     	

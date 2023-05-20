@@ -4,4 +4,18 @@
 <%@ include file="../common/head.jspf"%>
 
 <div>${club.purpose }</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<hr />
+<c:if test="${actorCanChat }">
+	<div>
+			<a href="../chat/room?id=${club.id }" class="btn btn-outline btn-xs">채팅</a>
+	</div>
+</c:if>
 <%@ include file="../common/foot.jspf"%>

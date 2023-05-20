@@ -113,7 +113,8 @@
 								<option id="town" value="">읍/면/동</option>
 						</select>
 				</div>
-
+				<br />
+				<br />
 				<div>
 						<div style="text-align: center; width: 90%;">
 								<select style="border-color: black; width: 200px;" id="categoryId" class="select select-ghost">
