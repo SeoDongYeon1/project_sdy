@@ -2,6 +2,7 @@ package com.KoreaIT.sdy.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -149,5 +150,66 @@ public class UsrMemberController {
 		}
 		
 		return ResultData.from("S-1", "사용 가능한 닉네임입니다.", nickname);
+	}
+	
+	@RequestMapping("/usr/member/profile")
+	public String showProfile(Model model) {
+		Member member = rq.getLoginedMember();
+
+		model.addAttribute("member", member);
+		
+		return "usr/member/profile";
+	}
+	
+	@RequestMapping("/usr/member/checkPw")
+	public String showCheckPw(Model model) {
+		Member member = rq.getLoginedMember();
+		
+		model.addAttribute("member", member);
+
+		return "usr/member/checkPw";
+	}
+	
+	@RequestMapping("/usr/member/modify")
+	public String modify(Model model) {
+
+		Member member = rq.getLoginedMember();
+
+		model.addAttribute("member", member);
+
+		return "usr/member/modify";
+	}
+
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(int id, String loginPw, String name, String nickname, String cellphoneNum) {
+		
+		if(rq.getLoginedMemberId()!= id) {
+			return rq.jsHistoryBack("F-0", "권한이 없습니다.");
+		}
+		
+		Member member = memberService.getMemberById(id);
+
+		if (member == null) {
+			return rq.jsHistoryBack("F-E", "존재하지 않는 회원입니다.");
+		}
+
+		if (Ut.empty(loginPw)) {
+			loginPw = null;
+		}
+
+		if (Ut.empty(name)) {
+			return rq.jsHistoryBack("F-1", "이름을 입력해주세요.");
+		}
+		if (Ut.empty(nickname)) {
+			return rq.jsHistoryBack("F-2", "닉네임을 입력해주세요.");
+		}
+		if (Ut.empty(cellphoneNum)) {
+			return rq.jsHistoryBack("F-3", "전화번호를 입력해주세요.");
+		}
+
+		ResultData modifyRd = memberService.modifyMember(id, loginPw, name, nickname, cellphoneNum);
+
+		return rq.jsReplace(modifyRd.getMsg(), "../member/profile");
 	}
 }

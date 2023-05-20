@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.ClubRepository;
+import com.KoreaIT.sdy.demo.repository.MemberRepository;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
 import com.KoreaIT.sdy.demo.vo.Member;
@@ -16,6 +17,9 @@ import com.KoreaIT.sdy.demo.vo.ResultData;
 public class ClubService {
 	@Autowired
 	ClubRepository clubRepository;
+	
+	@Autowired
+	MemberRepository memberRepository;
 	
 
 	// 생성자

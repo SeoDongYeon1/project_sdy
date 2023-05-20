@@ -63,7 +63,7 @@
 										
 										<div class="account-info-more-content">
 												<ul>
-														<li><a href="/">프로필</a></li>
+														<li><a href="../member/profile">프로필</a></li>
 														<hr />
 														<li><a href="../member/doLogout">로그아웃</a></li>
 												</ul>

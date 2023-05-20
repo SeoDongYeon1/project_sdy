@@ -1,5 +1,7 @@
 package com.KoreaIT.sdy.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,15 @@ public class MemberService {
 
 	public Member getMemberByNickname(String nickname) {
 		return memberRepository.getMemberByNickname(nickname);
+	}
+
+	public List<Member> getMembersByRoomId(int roomId) {
+		return memberRepository.getMembersByRoomId(roomId);
+	}
+	
+	public ResultData modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum) {
+		memberRepository.modifyMember(id, loginPw, name, nickname, cellphoneNum);
+		return ResultData.from("S-1", "회원 정보 수정이 완료되었습니다");
 	}
 }
 

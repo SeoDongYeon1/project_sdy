@@ -47,4 +47,16 @@
 		WHERE nickname = #{nickname};
 	</select>
 	
+	<update id="modifyMember">
+		UPDATE `member`
+		<set>
+			updateDate= NOW(),
+			<if test="loginPw != null and loginPw != ''">loginPw = #{loginPw},</if>
+			<if test="name != null and name != ''">`name` = #{name},</if>
+			<if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+			<if test="cellphoneNum != null and cellphoneNum != ''">cellphoneNum = #{cellphoneNum},</if>
+		</set>		
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

@@ -130,5 +130,13 @@
 		WHERE clubId = #{id}
 		AND memberId = #{actorId};
 	</select>
-
+	
+	<select id="getmembers" resultType="Club">
+		SELECT c.id AS 'id',
+		COUNT(mc.memberId) AS 'membersCount'
+		FROM club c
+		INNER JOIN member_club mc
+		ON c.id = mc.clubId
+		GROUP BY c.id;
+	</select>
 </mapper>

@@ -272,7 +272,7 @@ function doBadReaction(articleId) {
 						</c:forEach>
 				</table>
 		</div>
-
+</div>
 <!-- 댓글 작성 관련 -->
 <script>
 	let ReplyWrite__SubmitFormDone = false;

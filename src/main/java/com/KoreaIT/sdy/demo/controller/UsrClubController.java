@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.ChatRoomService;
 import com.KoreaIT.sdy.demo.service.ClubService;
+import com.KoreaIT.sdy.demo.service.MemberService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
+import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -26,6 +28,9 @@ public class UsrClubController {
 	
 	@Autowired
 	private ChatRoomService chatRoomService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@Autowired
 	private Rq rq;
@@ -47,7 +52,10 @@ public class UsrClubController {
 			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 페이지입니다.");
 		}
 		
+		List<Member> members = memberService.getMembersByRoomId(id);
+		
 		model.addAttribute("club", club);
+		model.addAttribute("members", members);
 
 		return "usr/club/detail";
 	}
