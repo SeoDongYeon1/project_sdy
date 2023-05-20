@@ -516,19 +516,7 @@ CREATE TABLE PersonalChatRoom (
 
 ALTER TABLE PersonalChatRoom CONVERT TO CHARSET UTF8;
 
-SELECT cr.*
-FROM ClubchatRoom cr
-INNER JOIN chat c
-ON cr.id = c.roomId
-WHERE c.memberId =2
-GROUP BY memberId;
 
-SELECT cr.*
-FROM PersonalchatRoom cr
-INNER JOIN chat c
-ON cr.id = c.roomId
-WHERE c.memberId =2
-GROUP BY memberId;
 
 #############################################################################################
 # 검색 쿼리
@@ -618,8 +606,14 @@ SELECT * FROM PersonalchatRoom
 WHERE (memberId1 =2 OR memberId1 = 1) AND (memberId2=1 OR memberId2 = 2)
 LIMIT 1;
 
-# 개인 채팅방 가져오는 쿼리
+# 맴버아이디로 개인 채팅방 리스트 가져오는 쿼리
 SELECT * FROM PersonalchatRoom
 WHERE (memberId1 =2 OR memberId2=2)
 
-
+# 맴버아이디로 동호회 채팅방 리스트 가져오는 쿼리
+SELECT cr.*
+FROM ClubchatRoom cr
+INNER JOIN chat c
+ON cr.id = c.roomId
+WHERE c.memberId =2
+GROUP BY memberId;

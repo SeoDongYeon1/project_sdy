@@ -56,6 +56,10 @@ public class ChatRoomController {
     // 회원 채팅방 생성
     @RequestMapping("/usr/chat/createPersonalChatroom")
     public String createPersonalChatRoom(@RequestParam int memberId1, RedirectAttributes rttr) {
+    	if(memberId1==rq.getLoginedMemberId()) {
+    		return rq.jsHistoryBackOnView("F-1", "해당 기능은 사용할 수 없습니다.");
+    	}
+    	
     	PersonalChatRoom isExistRoom = chatRoomService.getPersonalChatRoomByMemberId(memberId1, rq.getLoginedMemberId());
     	
     	if(isExistRoom!=null) {

@@ -18,7 +18,7 @@
 						</c:forEach>
 				</div>
 		</div>
-		
+		<hr />
 		<div class="container">
 				<div>
 						<c:forEach var="croom" items="${CList }">
@@ -34,10 +34,5 @@
 						</c:forEach>
 				</div>
 		</div>
-		<form action="/usr/chat/createroom" method="post" onsubmit="createRoom(this); return false;">
-				<input type="hidden" name="memberId" value=${rq.loginedMemberId }>
-				<input style="display: inline-block;" type="text" name="roomName" class="form-control input input-bordered" id="roomName">
-				<button class="btn btn-secondary" id="create">개설하기</button>
-		</form>
 </div>
 <%@ include file="../common/foot.jspf"%>
