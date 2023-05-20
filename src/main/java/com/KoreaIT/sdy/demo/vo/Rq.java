@@ -93,7 +93,7 @@ public class Rq {
 		
 	}
 
-	public String jsHistoryBackOnView(String msg) {
+	public String jsHistoryBackOnView(String resultCode, String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
 		return "usr/common/js";

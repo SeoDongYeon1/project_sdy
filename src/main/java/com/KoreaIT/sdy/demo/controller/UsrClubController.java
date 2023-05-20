@@ -16,7 +16,6 @@ import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
-import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -45,13 +44,10 @@ public class UsrClubController {
 		Club club = clubService.getClubById(id);
 		
 		if(club==null) {
-			return rq.jsHistoryBackOnView("존재하지 않는 페이지입니다.");
+			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 페이지입니다.");
 		}
 		
-		Boolean actorCanChat = clubService.actorCanChat(rq.getLoginedMemberId(), id);
-		
 		model.addAttribute("club", club);
-		model.addAttribute("actorCanChat", actorCanChat);
 
 		return "usr/club/detail";
 	}

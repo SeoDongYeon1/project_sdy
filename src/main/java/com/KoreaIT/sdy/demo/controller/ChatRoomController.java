@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.KoreaIT.sdy.demo.dto.ChatRoom;
 import com.KoreaIT.sdy.demo.service.ChatRoomService;
+import com.KoreaIT.sdy.demo.service.ClubService;
+import com.KoreaIT.sdy.demo.vo.Rq;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +21,12 @@ public class ChatRoomController {
 
     @Autowired
     private ChatRoomService chatRoomService;
+    
+    @Autowired
+    private ClubService clubService;
+    
+    @Autowired
+    private Rq rq;
 
     // 채팅 리스트 화면
     @GetMapping("/usr/chat/list")
@@ -41,6 +49,13 @@ public class ChatRoomController {
     // 채팅방 입장 화면
     @GetMapping("/usr/chat/room")
     public String roomDetail(Model model, @RequestParam int id){
+    	
+    	Boolean actorCanChat = clubService.actorCanChat(rq.getLoginedMemberId(), id);
+    	
+    	if(actorCanChat==false) {
+    		return rq.jsHistoryBackOnView("F-1", "해당 동호회에 가입 후 이용해주세요.");
+    	}
+    	
         log.info("id {}", id);
         model.addAttribute("room", chatRoomService.getRoomById(id));
         return "usr/chat/chatroom";

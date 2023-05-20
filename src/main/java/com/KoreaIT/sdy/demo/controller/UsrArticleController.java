@@ -74,7 +74,7 @@ public class UsrArticleController {
 		Board board = boardService.getBoardById(boardId);
 
 		if (boardId != 0 && board == null) {
-			return rq.jsHistoryBackOnView("존재하지 않는 게시판입니다.");
+			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 게시판입니다.");
 		}
 
 		int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
@@ -111,7 +111,7 @@ public class UsrArticleController {
 		Article foundArticle = articleService.getForPrintArticle(id);
 		
 		if(foundArticle==null) {
-			return rq.jsHistoryBackOnView("존재하지 않는 페이지입니다.");
+			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 페이지입니다.");
 		}
 
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),

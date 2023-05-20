@@ -33,7 +33,7 @@ public class UsrHomeController {
 		Category category = categoryService.getCategoryById(categoryId);
 
 		if (categoryId != 0 && category == null) {
-			return rq.jsHistoryBackOnView("존재하지 않는 카테고리입니다.");
+			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 카테고리입니다.");
 		}
 
 		int clubsCount = clubService.getClubsCount(categoryId, searchKeyword);

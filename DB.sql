@@ -462,29 +462,46 @@ ALTER TABLE chat CONVERT TO CHARSET UTF8;
 # chatRoom 테이블 생성
 CREATE TABLE chatRoom (
   id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  regDate DATETIME NOT NULL,
+  updateDate DATETIME NOT NULL,
   roomName VARCHAR(255) NOT NULL,
-  memberId INT(11) UNSIGNED NOT NULL
+  memberId INT(11) UNSIGNED NOT NULL,
+  clubId INT(11) UNSIGNED NOT NULL
 
 );
 ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
 
+INSERT INTO chatRoom
+SET regDate = NOW(),
+updateDate = NOW(),
+roomName = '축구좋아',
+memberId = 1,
+clubId = 1;
+
+INSERT INTO chatRoom
+SET regDate = NOW(),
+updateDate = NOW(),
+roomName = '등산가자!',
+memberId = 2,
+clubId = 2;
+
+INSERT INTO chatRoom
+SET regDate = NOW(),
+updateDate = NOW(),
+roomName = '도제(도자기 제작)',
+memberId = 3,
+clubId = 3;
+
 # chat_user 테이블 생성
 CREATE TABLE chat_user (
   id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  regDate DATETIME NOT NULL,
   roomId INT(10) UNSIGNED NOT NULL,
   memberId INT(11) UNSIGNED NOT NULL
 );
 
 ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
 
-SELECT *
-FROM chat_user
-WHERE memberId = 2
-AND roomId = 1
-
-SELECT *
-FROM chat
-WHERE roomId = 1;
 
 #############################################################################################
 # 검색 쿼리
