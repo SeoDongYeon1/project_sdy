@@ -106,11 +106,25 @@
 		AND roomType = #{roomType};
 	</select>
 	
-	<select id="getPersonalChatRoomByMemberId" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+	<select id="getPersonalChatRoomByMaM" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
 		SELECT * FROM PersonalchatRoom
 		WHERE (memberId1 =#{memberId1} OR memberId1 = #{memberId2}) 
 		AND (memberId2=#{memberId1} OR memberId2 = #{memberId2})
 		LIMIT 1;
+	</select>
+	
+	<select id="getClubChatRoomsByMemberId" resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
+		SELECT cr.*
+		FROM ClubchatRoom cr
+		INNER JOIN chat c
+		ON cr.id = c.roomId
+		WHERE c.memberId = #{memberId}
+		GROUP BY memberId;
+	</select>
+	
+	<select id="getPersonalChatRoomsByMemberId" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+		SELECT * FROM PersonalchatRoom
+		WHERE (memberId1 = #{memberId} OR memberId2 = #{memberId});
 	</select>
 	
 </mapper>

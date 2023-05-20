@@ -32,9 +32,14 @@ public class ChatRoomController {
 
     // 채팅 리스트 화면
     @GetMapping("/usr/chat/list")
-    public String goChatRoom(Model model){
-        model.addAttribute("list", chatRoomService.getRooms());
-        log.info("SHOW ALL ChatList {}", chatRoomService.getRooms());
+    public String ShowChatRoomList(Model model){
+    	
+        model.addAttribute("PList", chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId()));
+        model.addAttribute("CList", chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId()));
+        
+        log.info("SHOW ALL ChatList {}", chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId()));
+        log.info("SHOW ALL ChatList {}", chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId()));
+        
         return "usr/chat/chatlist";
     }
 

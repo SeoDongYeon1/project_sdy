@@ -50,6 +50,14 @@ public class ChatRoomService {
 	}
 
 	public PersonalChatRoom getPersonalChatRoomByMemberId(int memberId1, int memberId2) {
-		return chatRepository.getPersonalChatRoomByMemberId(memberId1, memberId2);
+		return chatRepository.getPersonalChatRoomByMaM(memberId1, memberId2);
+	}
+
+	public List<ClubChatRoom> getClubChatRoomsByMemberId(int memberId) {
+		return chatRepository.getClubChatRoomsByMemberId(memberId);
+	}
+
+	public List<PersonalChatRoom> getPersonalChatRoomsByMemberId(int memberId) {
+		return chatRepository.getPersonalChatRoomsByMemberId(memberId);
 	}
 }

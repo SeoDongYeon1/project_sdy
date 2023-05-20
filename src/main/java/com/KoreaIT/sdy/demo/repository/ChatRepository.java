@@ -40,5 +40,9 @@ public interface ChatRepository {
 
 	public PersonalChatRoom getPersonalChatRoomById(int id);
 
-	public PersonalChatRoom getPersonalChatRoomByMemberId(int memberId1, int memberId2);
+	public PersonalChatRoom getPersonalChatRoomByMaM(int memberId1, int memberId2);
+
+	public List<ClubChatRoom> getClubChatRoomsByMemberId(int memberId);
+
+	public List<PersonalChatRoom> getPersonalChatRoomsByMemberId(int memberId);
 }
