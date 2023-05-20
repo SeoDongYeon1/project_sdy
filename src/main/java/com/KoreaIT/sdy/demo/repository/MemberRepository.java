@@ -21,7 +21,7 @@ public interface MemberRepository {
 
 	public Member getMemberByNickname(String nickname);
 
-	public List<Member> getMembersByRoomId(int roomId);
+	public List<Member> getMembersByClubId(int clubId);
 	
 	public void modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum);
 

@@ -52,7 +52,7 @@ public class UsrClubController {
 			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 페이지입니다.");
 		}
 		
-		List<Member> members = memberService.getMembersByRoomId(id);
+		List<Member> members = memberService.getMembersByClubId(id);
 		
 		model.addAttribute("club", club);
 		model.addAttribute("members", members);
@@ -86,7 +86,7 @@ public class UsrClubController {
 		
 		int id = (int)createRd.getData1();
 		
-		chatRoomService.createChatRoom(name, rq.getLoginedMemberId(), id);
+		chatRoomService.createClubChatRoom(name, rq.getLoginedMemberId(), id);
 		
 		return Ut.jsReplace(createRd.getMsg(), Ut.f("../club/detail?id=%d", id));
 	}

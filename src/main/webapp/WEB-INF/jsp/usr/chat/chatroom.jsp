@@ -63,7 +63,7 @@
 		</div>
 		<div class="chat-container" style="width: 600px;">
 				<div class="chat-header">
-						<h2>${room.roomName}</h2>
+						<h2>채팅방</h2>
 				</div>
 				<div class="connecting">연결중..</div>
 				<ul id="messageArea">

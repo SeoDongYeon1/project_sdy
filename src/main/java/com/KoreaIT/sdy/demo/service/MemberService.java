@@ -58,8 +58,8 @@ public class MemberService {
 		return memberRepository.getMemberByNickname(nickname);
 	}
 
-	public List<Member> getMembersByRoomId(int roomId) {
-		return memberRepository.getMembersByRoomId(roomId);
+	public List<Member> getMembersByClubId(int clubId) {
+		return memberRepository.getMembersByClubId(clubId);
 	}
 	
 	public ResultData modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum) {

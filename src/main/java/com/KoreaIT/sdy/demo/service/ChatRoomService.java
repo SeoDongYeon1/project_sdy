@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.KoreaIT.sdy.demo.dto.ChatRoom;
+import com.KoreaIT.sdy.demo.dto.ClubChatRoom;
+import com.KoreaIT.sdy.demo.dto.PersonalChatRoom;
 import com.KoreaIT.sdy.demo.repository.ChatRepository;
 
 @Service
@@ -16,21 +17,39 @@ public class ChatRoomService {
         this.chatRepository = chatRepository;
     }
 
-    public List<ChatRoom> getRooms() {
+    public List<ClubChatRoom> getRooms() {
         return chatRepository.getRooms();
     }
 
-    public ChatRoom createChatRoom(String roomName, int memberId, int clubId) {
-    	chatRepository.createChatRoom(roomName, memberId, clubId);
+    public ClubChatRoom createClubChatRoom(String roomName, int memberId, int clubId) {
+    	chatRepository.createClubChatRoom(roomName, memberId, clubId);
     	
     	int id = chatRepository.getLastInsertId();
     	
-    	ChatRoom room = chatRepository.getRoomById(id);
+    	ClubChatRoom room = chatRepository.getClubChatRoomById(id);
     	
     	return room;
     }
 
-    public ChatRoom getRoomById(int id) {
-        return chatRepository.getRoomById(id);
+    public ClubChatRoom getClubChatRoomById(int id) {
+        return chatRepository.getClubChatRoomById(id);
     }
+    
+    public PersonalChatRoom getPersonalChatRoomById(int id) {
+    	return chatRepository.getPersonalChatRoomById(id);
+    }
+
+	public PersonalChatRoom createPersonalChatRoom(int memberId1, int memberId2) {
+		chatRepository.createPersonalChatRoom(memberId1, memberId2);
+    	
+    	int id = chatRepository.getLastInsertId();
+    	
+    	PersonalChatRoom room = chatRepository.getPersonalChatRoomById(id);
+    	
+    	return room;
+	}
+
+	public PersonalChatRoom getPersonalChatRoomByMemberId(int memberId1, int memberId2) {
+		return chatRepository.getPersonalChatRoomByMemberId(memberId1, memberId2);
+	}
 }

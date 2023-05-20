@@ -47,6 +47,14 @@
 		WHERE nickname = #{nickname};
 	</select>
 	
+	<select id="getMembersByClubId" resultType="Member">
+		SELECT m.*
+		FROM `member` m
+		INNER JOIN member_club mc
+		ON m.id = mc.memberId
+		WHERE mc.clubId = #{clubId};
+	</select>
+	
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>

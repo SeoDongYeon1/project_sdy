@@ -30,7 +30,7 @@
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 												<div class="ms-2 me-auto">
 														<div class="fw-bold">
-																<span class="hidden" id="${room.roomName}"></span> <a href="../chat/room?id=${room.id }">[[${room.roomName}]]</a>
+																<span class="hidden" id="${room.roomName}"></span> <a href="../chat/ClubChatroom?id=${room.id }">[[${room.roomName}]]</a>
 														</div>
 												</div> 
 												<span class="badge bg-primary rounded-pill">${room.userCount}명</span>

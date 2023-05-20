@@ -38,6 +38,7 @@ public class ClubService {
 
 		int clubId = clubRepository.getLastInsertId();
 		
+		// 클럽 만든 사람 자동으로 클럽에 가입되도록
 		clubRepository.join(clubId, loginedMemberId);
 
 		return ResultData.from("S-1", "동호회가 생성되었습니다.", clubId);

@@ -153,8 +153,8 @@ public class UsrMemberController {
 	}
 	
 	@RequestMapping("/usr/member/profile")
-	public String showProfile(Model model) {
-		Member member = rq.getLoginedMember();
+	public String showProfile(Model model, int id) {
+		Member member = memberService.getMemberById(id);
 
 		model.addAttribute("member", member);
 		

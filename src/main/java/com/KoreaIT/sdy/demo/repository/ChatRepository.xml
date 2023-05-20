@@ -4,36 +4,50 @@
 <mapper
 	namespace="com.KoreaIT.sdy.demo.repository.ChatRepository">
 
-	<select id="getRooms" resultType="com.KoreaIT.sdy.demo.dto.ChatRoom">
+	<select id="getRooms" resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
 		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
-		FROM chatRoom cr
+		FROM ClubchatRoom cr
 		LEFT JOIN chat_user cu
 		ON cr.id = cu.roomId
 		GROUP BY cr.id
 	</select>
 
-	<select id="getRoomById" resultType="com.KoreaIT.sdy.demo.dto.ChatRoom">
+	<select id="getClubChatRoomById" resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
 		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
-		FROM chatRoom cr
+		FROM ClubchatRoom cr
 		INNER JOIN chat_user cu
 		ON cr.id = cu.roomId
 		WHERE cr.id = #{id};
 	</select>
 	
-	<insert id="createChatRoom">
-		INSERT INTO chatRoom
+	<select id="getPersonalChatRoomById" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+		SELECT *
+		FROM PersonalchatRoom
+		WHERE id = #{id};
+	</select>
+	
+	<insert id="createClubChatRoom">
+		INSERT INTO ClubchatRoom
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		roomName = #{roomName},
 		memberId = #{memberId},
 		clubId = #{clubId};
 	</insert>
+	
+	<insert id="createPersonalChatRoom">
+		INSERT INTO PersonalchatRoom
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId1 = #{memberId1},
+		memberId2 = #{memberId2};
+	</insert>
 
 	<insert id="addUser">
 		INSERT INTO chat_user
 		SET regDate = NOW(),
 		roomId = #{roomId},
-		memberId = #{memberId},
+		memberId = #{memberId};
 	</insert>
 	
 	<delete id="delUser">
@@ -84,6 +98,12 @@
 		SELECT *
 		FROM chat
 		WHERE roomId = #{roomId};
+	</select>
+	
+	<select id="getPersonalChatRoomByMemberId" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+		SELECT * FROM PersonalchatRoom
+		WHERE (memberId1 =#{memberId1} OR memberId1 = #{memberId2}) 
+		AND (memberId2=#{memberId1} OR memberId2 = #{memberId2});
 	</select>
 	
 </mapper>

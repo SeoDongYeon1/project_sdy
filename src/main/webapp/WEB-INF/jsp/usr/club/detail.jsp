@@ -6,44 +6,40 @@
 <div class="mt-8 text-xl mx-auto px-3">
 		<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
 				<tr>
-						<th>번호</th>
-						<th>${article.id }</th>
-				</tr>
-				<tr>
-						<th>작성자</th>
-						<th>${article.extra__writer }</th>
-				</tr>
-				<tr>
 						<th>제목</th>
-						<th>${article.title }</th>
+						<th>${club.name }</th>
 				</tr>
 				<tr>
-						<th>내용</th>
-						<th>${article.body }</th>
+						<th>활동 내용</th>
+						<th>${club.purpose }</th>
 				</tr>
 				<tr>
-						<th>작성날짜</th>
-						<th>${article.regDate }</th>
+				<tr>
+						<th>개설날짜</th>
+						<th>${club.regDate }</th>
 				</tr>
 				<tr>
-						<th>수정날짜</th>
-						<th>${article.updateDate }</th>
-				</tr>
-				<tr>
-						<th>조회수</th>
-						<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
-				</tr>
-				<tr>
-						<th>좋아요</th>
-						<th>${article.goodReactionPoint }</th>
+						<th>채팅</th>
+						<th><a href="../chat/ClubChatroom?id=${club.id }" class="btn btn-outline btn-xs">채팅</a></th>
 				</tr>
 		</table>
+		
 </div>
 
-<div>${club.purpose }</div>
+<div class="mt-8 text-xl mx-auto px-3">
+		<table class="table-box-type-1 table table-zebra w-full" style="text-align:center;">
+		
+			<tr>
+				<th>이름</th>
+			</tr>
+		<c:forEach var="member" items="${members }">
+			<tr>
+				<th><a href="../member/profile?id=${member.id }">${member.name }</a></th>
+			</tr>
 
-	<div>
-			<a href="../chat/room?id=${club.id }" class="btn btn-outline btn-xs">채팅</a>
+		</c:forEach>
+		</table>
 	</div>
+
 
 <%@ include file="../common/foot.jspf"%>

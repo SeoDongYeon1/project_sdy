@@ -41,7 +41,7 @@
 		<br />
 		<div class="btn_box">
 				<button class="btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
-				<a class="btn btn-outline" href="../chat/createroom">채팅</a>
+				<a class="btn btn-outline" href="../chat/createPersonalChatroom?memberId1=${member.id }">채팅</a>
 				<a class="btn btn-outline" href="../member/checkPw">회원정보 수정</a>
 		</div>
 </div>
