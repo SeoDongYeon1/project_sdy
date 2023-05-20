@@ -16,6 +16,7 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 var memberId = 0;
+var roomType = null;
 
 var colors = [
 	'#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -29,6 +30,7 @@ const id = url.get('id');
 function connect(event) {
 	username = document.querySelector('#name').value.trim();
 	memberId = document.querySelector('#memberId').value.trim();
+	roomType = document.querySelector('#roomType').value.trim();
 
 	usernamePage.classList.add('hidden');
 	chatPage.classList.remove('hidden');
@@ -54,7 +56,8 @@ function onConnected() {
 			"roomId": id,
 			sender: username,
 			memberId: memberId,
-			type: 'ENTER'
+			type: 'ENTER',
+			roomType: roomType
 		})
 	)
 
@@ -72,7 +75,8 @@ function getUserList() {
 		type: "GET",
 		url: "/chat/userlist",
 		data: {
-			"roomId": id
+			"roomId": id,
+			roomType: roomType
 		},
 		success: function(data) {
 			var users = "";
@@ -92,7 +96,8 @@ function getChatHistory(id) {
 		url: '/chat/chatHistory',
 		method: 'GET',
 		data: {
-			"roomId": id
+			"roomId": id,
+			roomType: roomType
 		},
 		success: function(data) {
 			console.log(data);
@@ -157,7 +162,8 @@ function sendMessage(event) {
 			sender: username,
 			memberId: memberId,
 			message: messageInput.value,
-			type: 'TALK'
+			type: 'TALK',
+			roomType: roomType
 		};
 
 		stompClient.send("/pub/chat/sendMessage", {}, JSON.stringify(chatMessage));

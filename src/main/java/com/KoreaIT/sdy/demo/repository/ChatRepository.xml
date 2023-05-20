@@ -47,13 +47,15 @@
 		INSERT INTO chat_user
 		SET regDate = NOW(),
 		roomId = #{roomId},
-		memberId = #{memberId};
+		memberId = #{memberId},
+		roomType = #{roomType};
 	</insert>
 	
 	<delete id="delUser">
 		DELETE FROM chat_user
 		WHERE roomId = #{roomId}
-		AND memberId = #{memberId};
+		AND memberId = #{memberId}
+		AND roomType = #{roomType};
 	</delete>
 	
 	<insert id="saveChat">
@@ -63,7 +65,8 @@
 		sender = #{sender},
 		memberId = #{memberId},
 		message = #{message},
-		`time` = #{time};
+		`time` = #{time},
+		roomType = #{roomType};
 	</insert>
 
 	<select id="getUserName" resultType="String">
@@ -80,7 +83,8 @@
 		FROM chat_user cu
 		INNER JOIN `member` m
 		ON m.id = cu.memberId
-		WHERE cu.roomId = #{roomId};
+		WHERE cu.roomId = #{roomId}
+		AND cu.roomType = #{roomType};
 	</select>
 
 	<select id="getLastInsertId" resultType="int">
@@ -91,19 +95,22 @@
 		SELECT *
 		FROM chat_user
 		WHERE memberId = #{memberId}
-		AND roomId = #{roomId};
+		AND roomId = #{roomId}
+		AND roomType = #{roomType};
 	</select>
 	
 	<select id="getChatHistory" resultType="com.KoreaIT.sdy.demo.dto.Chat">
 		SELECT *
 		FROM chat
-		WHERE roomId = #{roomId};
+		WHERE roomId = #{roomId}
+		AND roomType = #{roomType};
 	</select>
 	
 	<select id="getPersonalChatRoomByMemberId" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
 		SELECT * FROM PersonalchatRoom
 		WHERE (memberId1 =#{memberId1} OR memberId1 = #{memberId2}) 
-		AND (memberId2=#{memberId1} OR memberId2 = #{memberId2});
+		AND (memberId2=#{memberId1} OR memberId2 = #{memberId2})
+		LIMIT 1;
 	</select>
 	
 </mapper>

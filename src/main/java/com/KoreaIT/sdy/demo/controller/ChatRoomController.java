@@ -76,6 +76,7 @@ public class ChatRoomController {
     	
         log.info("id {}", id);
         model.addAttribute("room", chatRoomService.getClubChatRoomById(id));
+        model.addAttribute("roomType", "Club");
         return "usr/chat/chatroom";
     }
     
@@ -85,6 +86,7 @@ public class ChatRoomController {
     	
     	log.info("id {}", id);
     	model.addAttribute("room", chatRoomService.getPersonalChatRoomById(id));
+    	model.addAttribute("roomType", "Personal");
     	return "usr/chat/chatroom";
     }
 }

@@ -20,21 +20,21 @@ public interface ChatRepository {
 
     public void createClubChatRoom(String roomName, int memberId, int clubId);
 
-    public void addUser(int roomId, int memberId);
+    public void addUser(int roomId, int memberId, String roomType);
 
-    public void delUser(int roomId, int memberId);
+    public void delUser(int roomId, int memberId, String roomType);
 
     public String getUserName(int roomId, int memberId);
 
-    public List<String> getUserList(int roomId);
+    public List<String> getUserList(int roomId, String roomType);
 
-    public void saveChat(MessageType type, int roomId, String sender, int memberId, String message, String time);
+    public void saveChat(MessageType type, int roomId, String sender, int memberId, String message, String time, String roomType);
 
 	public int getLastInsertId();
 
-	public Chat_User getChat_UserByRoomIdAndMemberId(int roomId, int memberId);
+	public Chat_User getChat_UserByRoomIdAndMemberId(int roomId, int memberId, String roomType);
 
-	public List<Chat> getChatHistory(int roomId);
+	public List<Chat> getChatHistory(int roomId, String roomType);
 
 	public void createPersonalChatRoom(int memberId1, int memberId2);
 

@@ -453,14 +453,15 @@ CREATE TABLE chat (
     sender VARCHAR(255) NOT NULL,
     memberId INT(11) UNSIGNED NOT NULL,
     message TEXT NOT NULL,
-    `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    roomType VARCHAR(255) NOT NULL
 );
 
 ALTER TABLE chat CONVERT TO CHARSET UTF8;
 
 
-# chatRoom 테이블 생성
-CREATE TABLE chatRoom (
+# ClubChatRoom 테이블 생성
+CREATE TABLE ClubChatRoom (
   id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   regDate DATETIME NOT NULL,
   updateDate DATETIME NOT NULL,
@@ -469,23 +470,23 @@ CREATE TABLE chatRoom (
   clubId INT(11) UNSIGNED NOT NULL
 
 );
-ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
+ALTER TABLE ClubChatRoom CONVERT TO CHARSET UTF8;
 
-INSERT INTO chatRoom
+INSERT INTO ClubChatRoom
 SET regDate = NOW(),
 updateDate = NOW(),
 roomName = '축구좋아',
 memberId = 1,
 clubId = 1;
 
-INSERT INTO chatRoom
+INSERT INTO ClubChatRoom
 SET regDate = NOW(),
 updateDate = NOW(),
 roomName = '등산가자!',
 memberId = 2,
 clubId = 2;
 
-INSERT INTO chatRoom
+INSERT INTO ClubChatRoom
 SET regDate = NOW(),
 updateDate = NOW(),
 roomName = '도제(도자기 제작)',
@@ -497,10 +498,24 @@ CREATE TABLE chat_user (
   id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   regDate DATETIME NOT NULL,
   roomId INT(10) UNSIGNED NOT NULL,
-  memberId INT(11) UNSIGNED NOT NULL
+  memberId INT(11) UNSIGNED NOT NULL,
+  roomType VARCHAR(50) NOT NULL
 );
 
 ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
+
+# PersonalChatRoom 테이블 생성
+CREATE TABLE PersonalChatRoom (
+  id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  regDate DATETIME NOT NULL,
+  updateDate DATETIME NOT NULL,
+  memberId1 INT(11) UNSIGNED NOT NULL,
+  memberId2 INT(11) UNSIGNED NOT NULL
+
+);
+
+ALTER TABLE PersonalChatRoom CONVERT TO CHARSET UTF8;
+
 
 
 #############################################################################################
@@ -514,7 +529,8 @@ SELECT * FROM category;
 SELECT * FROM region;
 SELECT * FROM member_club;
 SELECT * FROM chat;
-SELECT * FROM chatRoom;
+SELECT * FROM ClubchatRoom;
+SELECT * FROM PersonalchatRoom;
 SELECT * FROM chat_user;
 
 # 채팅방 멤버수 구하기
@@ -584,3 +600,9 @@ GROUP BY c.id;
 SELECT *
 FROM region
 WHERE step1='전라북도';
+
+# 같은 채팅방 생성 안하도록 하는 쿼리
+SELECT * FROM PersonalchatRoom
+WHERE (memberId1 =2 OR memberId1 = 1) AND (memberId2=1 OR memberId2 = 2)
+LIMIT 1;
+

@@ -21,6 +21,7 @@
 								<div class="form-group">
 										<input type="hidden" value="${rq.loginedMemberLoginId }" id="name" name="loginId" />
 										<input type="hidden" value="${rq.loginedMemberId }" id="memberId" name="memberId" />
+										<input type="hidden" value="${roomType }" id="roomType" name="roomType" />
 								</div>
 								<div class="form-group">
 										<button type="submit" class="accent username-submit">참여하기</button>
@@ -63,7 +64,13 @@
 		</div>
 		<div class="chat-container" style="width: 600px;">
 				<div class="chat-header">
-						<h2>채팅방</h2>
+						<c:if test="${roomType=='Club' }">
+							<h2>${room.roomName }</h2>
+						</c:if>
+						<c:if test="${roomType=='Personal' }">
+							<h2>채팅방</h2>
+						</c:if>
+						
 				</div>
 				<div class="connecting">연결중..</div>
 				<ul id="messageArea">

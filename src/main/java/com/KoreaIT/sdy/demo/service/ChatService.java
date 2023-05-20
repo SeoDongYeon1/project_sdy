@@ -28,18 +28,19 @@ public class ChatService {
 	private ChatRepository chatRepository;
 
 	public void enterUser(Chat chat, SimpMessageHeaderAccessor headerAccessor) {
-		boolean isMemberIdUnique = isMemberIdUnique(chat.getRoomId(), chat.getMemberId());
+		boolean isMemberIdUnique = isMemberIdUnique(chat.getRoomId(), chat.getMemberId(), chat.getRoomType());
 		
 		if(!isMemberIdUnique) {
 			return;
 		}
 
-		chatRepository.addUser(chat.getRoomId(), chat.getMemberId());
+		chatRepository.addUser(chat.getRoomId(), chat.getMemberId(), chat.getRoomType());
 
 		int memberId = chat.getMemberId();
 
 		headerAccessor.getSessionAttributes().put("memberId", memberId);
 		headerAccessor.getSessionAttributes().put("roomId", chat.getRoomId());
+		headerAccessor.getSessionAttributes().put("roomType", chat.getRoomType());
 
 		chat.setMessage(chat.getSender() + " 님 입장!!");
 		template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
@@ -52,7 +53,7 @@ public class ChatService {
 
 		// ChatRepository를 통해 메시지 정보를 DB에 저장
 		chatRepository.saveChat(chat.getType(), chat.getRoomId(), chat.getSender(), chat.getMemberId(),
-				chat.getMessage(), chat.getTime());
+				chat.getMessage(), chat.getTime(), chat.getRoomType());
 
 	}
 
@@ -65,12 +66,13 @@ public class ChatService {
 
 		int memberId = (int) headerAccessor.getSessionAttributes().get("memberId");
 		int roomId = (int) headerAccessor.getSessionAttributes().get("roomId");
+		String roomType = (String) headerAccessor.getSessionAttributes().get("roomType");
 
 		log.info("headAccessor {}", headerAccessor);
 
 		String username = chatRepository.getUserName(roomId, memberId);
 
-		chatRepository.delUser(roomId, memberId);
+		chatRepository.delUser(roomId, memberId, roomType);
 
 		if (username != null) {
 			log.info("User Disconnected: " + username);
@@ -80,20 +82,21 @@ public class ChatService {
 		}
 	}
 
-	public List<String> getUserList(int roomId) {
-		return chatRepository.getUserList(roomId);
+	public List<String> getUserList(int roomId, String roomType) {
+		return chatRepository.getUserList(roomId, roomType);
 	}
 	
-	public boolean isMemberIdUnique(int roomId, int memberId) {
+	public boolean isMemberIdUnique(int roomId, int memberId, String roomType) {
         // 해당 방(roomId)에서 memberId가 중복되는지 확인하는 로직을 구현합니다.
         // 예를 들어, userRepository를 활용하여 데이터베이스에서 중복 여부를 확인할 수 있습니다.
-        boolean isUnique = chatRepository.getChat_UserByRoomIdAndMemberId(roomId, memberId) == null;
+        boolean isUnique = chatRepository.getChat_UserByRoomIdAndMemberId(roomId, memberId, roomType) == null;
         
         return isUnique;
     }
 	
-	public List<Chat> getChatHistory(int roomId) {
-        return chatRepository.getChatHistory(roomId);
+	public List<Chat> getChatHistory(int roomId, String roomType) {
+		
+        return chatRepository.getChatHistory(roomId, roomType);
     }
 
 }
