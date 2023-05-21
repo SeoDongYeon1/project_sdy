@@ -34,12 +34,8 @@ public class ChatService {
 			return;
 		}
 		
-		System.out.println("ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
-
 		chatRepository.addUser(chat.getRoomId(), chat.getMemberId(), chat.getRoomType());
 		
-
-
 		int memberId = chat.getMemberId();
 
 		headerAccessor.getSessionAttributes().put("memberId", memberId);
@@ -50,6 +46,12 @@ public class ChatService {
 		
 		chatRepository.saveChat(chat.getType(), chat.getRoomId(), chat.getSender(), chat.getMemberId(),
 				chat.getMessage(), chat.getTime(), chat.getRoomType());
+		
+		int lastInsertId = chatRepository.getLastInsertId();
+		
+		// 마지막으로 읽은 채팅 업데이트
+		chatRepository.updateLastReadChatId(chat.getMemberId(), chat.getRoomId(), chat.getRoomType(), lastInsertId);
+		
 		template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
 	}
 
@@ -62,6 +64,12 @@ public class ChatService {
 		// ChatRepository를 통해 메시지 정보를 DB에 저장
 		chatRepository.saveChat(chat.getType(), chat.getRoomId(), chat.getSender(), chat.getMemberId(),
 				chat.getMessage(), chat.getTime(), chat.getRoomType());
+		
+		// 채팅을 보낸 id값 가져오기
+		int lastInsertId = chatRepository.getLastInsertId();
+		
+		// 마지막으로 읽은 채팅 업데이트
+		chatRepository.updateLastReadChatId(chat.getMemberId(), chat.getRoomId(), chat.getRoomType(), lastInsertId);
 
 	}
 
@@ -82,8 +90,6 @@ public class ChatService {
 
 		chatRepository.delUser(roomId, memberId, roomType);
 
-		System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
-		
 		if (username != null) {
 			log.info("User Disconnected: " + username);
 			Chat chat = Chat.builder().type(Chat.MessageType.LEAVE).sender(username).message(username + " 님 퇴장!!")

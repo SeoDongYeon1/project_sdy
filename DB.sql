@@ -447,14 +447,15 @@ VALUES (3, 1, NOW());
 
 # chat 테이블 추가
 CREATE TABLE chat (
-    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `type` VARCHAR(255) NOT NULL,
     roomId INT(10) UNSIGNED NOT NULL,
     sender VARCHAR(255) NOT NULL,
     memberId INT(11) UNSIGNED NOT NULL,
     message TEXT NOT NULL,
     `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    roomType VARCHAR(255) NOT NULL
+    roomType VARCHAR(255) NOT NULL,
+    isRead TINYINT(1) NOT NULL DEFAULT 0
 );
 
 ALTER TABLE chat CONVERT TO CHARSET UTF8;
@@ -517,7 +518,30 @@ CREATE TABLE PersonalChatRoom (
 ALTER TABLE PersonalChatRoom CONVERT TO CHARSET UTF8;
 
 
+CREATE TABLE read_chat (
+  id INT(11) PRIMARY KEY AUTO_INCREMENT,
+  memberId INT(11),
+  roomId INT(11),
+  roomType VARCHAR(255),
+  lastReadId INT(11)
+  
+);
 
+SELECT rc.*
+FROM read_chat rc
+INNER JOIN chat c
+ON rc.lastReadId = c.id
+WHERE c.type = 'TALK';
+
+
+# 안읽은 채팅 개수 구하기
+SELECT COUNT(*) 
+FROM chat 
+WHERE roomId = 1
+AND roomType = 'Personal' 
+AND id > 23
+AND memberId = 2
+AND `type` = 'talk';
 #############################################################################################
 # 검색 쿼리
 SELECT * FROM article;
@@ -532,6 +556,7 @@ SELECT * FROM chat;
 SELECT * FROM ClubchatRoom;
 SELECT * FROM PersonalchatRoom;
 SELECT * FROM chat_user;
+SELECT * FROM read_chat;
 
 # 채팅방 멤버수 구하기
 SELECT cr.*, COUNT(cu.memberId) AS 'userCount'

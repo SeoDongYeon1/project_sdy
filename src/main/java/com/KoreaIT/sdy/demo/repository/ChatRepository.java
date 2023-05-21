@@ -45,4 +45,6 @@ public interface ChatRepository {
 	public List<ClubChatRoom> getClubChatRoomsByMemberId(int memberId);
 
 	public List<PersonalChatRoom> getPersonalChatRoomsByMemberId(int memberId);
+
+	public void updateLastReadChatId(int memberId, int roomId, String roomType, int lastReadId);
 }
