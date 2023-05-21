@@ -24,7 +24,7 @@ public interface ChatRepository {
 
     public void delUser(int roomId, int memberId, String roomType);
 
-    public String getUserName(int roomId, int memberId);
+    public String getUserName(int roomId, int memberId, String roomType);
 
     public List<String> getUserList(int roomId, String roomType);
 

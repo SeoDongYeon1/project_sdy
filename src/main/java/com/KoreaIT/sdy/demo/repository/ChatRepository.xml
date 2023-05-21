@@ -4,28 +4,35 @@
 <mapper
 	namespace="com.KoreaIT.sdy.demo.repository.ChatRepository">
 
-	<select id="getRooms" resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
+	<select id="getRooms"
+		resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
 		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
-		FROM ClubchatRoom cr
+		FROM
+		ClubchatRoom cr
 		LEFT JOIN chat_user cu
 		ON cr.id = cu.roomId
-		GROUP BY cr.id
+		GROUP BY
+		cr.id
 	</select>
 
-	<select id="getClubChatRoomById" resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
+	<select id="getClubChatRoomById"
+		resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
 		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
-		FROM ClubchatRoom cr
+		FROM
+		ClubchatRoom cr
 		INNER JOIN chat_user cu
 		ON cr.id = cu.roomId
-		WHERE cr.id = #{id};
+		WHERE cr.id
+		= #{id};
 	</select>
-	
-	<select id="getPersonalChatRoomById" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+
+	<select id="getPersonalChatRoomById"
+		resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
 		SELECT *
 		FROM PersonalchatRoom
 		WHERE id = #{id};
 	</select>
-	
+
 	<insert id="createClubChatRoom">
 		INSERT INTO ClubchatRoom
 		SET regDate = NOW(),
@@ -34,7 +41,7 @@
 		memberId = #{memberId},
 		clubId = #{clubId};
 	</insert>
-	
+
 	<insert id="createPersonalChatRoom">
 		INSERT INTO PersonalchatRoom
 		SET regDate = NOW(),
@@ -46,26 +53,33 @@
 	<insert id="addUser">
 		INSERT INTO chat_user
 		SET regDate = NOW(),
-		roomId = #{roomId},
+		roomId =
+		#{roomId},
 		memberId = #{memberId},
 		roomType = #{roomType};
 	</insert>
-	
+
 	<delete id="delUser">
 		DELETE FROM chat_user
 		WHERE roomId = #{roomId}
-		AND memberId = #{memberId}
+		AND
+		memberId = #{memberId}
 		AND roomType = #{roomType};
 	</delete>
-	
+
 	<insert id="saveChat">
-		INSERT INTO chat 
+		INSERT INTO chat
 		SET `type` = #{type},
 		roomId = #{roomId},
 		sender = #{sender},
 		memberId = #{memberId},
 		message = #{message},
-		`time` = #{time},
+		<if test="time == null or time.trim().isEmpty()">
+			`time` = now(),
+		</if>
+		<if test="time != null and !time.trim().isEmpty()">
+			`time` = #{time},
+		</if>
 		roomType = #{roomType};
 	</insert>
 
@@ -74,57 +88,70 @@
 		FROM chat_user cu
 		INNER JOIN `member` m
 		ON m.id = cu.memberId
-		WHERE roomId = #{roomId}
-		AND memberId = #{memberId};
+		WHERE
+		roomId = #{roomId}
+		AND memberId = #{memberId}
+		AND roomType = #{roomType};
 	</select>
-	
+
 	<select id="getUserList" resultType="String">
 		SELECT m.name AS 'userName'
 		FROM chat_user cu
 		INNER JOIN `member` m
 		ON m.id = cu.memberId
-		WHERE cu.roomId = #{roomId}
+		WHERE
+		cu.roomId = #{roomId}
 		AND cu.roomType = #{roomType};
 	</select>
 
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
-	
-	<select id="getChat_UserByRoomIdAndMemberId" resultType="com.KoreaIT.sdy.demo.dto.Chat_User">
+
+	<select id="getChat_UserByRoomIdAndMemberId"
+		resultType="com.KoreaIT.sdy.demo.dto.Chat_User">
 		SELECT *
 		FROM chat_user
 		WHERE memberId = #{memberId}
-		AND roomId = #{roomId}
+		AND
+		roomId = #{roomId}
 		AND roomType = #{roomType};
 	</select>
-	
-	<select id="getChatHistory" resultType="com.KoreaIT.sdy.demo.dto.Chat">
+
+	<select id="getChatHistory"
+		resultType="com.KoreaIT.sdy.demo.dto.Chat">
 		SELECT *
 		FROM chat
 		WHERE roomId = #{roomId}
-		AND roomType = #{roomType};
+		AND roomType = #{roomType}
+		AND type = 'TALK';
 	</select>
-	
-	<select id="getPersonalChatRoomByMaM" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+
+	<select id="getPersonalChatRoomByMaM"
+		resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
 		SELECT * FROM PersonalchatRoom
-		WHERE (memberId1 =#{memberId1} OR memberId1 = #{memberId2}) 
+		WHERE (memberId1
+		=#{memberId1} OR memberId1 = #{memberId2})
 		AND (memberId2=#{memberId1} OR memberId2 = #{memberId2})
 		LIMIT 1;
 	</select>
-	
-	<select id="getClubChatRoomsByMemberId" resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
+
+	<select id="getClubChatRoomsByMemberId"
+		resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
 		SELECT cr.*
 		FROM ClubchatRoom cr
 		INNER JOIN chat c
-		ON cr.id = c.roomId
+		ON cr.id =
+		c.roomId
 		WHERE c.memberId = #{memberId}
 		GROUP BY memberId;
 	</select>
-	
-	<select id="getPersonalChatRoomsByMemberId" resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+
+	<select id="getPersonalChatRoomsByMemberId"
+		resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
 		SELECT * FROM PersonalchatRoom
-		WHERE (memberId1 = #{memberId} OR memberId2 = #{memberId});
+		WHERE (memberId1 =
+		#{memberId} OR memberId2 = #{memberId});
 	</select>
-	
+
 </mapper>

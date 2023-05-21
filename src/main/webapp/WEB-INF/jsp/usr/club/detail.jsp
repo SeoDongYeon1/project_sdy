@@ -24,9 +24,7 @@
 				</tr>
 		</table>
 		
-</div>
-
-<div class="mt-8 text-xl mx-auto px-3">
+	<div class="mt-8 text-xl mx-auto px-3">
 		<table class="table-box-type-1 table table-zebra w-full" style="text-align:center;">
 		
 			<tr>
@@ -40,6 +38,8 @@
 		</c:forEach>
 		</table>
 	</div>
+</div>
+
 
 
 <%@ include file="../common/foot.jspf"%>

@@ -19,7 +19,7 @@
 				<div class="username-page-container">
 						<form id="usernameForm" name="usernameForm">
 								<div class="form-group">
-										<input type="hidden" value="${rq.loginedMemberLoginId }" id="name" name="loginId" />
+										<input type="hidden" value="${rq.loginedMember.name }" id="name" name="loginId" />
 										<input type="hidden" value="${rq.loginedMemberId }" id="memberId" name="memberId" />
 										<input type="hidden" value="${roomType }" id="roomType" name="roomType" />
 								</div>
