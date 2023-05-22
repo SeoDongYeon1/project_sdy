@@ -1,3 +1,4 @@
+// 코드 작성의 실수를 예방하고 JavaScript 엔진의 최적화를 통해 코드 실행 속도를 향상
 'use strict';
 
 document.write("<script\n" +

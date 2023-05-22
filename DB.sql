@@ -530,9 +530,9 @@ CREATE TABLE read_chat (
 );
 
 
-SELECT *
-FROM member_club
-WHERE memberId = 3;
+
+
+
 
 
 #############################################################################################
@@ -570,29 +570,12 @@ AND c.id > 10
 AND (pcr.memberId1 = 2 OR pcr.memberId2 = 2)
 AND c.`type` = 'talk';
 
-
 # 마지막으로 읽은 id 가져오기
 SELECT IFNULL(MAX(lastReadId), 0) AS lastReadId
 FROM read_chat
 WHERE memberId = 3
 AND roomId = 2
 AND roomType = 'club';
-
-SELECT c.*, rc.*
-FROM chat c
-INNER JOIN read_chat rc
-ON rc.roomId = c.roomId
-GROUP BY c.id;
-
-SELECT cr.*
-FROM ClubchatRoom cr
-INNER JOIN chat c
-ON cr.id = c.roomId
-WHERE cr.memberId = 2;
-
-SELECT LAST_INSERT_ID()
-FROM ClubChatRoom
-WHERE memberId = 2;
 
 # 내가 속한 동호회 가져오기
 SELECT mc.*, c.name AS 'clubName'
@@ -615,13 +598,6 @@ INNER JOIN `member` m
 ON m.id = cu.memberId
 WHERE roomId = 1
 AND memberId = 2;
-
-SELECT m.name AS 'userName'
-FROM chat_user cu
-INNER JOIN `member` m
-ON m.id = cu.memberId
-WHERE roomId = 1;
-
 
 # 마지막으로 삽입된 id 검색
 SELECT LAST_INSERT_ID();
@@ -689,3 +665,9 @@ ON cr.id = c.roomId
 WHERE c.memberId = 2 AND c.roomType = 'Club'
 GROUP BY cr.id;
 
+# 개인채팅방에 회원 이름
+SELECT pc.*, m1.name AS member1_name, m2.name AS member2_name
+FROM PersonalchatRoom pc
+JOIN MEMBER m1 ON pc.memberId1 = m1.id
+JOIN MEMBER m2 ON pc.memberId2 = m2.id
+WHERE pc.id = 1;

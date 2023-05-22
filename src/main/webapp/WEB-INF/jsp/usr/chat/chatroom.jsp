@@ -68,7 +68,7 @@
 							<h2>${room.roomName }</h2>
 						</c:if>
 						<c:if test="${roomType=='Personal' }">
-							<h2>채팅방</h2>
+							<h2>${room.member1_name }</h2>
 						</c:if>
 						
 				</div>

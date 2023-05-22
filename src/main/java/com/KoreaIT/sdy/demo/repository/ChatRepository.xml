@@ -26,13 +26,6 @@
 		= #{id};
 	</select>
 
-	<select id="getPersonalChatRoomById"
-		resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
-		SELECT *
-		FROM PersonalchatRoom
-		WHERE id = #{id};
-	</select>
-
 	<insert id="createClubChatRoom">
 		INSERT INTO ClubchatRoom
 		SET regDate = NOW(),
@@ -41,15 +34,7 @@
 		memberId = #{memberId},
 		clubId = #{clubId};
 	</insert>
-
-	<insert id="createPersonalChatRoom">
-		INSERT INTO PersonalchatRoom
-		SET regDate = NOW(),
-		updateDate = NOW(),
-		memberId1 = #{memberId1},
-		memberId2 = #{memberId2};
-	</insert>
-
+	
 	<insert id="addUser">
 		INSERT INTO chat_user
 		SET regDate = NOW(),
@@ -66,7 +51,28 @@
 		memberId = #{memberId}
 		AND roomType = #{roomType};
 	</delete>
-
+	
+	<select id="getUserName" resultType="String">
+		SELECT m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
+		WHERE
+		roomId = #{roomId}
+		AND memberId = #{memberId}
+		AND roomType = #{roomType};
+	</select>
+	
+	<select id="getUserList" resultType="String">
+		SELECT m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
+		WHERE
+		cu.roomId = #{roomId}
+		AND cu.roomType = #{roomType};
+	</select>
+	
 	<insert id="saveChat">
 		INSERT INTO chat
 		SET `type` = #{type},
@@ -82,32 +88,11 @@
 		</if>
 		roomType = #{roomType};
 	</insert>
-
-	<select id="getUserName" resultType="String">
-		SELECT m.name AS 'userName'
-		FROM chat_user cu
-		INNER JOIN `member` m
-		ON m.id = cu.memberId
-		WHERE
-		roomId = #{roomId}
-		AND memberId = #{memberId}
-		AND roomType = #{roomType};
-	</select>
-
-	<select id="getUserList" resultType="String">
-		SELECT m.name AS 'userName'
-		FROM chat_user cu
-		INNER JOIN `member` m
-		ON m.id = cu.memberId
-		WHERE
-		cu.roomId = #{roomId}
-		AND cu.roomType = #{roomType};
-	</select>
-
+	
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
-
+	
 	<select id="getChat_UserByRoomIdAndMemberId"
 		resultType="com.KoreaIT.sdy.demo.dto.Chat_User">
 		SELECT *
@@ -117,7 +102,7 @@
 		roomId = #{roomId}
 		AND roomType = #{roomType};
 	</select>
-
+	
 	<select id="getChatHistory"
 		resultType="com.KoreaIT.sdy.demo.dto.Chat">
 		SELECT *
@@ -125,6 +110,23 @@
 		WHERE roomId = #{roomId}
 		AND roomType = #{roomType}
 		AND type = 'TALK';
+	</select>
+	
+	<insert id="createPersonalChatRoom">
+		INSERT INTO PersonalchatRoom
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId1 = #{memberId1},
+		memberId2 = #{memberId2};
+	</insert>
+	
+	<select id="getPersonalChatRoomById"
+		resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
+		SELECT pc.*, m1.name AS member1_name, m2.name AS member2_name
+		FROM PersonalchatRoom pc
+		JOIN MEMBER m1 ON pc.memberId1 = m1.id
+		JOIN MEMBER m2 ON pc.memberId2 = m2.id
+		WHERE pc.id = #{id};
 	</select>
 
 	<select id="getPersonalChatRoomByMaM"
@@ -151,7 +153,7 @@
 		FROM PersonalchatRoom pc
 		JOIN MEMBER m1 ON pc.memberId1 = m1.id
 		JOIN MEMBER m2 ON pc.memberId2 = m2.id
-		WHERE (pc.memberId1 = 2 OR pc.memberId2 = 2);
+		WHERE (pc.memberId1 = #{memberId} OR pc.memberId2 = #{memberId});
 	</select>
 
 	<insert id="updateLastReadChatId">

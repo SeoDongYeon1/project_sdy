@@ -42,12 +42,12 @@ public class ChatRoomController {
     	// 해당 memberId가 속하는 개인 채팅방 가져오기
     	List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId());
     	
+    	// 개인채팅방에서 상대방의 이름과 읽지 않은 채팅 수를 가져오기 위한 반복문
     	for(PersonalChatRoom room : PList) {
     		if(room.getMemberId1() == rq.getLoginedMemberId()) {
     			int tmp1 = room.getMemberId1();
     			room.setMemberId1(room.getMemberId2());
     			room.setMemberId2(tmp1);
-    			System.out.println(tmp1 + room.getMemberId1() + room.getMemberId2());
     			
     			String tmp2 = room.getMember1_name();
     			room.setMember1_name(room.getMember2_name());
@@ -69,6 +69,7 @@ public class ChatRoomController {
         // 해당 memberId가 속하는 동호회 채팅방 가져오기
         List<ClubChatRoom> CList = chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId());
         
+        // 동호회 채팅방에서 읽지 않은 채팅의 수를 가져오는 것
         for(ClubChatRoom room : CList) {
         	String roomType = "Club";
     		
@@ -104,8 +105,10 @@ public class ChatRoomController {
     		return rq.jsHistoryBackOnView("F-1", "해당 기능은 사용할 수 없습니다.");
     	}
     	
+    	// 개인 채팅방중에 memberId1과 memberId2를 포함하는 채팅방이 있는지 확인 
     	PersonalChatRoom isExistRoom = chatRoomService.getPersonalChatRoomByMemberId(memberId1, rq.getLoginedMemberId());
     	
+    	// 중복되는 방이 있다면 그 채팅방으로 리턴
     	if(isExistRoom!=null) {
     		return "redirect:/usr/chat/PersonalChatroom?id="+isExistRoom.getId();
     	}
@@ -120,6 +123,7 @@ public class ChatRoomController {
     @RequestMapping("/usr/chat/ClubChatroom")
     public String ClubChatRoomDetail(Model model, int id){
     	
+    	// 로그인한 사람이 해당 동호회에 가입이 되어있어 채팅이 가능한지 체크
     	Boolean actorCanChat = clubService.actorCanChat(rq.getLoginedMemberId(), id);
     	
     	if(actorCanChat==false) {
@@ -137,7 +141,19 @@ public class ChatRoomController {
     public String PersonalChatRoomDetail(Model model, int id){
     	
     	log.info("id {}", id);
-    	model.addAttribute("room", chatRoomService.getPersonalChatRoomById(id));
+    	PersonalChatRoom room = chatRoomService.getPersonalChatRoomById(id);
+    	
+    	if(room.getMemberId1() == rq.getLoginedMemberId()) {
+    		int tmp1 = room.getMemberId1();
+			room.setMemberId1(room.getMemberId2());
+			room.setMemberId2(tmp1);
+			
+			String tmp2 = room.getMember1_name();
+			room.setMember1_name(room.getMember2_name());
+			room.setMember2_name(tmp2);
+    	}
+    	
+    	model.addAttribute("room", room);
     	model.addAttribute("roomType", "Personal");
     	return "usr/chat/chatroom";
     }
