@@ -36,14 +36,16 @@ public class UsrClubController {
 	private Rq rq;
 	
 	
-	@RequestMapping("/usr/club/list")
-	public String showClubList(Model model, String category) {
-		List<Club> clubs = clubService.getClubs();
-		
-		model.addAttribute("clubs", clubs);
-		return "usr/club/list";
-	}
+
+//	@RequestMapping("/usr/club/list")
+//	public String showClubList(Model model, String category) {
+//		List<Club> clubs = clubService.getClubs();
+//		
+//		model.addAttribute("clubs", clubs);
+//		return "usr/club/list";
+//	}
 	
+	// 동호회별 페이지
 	@RequestMapping("usr/club/detail")
 	public String showDetail(int id, Model model) {
 		Club club = clubService.getClubById(id);
@@ -61,19 +63,22 @@ public class UsrClubController {
 	}
 	
 	
-	@PostMapping(value = "/usr/club/getArea")
+	// 지역 csv 가져오기
+	@RequestMapping("/usr/club/getArea")
     @ResponseBody
     public List<AreaRequestDTO> getAreaStep(@RequestParam Map<String, String> params)
     {
         return clubService.getArea(params);
     }
 	
+	// 동호회 생성 페이지로 보내기
 	@RequestMapping("/usr/club/create")
 	public String create() {
 		
 		return "usr/club/create";
 	}
 	
+	// 동호회 생성
 	@RequestMapping("/usr/club/doCreate")
 	@ResponseBody
 	public String doCreate(String name, String areacode, int categoryId, String purpose) {
@@ -91,20 +96,24 @@ public class UsrClubController {
 		return Ut.jsReplace(createRd.getMsg(), Ut.f("../club/detail?id=%d", id));
 	}
 	
+	// 내가 가입한 동호회 리스트
 	@RequestMapping("usr/club/showMyClubList")
-	public String showMyClubList(int id, Model model) {
-		Club club = clubService.getClubById(id);
+	public String showMyClubList(Model model) {
+		List<Club> clubs = clubService.getMyClubs(rq.getLoginedMemberId());
 		
-		if(club==null) {
-			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 페이지입니다.");
-		}
-		
-		List<Member> members = memberService.getMembersByClubId(id);
-		
-		model.addAttribute("club", club);
-		model.addAttribute("members", members);
+		model.addAttribute("clubs", clubs);
 
-		return "usr/club/detail";
+		return "usr/club/myClubList";
+	}
+	
+	// 동호회 가입하기
+	@RequestMapping("usr/club/join")
+	public String join(Model model) {
+		List<Club> clubs = clubService.getMyClubs(rq.getLoginedMemberId());
+		
+		model.addAttribute("clubs", clubs);
+		
+		return "usr/club/join";
 	}
 
 }

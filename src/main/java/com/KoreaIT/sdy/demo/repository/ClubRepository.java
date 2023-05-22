@@ -33,4 +33,6 @@ public interface ClubRepository {
 
 	public int actorCanChat(int actorId, int id);
 
+	public List<Club> getMyClubs(int memberId);
+
 }

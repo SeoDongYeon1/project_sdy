@@ -121,8 +121,12 @@ public class ChatService {
 		return chatRepository.getChatHistory(roomId, roomType);
 	}
 
-	public int getUnreadCount(int roomId, int memberId, String roomType, int lastReadId) {
-		return chatRepository.getUnreadCount(roomId, memberId, roomType, lastReadId);
+	public int getPersonalChatUnreadCount(int roomId, int memberId, String roomType, int lastReadId) {
+		return chatRepository.getPersonalChatUnreadCount(roomId, memberId, roomType, lastReadId);
+	}
+	
+	public int getClubChatUnreadCount(int roomId, int memberId, String roomType, int lastReadId) {
+		return chatRepository.getClubChatUnreadCount(roomId, memberId, roomType, lastReadId);
 	}
 
 	public int getLastReadId(int roomId, int memberId, String roomType) {

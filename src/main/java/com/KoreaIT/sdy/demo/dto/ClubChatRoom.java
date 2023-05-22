@@ -12,5 +12,6 @@ public class ClubChatRoom {
     private int clubId; // 동호회 번호
     
     private long userCount; // 채팅방 인원수
+    private int unreadCount; // 안읽은 채팅 수
 
 }

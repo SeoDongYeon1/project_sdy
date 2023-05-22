@@ -81,4 +81,9 @@ public class ClubService {
 		return true;
 	}
 
+	public List<Club> getMyClubs(int memberId) {
+		
+		return clubRepository.getMyClubs(memberId);
+	}
+
 }

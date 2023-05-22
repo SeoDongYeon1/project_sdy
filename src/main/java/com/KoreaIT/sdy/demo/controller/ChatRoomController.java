@@ -55,17 +55,26 @@ public class ChatRoomController {
     		
     		int lastReadId = chatService.getLastReadId(room.getId(), rq.getLoginedMemberId(), roomType);
     		
-    		int unreadCount = chatService.getUnreadCount(room.getId(), rq.getLoginedMemberId(), roomType, lastReadId);
+    		int unreadCount = chatService.getPersonalChatUnreadCount(room.getId(), rq.getLoginedMemberId(), roomType, lastReadId);
     		
     		room.setUnreadCount(unreadCount);
     		
-    		System.out.println("================="+room);
     	}
     	
         model.addAttribute("PList", PList);
         
         // 해당 memberId가 속하는 동호회 채팅방 가져오기
         List<ClubChatRoom> CList = chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId());
+        
+        for(ClubChatRoom room : CList) {
+        	String roomType = "Club";
+    		
+    		int lastReadId = chatService.getLastReadId(room.getId(), rq.getLoginedMemberId(), roomType);
+    		
+    		int unreadCount = chatService.getClubChatUnreadCount(room.getId(), rq.getLoginedMemberId(), roomType, lastReadId);
+    		
+    		room.setUnreadCount(unreadCount);
+        }
         
         model.addAttribute("CList", CList);
         

@@ -162,7 +162,7 @@
 		lastReadId = #{lastReadId};
 	</insert>
 	
-	<select id="getUnreadCount" resultType="int">
+	<select id="getPersonalChatUnreadCount" resultType="int">
 		SELECT COUNT(c.id) 
 		FROM chat c
 		INNER JOIN PersonalchatRoom pcr
@@ -172,6 +172,15 @@
 		AND c.id > #{lastReadId}
 		AND (pcr.memberId1 = #{memberId} OR pcr.memberId2 = #{memberId})
 		AND c.`type` = 'talk';
+	</select>
+	
+	<select id="getClubChatUnreadCount" resultType="int">
+		SELECT COUNT(id) 
+		FROM chat
+		WHERE roomId = #{roomId}
+		AND roomType = #{roomType}
+		AND id > #{lastReadId}
+		AND `type` = 'talk';
 	</select>
 	
 	<select id="getLastReadId" resultType="int">

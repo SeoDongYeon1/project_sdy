@@ -11,7 +11,7 @@
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 												<div class="ms-2 me-auto">
 														<div class="fw-bold">
-																<span class="hidden" id="${proom.memberId1}"></span> <a href="../chat/PersonalChatroom?id=${proom.id }">[[${proom.member1_name}]] +${proom.unreadCount }</a>
+																<span class="hidden" id="${proom.memberId1}"></span> <a href="../chat/PersonalChatroom?id=${proom.id }">[[${proom.member1_name}]] + <span style= "color: red;">${proom.unreadCount }</span></a>
 														</div>
 												</div> 
 										</li>
@@ -32,7 +32,7 @@
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 												<div class="ms-2 me-auto">
 														<div class="fw-bold">
-																<span class="hidden" id="${croom.roomName}"></span> <a href="../chat/ClubChatroom?id=${croom.id }">[[${croom.roomName}]]</a>
+																<span class="hidden" id="${croom.roomName}"></span> <a href="../chat/ClubChatroom?id=${croom.id }">[[${croom.roomName}]] + <span style= "color: red;">${croom.unreadCount }</span></a>
 														</div>
 												</div> 
 										</li>
