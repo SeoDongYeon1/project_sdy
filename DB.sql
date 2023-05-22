@@ -431,20 +431,21 @@ CREATE TABLE member_club (
   id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   memberId INT(10) UNSIGNED NOT NULL,
   clubId INT(10) UNSIGNED NOT NULL,
+  purpose TEXT NOT NULL,
   regDate DATETIME NOT NULL
 
 );
 
 ALTER TABLE member_club CONVERT TO CHARSET UTF8;
 
-INSERT INTO member_club (memberId, clubId, regDate)
-VALUES (1, 3, NOW());
+INSERT INTO member_club (memberId, clubId, purpose, regDate)
+VALUES (1, 3, ".", NOW());
 
-INSERT INTO member_club (memberId, clubId, regDate)
-VALUES (2, 2, NOW());
+INSERT INTO member_club (memberId, clubId, purpose, regDate)
+VALUES (2, 2, ".", NOW());
 
-INSERT INTO member_club (memberId, clubId, regDate)
-VALUES (3, 1, NOW());
+INSERT INTO member_club (memberId, clubId, purpose, regDate)
+VALUES (3, 1, ".", NOW());
 
 # chat 테이블 추가
 CREATE TABLE chat (
@@ -518,7 +519,7 @@ CREATE TABLE PersonalChatRoom (
 
 ALTER TABLE PersonalChatRoom CONVERT TO CHARSET UTF8;
 
-
+# read_chat 테이블 생성
 CREATE TABLE read_chat (
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
   memberId INT(11),
@@ -527,6 +528,13 @@ CREATE TABLE read_chat (
   lastReadId INT(11) NOT NULL DEFAULT 0
   
 );
+
+
+SELECT c.*, mc.memberId
+FROM club c
+INNER JOIN member_club mc
+ON c.id = mc.clubId
+WHERE memberId = 3;
 
 
 #############################################################################################
@@ -545,7 +553,15 @@ SELECT * FROM PersonalchatRoom;
 SELECT * FROM chat_user;
 SELECT * FROM read_chat;
 
-# 안읽은 채팅 개수 구하기
+# 동호회 채팅방 안읽은 채팅 개수 구하기
+SELECT COUNT(c.id) 
+FROM chat c
+WHERE c.roomId = 2
+AND c.roomType = 'Club'
+AND c.id > 2
+AND c.`type` = 'talk';
+
+# 개인 채팅방 안읽은 채팅 개수 구하기
 SELECT COUNT(c.id) 
 FROM chat c
 INNER JOIN PersonalchatRoom pcr
@@ -561,8 +577,8 @@ AND c.`type` = 'talk';
 SELECT IFNULL(MAX(lastReadId), 0) AS lastReadId
 FROM read_chat
 WHERE memberId = 3
-AND roomId = 1
-AND roomType = 'Personal';
+AND roomId = 2
+AND roomType = 'club';
 
 SELECT c.*, rc.*
 FROM chat c
