@@ -147,4 +147,12 @@
 		ON c.id = mc.clubId
 		WHERE memberId = #{memberId};
 	</select>
+	
+	<select id="getClubByMemberId" resultType="member_club">
+		SELECT c.*, mc.memberId
+		FROM club c
+		INNER JOIN member_club mc
+		ON c.id = mc.clubId
+		WHERE memberId = #{memberId};
+	</select>
 </mapper>

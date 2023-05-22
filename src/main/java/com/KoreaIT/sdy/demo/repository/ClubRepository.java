@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.KoreaIT.sdy.demo.dto.member_club;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
 
@@ -34,5 +35,7 @@ public interface ClubRepository {
 	public List<Club> getMyClubs(int memberId);
 
 	public void doJoin(int clubId, int memberId, String purpose);
+
+	public member_club getClubByMemberId(int memberId);
 
 }

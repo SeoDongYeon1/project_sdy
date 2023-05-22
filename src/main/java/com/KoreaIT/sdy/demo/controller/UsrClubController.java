@@ -6,11 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.KoreaIT.sdy.demo.dto.member_club;
 import com.KoreaIT.sdy.demo.service.ChatRoomService;
 import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.service.MemberService;
@@ -120,6 +120,8 @@ public class UsrClubController {
 		if (Ut.empty(purpose)) {
 			return Ut.jsHistoryBack("F-1", "가입 목적을 입력해주세요");
 		}
+		
+		member_club mc = clubService.getClubByMemberId(rq.getLoginedMemberId());
 		
 		clubService.doJoin(clubId, purpose, rq.getLoginedMemberId());
 		

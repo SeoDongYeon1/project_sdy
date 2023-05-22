@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.KoreaIT.sdy.demo.dto.member_club;
 import com.KoreaIT.sdy.demo.repository.ClubRepository;
 import com.KoreaIT.sdy.demo.repository.MemberRepository;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
@@ -87,6 +88,11 @@ public class ClubService {
 
 	public void doJoin(int clubId, String purpose, int memberId) {
 		clubRepository.doJoin(clubId, memberId, purpose);
+	}
+
+	public member_club getClubByMemberId(int memberId) {
+		
+		return clubRepository.getClubByMemberId(memberId);
 	}
 
 }
