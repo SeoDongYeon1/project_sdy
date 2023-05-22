@@ -530,10 +530,8 @@ CREATE TABLE read_chat (
 );
 
 
-SELECT c.*, mc.memberId
-FROM club c
-INNER JOIN member_club mc
-ON c.id = mc.clubId
+SELECT *
+FROM member_club
 WHERE memberId = 3;
 
 

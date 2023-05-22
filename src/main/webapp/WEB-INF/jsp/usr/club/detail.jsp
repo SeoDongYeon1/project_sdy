@@ -18,15 +18,16 @@
 						<th>개설날짜</th>
 						<th>${club.regDate }</th>
 				</tr>
-				<tr>
-						<th>동호회 가입하기</th>
-						<th><a href="../club/join?id=${club.id }">동호회 가입하기</a></th>
-				</tr>
+
 				<tr>
 						<th>채팅</th>
 						<th><a href="../chat/ClubChatroom?id=${club.id }" class="btn btn-outline btn-xs">채팅</a></th>
 				</tr>
 		</table>
+		<br />
+		<a href="../club/join?id=${club.id }">
+				<button style="width: 100px;" class="app-content-headerButton">동호회 가입</button>
+		</a>
 
 		<div class="mt-8 text-xl mx-auto px-3">
 				<div>회원 리스트</div>

@@ -6,7 +6,7 @@ import lombok.Data;
 public class member_club {
     private int id;
     private String regDate;
-    private int roomId;
+    private int clubId;
     private int memberId;
     
 }

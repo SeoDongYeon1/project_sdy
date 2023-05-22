@@ -35,6 +35,9 @@ public class ChatRoomController {
     // 채팅 리스트 화면
     @RequestMapping("/usr/chat/list")
     public String ShowChatRoomList(Model model){
+    	if(rq.getLoginedMemberId()==0) {
+			return rq.jsHistoryBackOnView("F-L", "로그인 후 이용해주세요.");
+		}
     	
     	// 해당 memberId가 속하는 개인 채팅방 가져오기
     	List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId());

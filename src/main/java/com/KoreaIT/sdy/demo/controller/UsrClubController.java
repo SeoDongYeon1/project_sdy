@@ -84,7 +84,7 @@ public class UsrClubController {
 	public String doCreate(String name, String areacode, int categoryId, String purpose) {
 		
 		if(rq.getLoginedMemberId()==0) {
-			return Ut.jsHistoryBack("F-L", "로그인 후 이용해주세요.");
+			return rq.jsHistoryBackOnView("F-L", "로그인 후 이용해주세요.");
 		}
 		
 		ResultData createRd = clubService.create(rq.getLoginedMemberId(), name, areacode ,categoryId, purpose);
@@ -99,6 +99,11 @@ public class UsrClubController {
 	// 내가 가입한 동호회 리스트
 	@RequestMapping("usr/club/showMyClubList")
 	public String showMyClubList(Model model) {
+		
+		if(rq.getLoginedMemberId()==0) {
+			return rq.jsHistoryBackOnView("F-L", "로그인 후 이용해주세요.");
+		}
+		
 		List<Club> clubs = clubService.getMyClubs(rq.getLoginedMemberId());
 		
 		model.addAttribute("clubs", clubs);
@@ -110,6 +115,16 @@ public class UsrClubController {
 	// 동호회 가입하기
 	@RequestMapping("/usr/club/join")
 	public String showJoin(@RequestParam("id") int clubId, Model model) {
+		if(rq.getLoginedMemberId()==0) {
+			return rq.jsHistoryBackOnView("F-L", "로그인 후 이용해주세요.");
+		}
+		
+		member_club mc = clubService.getClubByMemberId(rq.getLoginedMemberId());
+		
+		if(mc.getClubId()==clubId) {
+			return rq.jsHistoryBackOnView("F-1", "이미 가입한 동호회입니다.");
+		}
+		
 		model.addAttribute("clubId", clubId);
 		return "usr/club/join";
 	}
@@ -117,11 +132,19 @@ public class UsrClubController {
 	@RequestMapping("usr/club/doJoin")
 	@ResponseBody
 	public String doJoin(String purpose, int clubId) {
+		if(rq.getLoginedMemberId()==0) {
+			return rq.jsHistoryBackOnView("F-L", "로그인 후 이용해주세요.");
+		}
+		
 		if (Ut.empty(purpose)) {
 			return Ut.jsHistoryBack("F-1", "가입 목적을 입력해주세요");
 		}
 		
 		member_club mc = clubService.getClubByMemberId(rq.getLoginedMemberId());
+		
+		if(mc.getClubId()==clubId) {
+			return rq.jsHistoryBackOnView("F-2", "이미 가입한 동호회입니다.");
+		}
 		
 		clubService.doJoin(clubId, purpose, rq.getLoginedMemberId());
 		
