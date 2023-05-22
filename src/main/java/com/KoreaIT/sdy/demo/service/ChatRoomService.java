@@ -56,7 +56,7 @@ public class ChatRoomService {
 
 	// memberId1과 memberId2에 해당되는 개인채팅방 가져오기
 	public PersonalChatRoom getPersonalChatRoomByMemberId(int memberId1, int memberId2) {
-		return chatRepository.getPersonalChatRoomByMaM(memberId1, memberId2);
+		return chatRepository.getPersonalChatRoomByMemberId(memberId1, memberId2);
 	}
 
 	// memberId가 해당되어있는 동호회 채팅방 리스트 가져오기

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.KoreaIT.sdy.demo.util.Ut;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
