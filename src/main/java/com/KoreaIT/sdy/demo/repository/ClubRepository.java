@@ -29,10 +29,10 @@ public interface ClubRepository {
 
 	public List<AreaRequestDTO> selectArea(Map<String, String> params);
 
-	public void join(int clubId, int memberId);
-
 	public int actorCanChat(int actorId, int id);
 
 	public List<Club> getMyClubs(int memberId);
+
+	public void doJoin(int clubId, int memberId, String purpose);
 
 }

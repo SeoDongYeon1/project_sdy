@@ -21,45 +21,50 @@
 						<th>닉네임</th>
 						<th>${member.nickname }</th>
 				</tr>
-				
-				<tr>
-						<th>이메일</th>
-						<th>${member.email }</th>
-				</tr>
-				
-				<tr>
-						<th>전화번호</th>
-						<th>${member.cellphoneNum }</th>
-				</tr>
+				<c:if test="${rq.loginedMemberId == member.id }">
+						<tr>
+								<th>이메일</th>
+								<th>${member.email }</th>
+						</tr>
 
-				<tr>
-						<th>가입날짜</th>
-						<th>${member.regDate }</th>
-				</tr>
-				
+						<tr>
+								<th>전화번호</th>
+								<th>${member.cellphoneNum }</th>
+						</tr>
+
+						<tr>
+								<th>가입날짜</th>
+								<th>${member.regDate }</th>
+						</tr>
+				</c:if>
+
 		</table>
 		<br />
 		<div class="btn_box">
 				<button class="btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
-				<a class="btn btn-outline" href="../chat/createPersonalChatroom?memberId1=${member.id }">채팅</a>
-				<a class="btn btn-outline" href="../member/checkPw">회원정보 수정</a>
+				<c:if test="${rq.loginedMemberId != member.id }">
+					<a class="btn btn-outline" href="../chat/createPersonalChatroom?memberId1=${member.id }">채팅</a>
+				</c:if>
+				<c:if test="${rq.loginedMemberId == member.id }">
+						<a class="btn btn-outline" href="../member/checkPw">회원정보 수정</a>
+				</c:if>
 		</div>
 </div>
 
 <style type="text/css">
-	.profile_box {
-		margin-left: auto;
-		margin-right: auto;
-		width: 600px;
-	}
-	
-	.btn_box {
-		text-align: center;
-	}
-	
-	tr, th {
-		border: 1px solid black;
-	}
+.profile_box {
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+
+.btn_box {
+	text-align: center;
+}
+
+tr, th {
+	border: 1px solid black;
+}
 </style>
 
 <%@ include file="../common/foot.jspf"%>

@@ -106,14 +106,24 @@ public class UsrClubController {
 		return "usr/club/myClubList";
 	}
 	
+	
 	// 동호회 가입하기
-	@RequestMapping("usr/club/join")
-	public String join(Model model) {
-		List<Club> clubs = clubService.getMyClubs(rq.getLoginedMemberId());
-		
-		model.addAttribute("clubs", clubs);
-		
+	@RequestMapping("/usr/club/join")
+	public String showJoin(@RequestParam("id") int clubId, Model model) {
+		model.addAttribute("clubId", clubId);
 		return "usr/club/join";
+	}
+
+	@RequestMapping("usr/club/doJoin")
+	@ResponseBody
+	public String doJoin(String purpose, int clubId) {
+		if (Ut.empty(purpose)) {
+			return Ut.jsHistoryBack("F-1", "가입 목적을 입력해주세요");
+		}
+		
+		clubService.doJoin(clubId, purpose, rq.getLoginedMemberId());
+		
+		return  Ut.jsReplace("동호회에 가입되었습니다.", "../club/detail?id="+clubId);
 	}
 
 }

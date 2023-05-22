@@ -116,10 +116,11 @@
 		</choose>
 	</select>
 	
-	<insert id="join">
+	<insert id="doJoin">
 		INSERT INTO member_club 
 		SET memberId = #{memberId},
 		clubId = #{clubId},
+		purpose = #{purpose},
 		regDate = NOW();
 	</insert>
 	

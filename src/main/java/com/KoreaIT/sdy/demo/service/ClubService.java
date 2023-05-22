@@ -10,7 +10,6 @@ import com.KoreaIT.sdy.demo.repository.ClubRepository;
 import com.KoreaIT.sdy.demo.repository.MemberRepository;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
 import com.KoreaIT.sdy.demo.vo.Club;
-import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
 @Service
@@ -39,7 +38,7 @@ public class ClubService {
 		int clubId = clubRepository.getLastInsertId();
 		
 		// 클럽 만든 사람 자동으로 클럽에 가입되도록
-		clubRepository.join(clubId, loginedMemberId);
+		clubRepository.doJoin(clubId, loginedMemberId, purpose);
 
 		return ResultData.from("S-1", "동호회가 생성되었습니다.", clubId);
 	}
@@ -84,6 +83,10 @@ public class ClubService {
 	public List<Club> getMyClubs(int memberId) {
 		
 		return clubRepository.getMyClubs(memberId);
+	}
+
+	public void doJoin(int clubId, String purpose, int memberId) {
+		clubRepository.doJoin(clubId, memberId, purpose);
 	}
 
 }
