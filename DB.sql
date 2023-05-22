@@ -524,25 +524,11 @@ CREATE TABLE read_chat (
   memberId INT(11),
   roomId INT(11),
   roomType VARCHAR(255),
-  lastReadId INT(11)
+  lastReadId INT(11) NOT NULL DEFAULT 0
   
 );
 
-SELECT rc.*
-FROM read_chat rc
-INNER JOIN chat c
-ON rc.lastReadId = c.id
-WHERE c.type = 'TALK';
 
-
-# 안읽은 채팅 개수 구하기
-SELECT COUNT(*) 
-FROM chat 
-WHERE roomId = 1
-AND roomType = 'Personal' 
-AND id > 2
-AND memberId = 2
-AND `type` = 'talk';
 #############################################################################################
 # 검색 쿼리
 SELECT * FROM article;
@@ -559,11 +545,40 @@ SELECT * FROM PersonalchatRoom;
 SELECT * FROM chat_user;
 SELECT * FROM read_chat;
 
+# 안읽은 채팅 개수 구하기
+SELECT COUNT(c.id) 
+FROM chat c
+INNER JOIN PersonalchatRoom pcr
+ON c.roomId = pcr.id
+WHERE c.roomId = 1
+AND c.roomType = 'Personal'
+AND c.id > 10
+AND (pcr.memberId1 = 2 OR pcr.memberId2 = 2)
+AND c.`type` = 'talk';
+
+
+# 마지막으로 읽은 id 가져오기
+SELECT IFNULL(MAX(lastReadId), 0) AS lastReadId
+FROM read_chat
+WHERE memberId = 3
+AND roomId = 1
+AND roomType = 'Personal';
+
+SELECT c.*, rc.*
+FROM chat c
+INNER JOIN read_chat rc
+ON rc.roomId = c.roomId
+GROUP BY c.id;
+
 SELECT cr.*
 FROM ClubchatRoom cr
 INNER JOIN chat c
 ON cr.id = c.roomId
 WHERE cr.memberId = 2;
+
+SELECT LAST_INSERT_ID()
+FROM ClubChatRoom
+WHERE memberId = 2;
 
 # 내가 속한 동호회 가져오기
 SELECT mc.*, c.name AS 'clubName'

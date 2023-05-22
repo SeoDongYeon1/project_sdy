@@ -161,4 +161,24 @@
 		roomType = #{roomType},
 		lastReadId = #{lastReadId};
 	</insert>
+	
+	<select id="getUnreadCount" resultType="int">
+		SELECT COUNT(c.id) 
+		FROM chat c
+		INNER JOIN PersonalchatRoom pcr
+		ON c.roomId = pcr.id
+		WHERE c.roomId = #{roomId}
+		AND c.roomType = #{roomType}
+		AND c.id > #{lastReadId}
+		AND (pcr.memberId1 = #{memberId} OR pcr.memberId2 = #{memberId})
+		AND c.`type` = 'talk';
+	</select>
+	
+	<select id="getLastReadId" resultType="int">
+		SELECT IFNULL(MAX(lastReadId), 0) AS lastReadId
+		FROM read_chat
+		WHERE memberId = #{memberId}
+		AND roomId = #{roomId}
+		AND roomType = #{roomType};
+	</select>
 </mapper>

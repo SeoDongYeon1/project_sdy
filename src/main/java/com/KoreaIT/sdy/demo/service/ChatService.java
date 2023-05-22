@@ -49,6 +49,8 @@ public class ChatService {
 		
 		int lastInsertId = chatRepository.getLastInsertId();
 		
+		// update 쓰기
+		
 		// 마지막으로 읽은 채팅 업데이트
 		chatRepository.updateLastReadChatId(chat.getMemberId(), chat.getRoomId(), chat.getRoomType(), lastInsertId);
 		
@@ -117,6 +119,14 @@ public class ChatService {
 	public List<Chat> getChatHistory(int roomId, String roomType) {
 
 		return chatRepository.getChatHistory(roomId, roomType);
+	}
+
+	public int getUnreadCount(int roomId, int memberId, String roomType, int lastReadId) {
+		return chatRepository.getUnreadCount(roomId, memberId, roomType, lastReadId);
+	}
+
+	public int getLastReadId(int roomId, int memberId, String roomType) {
+		return chatRepository.getLastReadId(roomId, memberId, roomType);
 	}
 
 }

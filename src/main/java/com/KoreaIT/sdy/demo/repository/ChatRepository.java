@@ -47,4 +47,8 @@ public interface ChatRepository {
 	public List<PersonalChatRoom> getPersonalChatRoomsByMemberId(int memberId);
 
 	public void updateLastReadChatId(int memberId, int roomId, String roomType, int lastReadId);
+
+	public int getUnreadCount(int roomId, int memberId, String roomType, int lastReadId);
+
+	public int getLastReadId(int roomId, int memberId, String roomType);
 }

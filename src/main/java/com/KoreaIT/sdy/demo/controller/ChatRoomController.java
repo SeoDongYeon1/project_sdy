@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.KoreaIT.sdy.demo.dto.ClubChatRoom;
 import com.KoreaIT.sdy.demo.dto.PersonalChatRoom;
 import com.KoreaIT.sdy.demo.service.ChatRoomService;
+import com.KoreaIT.sdy.demo.service.ChatService;
 import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -24,6 +25,9 @@ public class ChatRoomController {
     
     @Autowired
     private ClubService clubService;
+    
+    @Autowired
+    private ChatService chatService;
     
     @Autowired
     private Rq rq;
@@ -46,6 +50,16 @@ public class ChatRoomController {
     			room.setMember1_name(room.getMember2_name());
     			room.setMember2_name(tmp2);
     		}
+    		
+    		String roomType = "Personal";
+    		
+    		int lastReadId = chatService.getLastReadId(room.getId(), rq.getLoginedMemberId(), roomType);
+    		
+    		int unreadCount = chatService.getUnreadCount(room.getId(), rq.getLoginedMemberId(), roomType, lastReadId);
+    		
+    		room.setUnreadCount(unreadCount);
+    		
+    		System.out.println("================="+room);
     	}
     	
         model.addAttribute("PList", PList);

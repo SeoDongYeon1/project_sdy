@@ -11,7 +11,7 @@
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 												<div class="ms-2 me-auto">
 														<div class="fw-bold">
-																<span class="hidden" id="${proom.memberId1}"></span> <a href="../chat/PersonalChatroom?id=${proom.id }">[[${proom.member1_name}]]</a>
+																<span class="hidden" id="${proom.memberId1}"></span> <a href="../chat/PersonalChatroom?id=${proom.id }">[[${proom.member1_name}]] +${proom.unreadCount }</a>
 														</div>
 												</div> 
 										</li>
