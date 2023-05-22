@@ -90,5 +90,21 @@ public class UsrClubController {
 		
 		return Ut.jsReplace(createRd.getMsg(), Ut.f("../club/detail?id=%d", id));
 	}
+	
+	@RequestMapping("usr/club/showMyClubList")
+	public String showMyClubList(int id, Model model) {
+		Club club = clubService.getClubById(id);
+		
+		if(club==null) {
+			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 페이지입니다.");
+		}
+		
+		List<Member> members = memberService.getMembersByClubId(id);
+		
+		model.addAttribute("club", club);
+		model.addAttribute("members", members);
+
+		return "usr/club/detail";
+	}
 
 }

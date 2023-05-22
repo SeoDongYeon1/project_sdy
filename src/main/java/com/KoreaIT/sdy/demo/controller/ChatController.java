@@ -64,7 +64,7 @@ public class ChatController {
     // 채팅내역을 받아오는 메소드
     @GetMapping("/chat/chatHistory")
     @ResponseBody
-    public List<Chat> getChatHistory(@RequestParam("roomId") int roomId, String roomType) {
+    public List<Chat> getChatHistory(int roomId, String roomType) {
         return chatService.getChatHistory(roomId, roomType);
     }
 }

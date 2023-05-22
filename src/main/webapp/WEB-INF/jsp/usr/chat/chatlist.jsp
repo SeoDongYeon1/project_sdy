@@ -5,12 +5,13 @@
 <div>
 		<div class="container">
 				<div>
+					<h1>개인 채팅방</h1>
 						<c:forEach var="proom" items="${PList }">
 								<ul>
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 												<div class="ms-2 me-auto">
 														<div class="fw-bold">
-																<span class="hidden" id="${proom.memberId1}"></span> <a href="../chat/PersonalChatroom?id=${proom.id }">[[${proom.memberId1}]]</a>
+																<span class="hidden" id="${proom.memberId1}"></span> <a href="../chat/PersonalChatroom?id=${proom.id }">[[${proom.member1_name}]]</a>
 														</div>
 												</div> 
 										</li>
@@ -19,8 +20,13 @@
 				</div>
 		</div>
 		<hr />
-		<div class="container">
+		
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+	<div class="container">
 				<div>
+					<h1>동호회 채팅방</h1>
 						<c:forEach var="croom" items="${CList }">
 								<ul>
 										<li class="list-group-item d-flex justify-content-between align-items-start">

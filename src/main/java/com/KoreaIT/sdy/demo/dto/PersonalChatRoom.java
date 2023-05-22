@@ -11,4 +11,6 @@ public class PersonalChatRoom {
     private int memberId2; // 채팅방 사람2
     private int unreadCount; // 안읽은 채팅 수
     
+    private String member1_name;
+    private String member2_name;
 }

@@ -428,6 +428,7 @@ ENGINE=INNODB;
 
 # 동호회에 가입한 회원을 관리하기 위해서 member_club 테이블 생성 
 CREATE TABLE member_club (
+  id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   memberId INT(10) UNSIGNED NOT NULL,
   clubId INT(10) UNSIGNED NOT NULL,
   regDate DATETIME NOT NULL
@@ -539,7 +540,7 @@ SELECT COUNT(*)
 FROM chat 
 WHERE roomId = 1
 AND roomType = 'Personal' 
-AND id > 23
+AND id > 2
 AND memberId = 2
 AND `type` = 'talk';
 #############################################################################################
@@ -557,6 +558,19 @@ SELECT * FROM ClubchatRoom;
 SELECT * FROM PersonalchatRoom;
 SELECT * FROM chat_user;
 SELECT * FROM read_chat;
+
+SELECT cr.*
+FROM ClubchatRoom cr
+INNER JOIN chat c
+ON cr.id = c.roomId
+WHERE cr.memberId = 2;
+
+# 내가 속한 동호회 가져오기
+SELECT mc.*, c.name AS 'clubName'
+FROM club c
+INNER JOIN member_club mc
+ON c.id = mc.clubId
+WHERE mc.memberId = 2;
 
 # 채팅방 멤버수 구하기
 SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
@@ -632,13 +646,17 @@ WHERE (memberId1 =2 OR memberId1 = 1) AND (memberId2=1 OR memberId2 = 2)
 LIMIT 1;
 
 # 맴버아이디로 개인 채팅방 리스트 가져오는 쿼리
-SELECT * FROM PersonalchatRoom
-WHERE (memberId1 =2 OR memberId2=2)
+SELECT pc.*, m1.name AS member1_name, m2.name AS member2_name
+FROM PersonalchatRoom pc
+JOIN MEMBER m1 ON pc.memberId1 = m1.id
+JOIN MEMBER m2 ON pc.memberId2 = m2.id
+WHERE (pc.memberId1 = 2 OR pc.memberId2 = 2);
 
 # 맴버아이디로 동호회 채팅방 리스트 가져오는 쿼리
 SELECT cr.*
-FROM ClubchatRoom cr
-INNER JOIN chat c
+FROM ClubChatRoom cr
+INNER JOIN chat c 
 ON cr.id = c.roomId
-WHERE c.memberId =2
-GROUP BY memberId;
+WHERE c.memberId = 2 AND c.roomType = 'Club'
+GROUP BY cr.id;
+

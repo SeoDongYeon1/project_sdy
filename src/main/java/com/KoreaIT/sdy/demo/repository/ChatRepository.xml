@@ -138,19 +138,20 @@
 	<select id="getClubChatRoomsByMemberId"
 		resultType="com.KoreaIT.sdy.demo.dto.ClubChatRoom">
 		SELECT cr.*
-		FROM ClubchatRoom cr
-		INNER JOIN chat c
-		ON cr.id =
-		c.roomId
-		WHERE c.memberId = #{memberId}
-		GROUP BY memberId;
+		FROM ClubChatRoom cr
+		INNER JOIN chat c 
+		ON cr.id = c.roomId
+		WHERE c.memberId = #{memberId} AND c.roomType = 'Club'
+		GROUP BY cr.id;
 	</select>
 
 	<select id="getPersonalChatRoomsByMemberId"
 		resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
-		SELECT * FROM PersonalchatRoom
-		WHERE (memberId1 =
-		#{memberId} OR memberId2 = #{memberId});
+		SELECT pc.*, m1.name AS member1_name, m2.name AS member2_name
+		FROM PersonalchatRoom pc
+		JOIN MEMBER m1 ON pc.memberId1 = m1.id
+		JOIN MEMBER m2 ON pc.memberId2 = m2.id
+		WHERE (pc.memberId1 = 2 OR pc.memberId2 = 2);
 	</select>
 
 	<insert id="updateLastReadChatId">

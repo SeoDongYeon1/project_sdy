@@ -1,13 +1,11 @@
 package com.KoreaIT.sdy.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.KoreaIT.sdy.demo.dto.ClubChatRoom;
 import com.KoreaIT.sdy.demo.dto.PersonalChatRoom;
@@ -31,11 +29,31 @@ public class ChatRoomController {
     private Rq rq;
 
     // 채팅 리스트 화면
-    @GetMapping("/usr/chat/list")
+    @RequestMapping("/usr/chat/list")
     public String ShowChatRoomList(Model model){
     	
-        model.addAttribute("PList", chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId()));
-        model.addAttribute("CList", chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId()));
+    	// 해당 memberId가 속하는 개인 채팅방 가져오기
+    	List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId());
+    	
+    	for(PersonalChatRoom room : PList) {
+    		if(room.getMemberId1() == rq.getLoginedMemberId()) {
+    			int tmp1 = room.getMemberId1();
+    			room.setMemberId1(room.getMemberId2());
+    			room.setMemberId2(tmp1);
+    			System.out.println(tmp1 + room.getMemberId1() + room.getMemberId2());
+    			
+    			String tmp2 = room.getMember1_name();
+    			room.setMember1_name(room.getMember2_name());
+    			room.setMember2_name(tmp2);
+    		}
+    	}
+    	
+        model.addAttribute("PList", PList);
+        
+        // 해당 memberId가 속하는 동호회 채팅방 가져오기
+        List<ClubChatRoom> CList = chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId());
+        
+        model.addAttribute("CList", CList);
         
         log.info("SHOW ALL ChatList {}", chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId()));
         log.info("SHOW ALL ChatList {}", chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId()));
@@ -44,18 +62,18 @@ public class ChatRoomController {
     }
 
     // 동호회 채팅방 생성
-    @PostMapping("/usr/chat/createClubChatroom")
-    public String createClubChatRoom(@RequestParam String roomName, @RequestParam int memberId, @RequestParam int clubId, RedirectAttributes rttr) {
+    @RequestMapping("/usr/chat/createClubChatroom")
+    public String createClubChatRoom(String roomName, int memberId, int clubId) {
         ClubChatRoom room = chatRoomService.createClubChatRoom(roomName, memberId, clubId);
         
         log.info("CREATE Chat Room {}", room);
-        rttr.addFlashAttribute("roomName", room);
+        
         return "redirect:/usr/chat/list";
     }
     
     // 회원 채팅방 생성
     @RequestMapping("/usr/chat/createPersonalChatroom")
-    public String createPersonalChatRoom(@RequestParam int memberId1, RedirectAttributes rttr) {
+    public String createPersonalChatRoom(int memberId1) {
     	if(memberId1==rq.getLoginedMemberId()) {
     		return rq.jsHistoryBackOnView("F-1", "해당 기능은 사용할 수 없습니다.");
     	}
@@ -69,13 +87,12 @@ public class ChatRoomController {
         PersonalChatRoom room = chatRoomService.createPersonalChatRoom(memberId1, rq.getLoginedMemberId());
         
         log.info("CREATE Chat Room {}", room);
-        rttr.addFlashAttribute("roomName", room);
         return "redirect:/usr/chat/PersonalChatroom?id="+room.getId();
     }
 
     // 채팅방 입장 화면
-    @GetMapping("/usr/chat/ClubChatroom")
-    public String ClubChatRoomDetail(Model model, @RequestParam int id){
+    @RequestMapping("/usr/chat/ClubChatroom")
+    public String ClubChatRoomDetail(Model model, int id){
     	
     	Boolean actorCanChat = clubService.actorCanChat(rq.getLoginedMemberId(), id);
     	
@@ -90,8 +107,8 @@ public class ChatRoomController {
     }
     
     // 채팅방 입장 화면
-    @GetMapping("/usr/chat/PersonalChatroom")
-    public String PersonalChatRoomDetail(Model model, @RequestParam int id){
+    @RequestMapping("/usr/chat/PersonalChatroom")
+    public String PersonalChatRoomDetail(Model model, int id){
     	
     	log.info("id {}", id);
     	model.addAttribute("room", chatRoomService.getPersonalChatRoomById(id));
