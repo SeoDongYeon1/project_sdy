@@ -15,6 +15,7 @@ public class BoardService {
 		this.boardRepository = boardRepository;
 	}
 
+	// id에 해당하는 게시판 가져오기
 	public Board getBoardById(int id) {
 		return boardRepository.getBoardById(id);
 	}

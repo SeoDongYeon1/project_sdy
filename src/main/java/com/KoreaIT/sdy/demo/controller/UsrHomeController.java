@@ -36,6 +36,7 @@ public class UsrHomeController {
 			return rq.jsHistoryBackOnView("F-E", "존재하지 않는 카테고리입니다.");
 		}
 
+		// 조건식에 맞는 동호회 갯수 가져오기
 		int clubsCount = clubService.getClubsCount(categoryId, searchKeyword);
 
 		// 페이지 네이션

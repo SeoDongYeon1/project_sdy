@@ -15,6 +15,7 @@ public class CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
+	// id에 해당되는 카테고리 가져오기
 	public Category getCategoryById(int id) {
 		return categoryRepository.getCategoryById(id);
 	}

@@ -20,11 +20,13 @@ public class UsrMemberController {
 	@Autowired
 	private Rq rq;
 
+	// 회원가입 페이지로
 	@RequestMapping("/usr/member/join")
 	public String showJoin() {
 		return "usr/member/join";
 	}
 
+	// 회원가입
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, Integer age, String nickname, String cellphoneNum, String email) {
@@ -60,12 +62,14 @@ public class UsrMemberController {
 		return  Ut.jsReplace(joinRd.getResultCode(), joinRd.getMsg(), "../member/login");
 	}
 
+	// 로그인 페이지로
 	@RequestMapping("usr/member/login")
 	public String login(String loginId, String loginPw) {
 		
 		return "usr/member/login";
 	}
 
+	// 로그인
 	@RequestMapping("usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw) {
@@ -93,6 +97,7 @@ public class UsrMemberController {
 		return Ut.jsReplace("S-1", Ut.f("%s님 로그인 되었습니다.", member.getNickname()), "/");
 	}
 
+	// 로그아웃
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
 	public String doLogout() {
@@ -101,6 +106,7 @@ public class UsrMemberController {
 		return Ut.jsReplace("S-1", "로그아웃 되었습니다.", "../home/main");
 	}
 	
+	// 아이디 중복 체크
 	@RequestMapping("/usr/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String loginId) {
@@ -118,6 +124,7 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "사용 가능한 아이디입니다.", loginId);
 	}
 	
+	// 이메일 중복 체크
 	@RequestMapping("/usr/member/getEmailDup")
 	@ResponseBody
 	public ResultData getEmailDup(String email) {
@@ -135,6 +142,7 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "사용 가능한 이메일입니다.", email);
 	}
 	
+	// 닉네임 중복 체크
 	@RequestMapping("/usr/member/getNicknameDup")
 	@ResponseBody
 	public ResultData getNicknameDup(String nickname) {
@@ -152,6 +160,7 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "사용 가능한 닉네임입니다.", nickname);
 	}
 	
+	// 프로필 페이지로
 	@RequestMapping("/usr/member/profile")
 	public String showProfile(Model model, int id) {
 		Member member = memberService.getMemberById(id);
@@ -161,6 +170,7 @@ public class UsrMemberController {
 		return "usr/member/profile";
 	}
 	
+	// 비밀번호 확인하기
 	@RequestMapping("/usr/member/checkPw")
 	public String showCheckPw(Model model) {
 		Member member = rq.getLoginedMember();
@@ -170,6 +180,7 @@ public class UsrMemberController {
 		return "usr/member/checkPw";
 	}
 	
+	// 회원 정보 수정 페이지로
 	@RequestMapping("/usr/member/modify")
 	public String modify(Model model) {
 
@@ -180,6 +191,7 @@ public class UsrMemberController {
 		return "usr/member/modify";
 	}
 
+	// 회원 정보 수정
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public String doModify(int id, String loginPw, String name, String nickname, String cellphoneNum) {

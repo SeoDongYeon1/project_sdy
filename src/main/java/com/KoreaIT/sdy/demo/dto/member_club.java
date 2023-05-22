@@ -8,5 +8,6 @@ public class member_club {
     private String regDate;
     private int clubId;
     private int memberId;
+    private String purpose;
     
 }

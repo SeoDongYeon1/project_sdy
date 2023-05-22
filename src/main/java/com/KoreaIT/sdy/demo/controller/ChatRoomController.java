@@ -143,6 +143,7 @@ public class ChatRoomController {
     	log.info("id {}", id);
     	PersonalChatRoom room = chatRoomService.getPersonalChatRoomById(id);
     	
+    	// 개인채팅방에서 상대방의 이름과 로그인한 사람의 이름을 가져오는 코드
     	if(room.getMemberId1() == rq.getLoginedMemberId()) {
     		int tmp1 = room.getMemberId1();
 			room.setMemberId1(room.getMemberId2());

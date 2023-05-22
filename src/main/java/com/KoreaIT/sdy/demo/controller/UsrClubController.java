@@ -112,7 +112,7 @@ public class UsrClubController {
 	}
 	
 	
-	// 동호회 가입하기
+	// 동호회 가입 페이지로 보내기
 	@RequestMapping("/usr/club/join")
 	public String showJoin(@RequestParam("id") int clubId, Model model) {
 		if(rq.getLoginedMemberId()==0) {
@@ -129,6 +129,7 @@ public class UsrClubController {
 		return "usr/club/join";
 	}
 
+	// 동호회 가입
 	@RequestMapping("usr/club/doJoin")
 	@ResponseBody
 	public String doJoin(String purpose, int clubId) {
@@ -140,6 +141,7 @@ public class UsrClubController {
 			return Ut.jsHistoryBack("F-1", "가입 목적을 입력해주세요");
 		}
 		
+		// 해당 동호회에 가입했는지 판단
 		member_club mc = clubService.getClubByMemberId(rq.getLoginedMemberId());
 		
 		if(mc.getClubId()==clubId) {
