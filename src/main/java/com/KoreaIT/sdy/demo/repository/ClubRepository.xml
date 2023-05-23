@@ -151,6 +151,7 @@
 	<select id="getClubByMemberId" resultType="com.KoreaIT.sdy.demo.dto.member_club">
 		SELECT *
 		FROM member_club
-		WHERE memberId = #{memberId};	
+		WHERE memberId = #{memberId}
+		AND clubId = #{clubId};	
 	</select>
 </mapper>

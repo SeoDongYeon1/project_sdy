@@ -101,9 +101,9 @@ public class ClubService {
 	}
 
 	// 해당 회원이 가입한 동호회 가져오기
-	public member_club getClubByMemberId(int memberId) {
+	public member_club getClubByMemberId(int memberId, int clubId) {
 		
-		return clubRepository.getClubByMemberId(memberId);
+		return clubRepository.getClubByMemberId(memberId, clubId);
 	}
-
+	
 }
