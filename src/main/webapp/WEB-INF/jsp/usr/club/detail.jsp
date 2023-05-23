@@ -6,7 +6,11 @@
 <div class="mt-8 text-xl mx-auto px-3">
 		<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
 				<tr>
-						<th>제목</th>
+						<th>프로필 사진</th>
+						<th></th>
+				</tr>
+				<tr>
+						<th>동호회 이름</th>
 						<th>${club.name }</th>
 				</tr>
 				<tr>
@@ -17,6 +21,10 @@
 				<tr>
 						<th>개설날짜</th>
 						<th>${club.regDate }</th>
+				</tr>
+				<tr>
+						<th>사진첩</th>
+						<th></th>
 				</tr>
 
 				<tr>
@@ -37,9 +45,7 @@
 						</tr>
 						<c:forEach var="member" items="${members }">
 								<tr>
-
 										<th><a href="../member/profile?id=${member.id }">${member.name }</a></th>
-
 								</tr>
 						</c:forEach>
 				</table>
