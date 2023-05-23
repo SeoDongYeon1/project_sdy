@@ -98,7 +98,7 @@ public class ChatRoomController {
         return "redirect:/usr/chat/list";
     }
     
-    // 회원 채팅방 생성
+    // 개인 채팅방 생성
     @RequestMapping("/usr/chat/createPersonalChatroom")
     public String createPersonalChatRoom(int memberId1) {
     	if(memberId1==rq.getLoginedMemberId()) {
@@ -119,7 +119,7 @@ public class ChatRoomController {
         return "redirect:/usr/chat/PersonalChatroom?id="+room.getId();
     }
 
-    // 채팅방 입장 화면
+    // 동호회 채팅방 입장 화면
     @RequestMapping("/usr/chat/ClubChatroom")
     public String ClubChatRoomDetail(Model model, int id){
     	
@@ -136,7 +136,7 @@ public class ChatRoomController {
         return "usr/chat/chatroom";
     }
     
-    // 채팅방 입장 화면
+    // 개인 채팅방 입장 화면
     @RequestMapping("/usr/chat/PersonalChatroom")
     public String PersonalChatRoomDetail(Model model, int id){
     	

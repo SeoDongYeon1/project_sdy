@@ -129,7 +129,7 @@
 		WHERE pc.id = #{id};
 	</select>
 
-	<select id="getPersonalChatRoomByMaM"
+	<select id="getPersonalChatRoomByMemberId"
 		resultType="com.KoreaIT.sdy.demo.dto.PersonalChatRoom">
 		SELECT * FROM PersonalchatRoom
 		WHERE (memberId1 = #{memberId1} OR memberId1 = #{memberId2})
