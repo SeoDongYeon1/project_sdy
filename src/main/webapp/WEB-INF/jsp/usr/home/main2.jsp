@@ -6,42 +6,6 @@
 <link rel="stylesheet" href="/css/chat.css" />
 <script src="/js/chat.js" defer="defer"></script>
 
-
-<style>
-/* 팝업 스타일 */
-.popup-overlay {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.1); /* 배경 색상과 투명도 조절 */
-	display: none; /* 초기에는 숨김 처리 */
-	align-items: center;
-	justify-content: center;
-	z-index: 9999;
-}
-
-.popup-content {
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 5px;
-	text-align: center;
-	
-}
-
-.popup-close {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	cursor: pointer;
-	font-size: 40px;
-	
-}
-</style>
-</head>
-<body>
 		<!-- 팝업 열기 버튼 -->
 		<button id="openBtn">팝업 열기</button>
 
@@ -180,15 +144,4 @@
 				</div>
 		</div>
 
-		<script>
-        // 팝업 열기
-        document.getElementById("openBtn").addEventListener("click", function() {
-            document.getElementById("popup").style.display = "flex";
-        });
-        
-        // 팝업 닫기
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
-    </script>
 <%@ include file="../common/foot.jspf"%>
