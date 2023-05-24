@@ -130,7 +130,7 @@ int endPage = startPage + displayPage - 1;
 														<circle cx="12" cy="5" r="1" />
 														<circle cx="12" cy="19" r="1" /></svg>
 								</button> <span class="item image"> <img
-										src="${rq.getImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}"
+										src="${rq.getClubImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}"
 										alt=""> <span>${club.name }</span>
 						</span> <span class="item"> <span class="cell-label">지역:</span>${club.region_name }
 						</span> <span class="item "> <span class="cell-label">카테고리:</span> ${club.category_name }

@@ -166,7 +166,7 @@ function doBadReaction(articleId) {
 				</tr>
 				<tr>
 						<th>첨부 이미지</th>
-						<th><img class="w-full rounded-xl" src="${rq.getImgUri(article.id)}"
+						<th><img class="w-full rounded-xl" src="${rq.getArticleImgUri(article.id)}"
 								onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" /></th>
 				</tr>
 				<tr>

@@ -4,11 +4,15 @@ import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,6 +94,45 @@ public class Ut {
 
 	}
 	
+	public static Map<String, String> getParamMap(HttpServletRequest req) {
+		Map<String, String> param = new HashMap<>();
+
+		Enumeration<String> parameterNames = req.getParameterNames();
+
+		while (parameterNames.hasMoreElements()) {
+			String paramName = parameterNames.nextElement();
+			String paramValue = req.getParameter(paramName);
+
+			param.put(paramName, paramValue);
+		}
+
+		return param;
+	}
+	
+	public static String getAttr(Map map, String attrName, String defaultValue) {
+
+		if (map.containsKey(attrName)) {
+			return (String) map.get(attrName);
+		}
+
+		return defaultValue;
+	}
+	
+	public static String getTempPassword(int length) {
+		int index = 0;
+		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+				'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i < length; i++) {
+			index = (int) (charArr.length * Math.random());
+			sb.append(charArr[index]);
+		}
+
+		return sb.toString();
+	}
+
 	public static boolean isEmpty(Object data) {
 		if (data == null) {
 			return true;
@@ -386,6 +429,13 @@ public class Ut {
 
 		return defaultValue;
 	}
+	
+	public static <T> T ifNull(T data, T defaultValue) {
+		return data != null ? data : defaultValue;
+	}
 
-
+	public static <T> T reqAttr(HttpServletRequest req, String attrName, T defaultValue) {
+		return (T) ifNull(req.getAttribute(attrName), defaultValue);
+	}
+	
 }

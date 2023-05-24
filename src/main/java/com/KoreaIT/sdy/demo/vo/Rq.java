@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import com.KoreaIT.sdy.demo.util.Ut;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -113,8 +112,16 @@ public class Rq {
 		return !isLogined;
 	}
 	
-	public String getImgUri(int id) {
+	public String getArticleImgUri(int id) {
 		return "/common/genFile/file/article/" + id + "/extra/Img/1";
+	}
+	
+	public String getMemberImgUri(int id) {
+		return "/common/genFile/file/member/" + id + "/extra/Img/1";
+	}
+	
+	public String getClubImgUri(int id) {
+		return "/common/genFile/file/club/" + id + "/extra/Img/1";
 	}
 
 	public String getProfileFallbackImgUri() {

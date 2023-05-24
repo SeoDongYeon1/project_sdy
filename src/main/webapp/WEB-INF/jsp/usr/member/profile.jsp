@@ -6,10 +6,19 @@
 
 
 <div class="profile_box mt-8 text-xl">
+	<form action="../member/profileUpload" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="${param.id}" />
 		<table style="width: 700px;" class="table-box-type-1 table table-zebra">
 				<tr>
-						<th>이메일</th>
-						<th>${member.email }</th>
+						<th>프로필 사진</th>
+						<th>
+							<img class="w-full rounded-xl" src="${rq.getMemberImgUri(member.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+								<div>첨부 이미지</div>
+								<div>
+										<input name="file__member__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
+								</div>
+								<button class="btn btn-outline" type="submit" value="업로드">업로드</button>
+						</th>
 				</tr>
 
 				<tr>
@@ -39,6 +48,7 @@
 				</c:if>
 
 		</table>
+	</form>
 		<br />
 		<div class="btn_box">
 				<button class="btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>

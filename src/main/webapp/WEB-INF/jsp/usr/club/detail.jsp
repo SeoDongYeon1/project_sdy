@@ -10,10 +10,10 @@
 				<tr>
 						<th>프로필 사진</th>
 						<th>
-							<img class="w-full rounded-xl" src="${rq.getImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+							<img class="w-full rounded-xl" src="${rq.getClubImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 								<div>첨부 이미지</div>
 								<div>
-										<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
+										<input name="file__club__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
 								</div>
 								<button class="btn btn-outline" type="submit" value="업로드">업로드</button>
 						</th>
