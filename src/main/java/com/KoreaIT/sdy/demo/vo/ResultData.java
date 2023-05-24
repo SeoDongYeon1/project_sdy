@@ -1,16 +1,30 @@
 package com.KoreaIT.sdy.demo.vo;
 
-import lombok.Getter;
+import java.util.Map;
 
+import com.KoreaIT.sdy.demo.util.Ut;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class ResultData {
-	@Getter
 	private String resultCode;
 	
-	@Getter
 	private String msg;
 	
-	@Getter
 	private Object data1;
+	
+	private Map<String, Object> body;
+	
+	public ResultData(String resultCode, String msg, Object... args) {
+		this.resultCode = resultCode;
+		this.msg = msg;
+		this.body = Ut.mapOf(args);
+	}
 	
 	public static ResultData from(String resultCode, String msg) {
 		return from(resultCode, msg, null);

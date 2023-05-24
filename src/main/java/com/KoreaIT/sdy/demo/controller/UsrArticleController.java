@@ -1,6 +1,7 @@
 package com.KoreaIT.sdy.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.KoreaIT.sdy.demo.service.ArticleService;
 import com.KoreaIT.sdy.demo.service.BoardService;
+import com.KoreaIT.sdy.demo.service.GenFileService;
 import com.KoreaIT.sdy.demo.service.ReactionPointService;
 import com.KoreaIT.sdy.demo.service.ReplyService;
 import com.KoreaIT.sdy.demo.util.Ut;
@@ -36,6 +40,9 @@ public class UsrArticleController {
 
 	@Autowired
 	private Rq rq;
+	
+	@Autowired
+	private GenFileService genFileService;
 
 	@RequestMapping("usr/article/write")
 	public String write(String title, String body, Integer boardId) {
@@ -45,7 +52,7 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(String title, String body, int boardId, String replaceUri) {
+	public String doWrite(String title, String body, int boardId, String replaceUri, MultipartRequest multipartRequest) {
 		
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력하세요.");
@@ -60,6 +67,16 @@ public class UsrArticleController {
 		
 		if (Ut.empty(replaceUri)) {
 			replaceUri = Ut.f("../article/detail?id=%d", id);
+		}
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, id);
+			}
 		}
 
 		return Ut.jsReplace(writeArticleRd.getMsg(), replaceUri);

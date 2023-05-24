@@ -150,7 +150,7 @@ function doBadReaction(articleId) {
 }
 </script>
 
-<div class="mt-8 text-xl mx-auto px-3">
+<div class="mt-8 text-xl mx-auto px-3 detail_box">
 		<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
 				<tr>
 						<th>번호</th>
@@ -163,6 +163,11 @@ function doBadReaction(articleId) {
 				<tr>
 						<th>제목</th>
 						<th>${article.title }</th>
+				</tr>
+				<tr>
+						<th>첨부 이미지</th>
+						<th><img class="w-full rounded-xl" src="${rq.getImgUri(article.id)}"
+								onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" /></th>
 				</tr>
 				<tr>
 						<th>내용</th>
@@ -298,8 +303,13 @@ function doBadReaction(articleId) {
 <!-- 댓글 수정 관련 -->
 
 
-		<!-- 커스텀 -->
-		<style type="text/css">
+<!-- 커스텀 -->
+<style type="text/css">
+.detail_box {
+	overflow-y: auto;
+	width: 2000px;
+}
+
 .table-box-type-1 {
 	margin-left: auto;
 	margin-right: auto;
@@ -356,4 +366,4 @@ function doBadReaction(articleId) {
 }
 </style>
 
-		<%@ include file="../common/foot.jspf"%>
+<%@ include file="../common/foot.jspf"%>

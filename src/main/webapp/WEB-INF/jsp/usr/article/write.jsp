@@ -48,8 +48,7 @@
 </script>
 
 
-<form style="margin-left: 10%;" method="post" action="doWrite"
-		onsubmit="return ArticleWrite__submit(this); return false;">
+<form style="margin-left: 10%;" method="post" action="doWrite" onsubmit="return ArticleWrite__submit(this); return false;" enctype="multipart/form-data">
 		<br /> <input type="hidden" name="body">
 		<div class="form-menu">
 				<div style="width: 90%; font-weight: bold; font-size: 25px; text-align: center;">게시글 작성</div>
@@ -73,6 +72,14 @@
 										name="title" />
 								
 						</div>
+						
+						<div>
+							<div>첨부 이미지</div>
+							<div>
+								<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
+							</div>
+						</div>
+						
 						<br />
 						<div style="font-size: 17px; font-weight: bold;">
 								내용 
