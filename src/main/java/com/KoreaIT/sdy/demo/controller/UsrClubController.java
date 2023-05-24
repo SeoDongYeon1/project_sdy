@@ -121,7 +121,7 @@ public class UsrClubController {
 		
 		member_club mc = clubService.getClubByMemberId(rq.getLoginedMemberId(), clubId);
 		
-		if(mc.getClubId()==clubId) {
+		if(mc!=null) {
 			return rq.jsHistoryBackOnView("F-1", "이미 가입한 동호회입니다.");
 		}
 		
@@ -144,7 +144,7 @@ public class UsrClubController {
 		// 해당 동호회에 가입했는지 판단
 		member_club mc = clubService.getClubByMemberId(rq.getLoginedMemberId(), clubId);
 		
-		if(mc.getClubId()==clubId) {
+		if(mc!=null) {
 			return rq.jsHistoryBackOnView("F-2", "이미 가입한 동호회입니다.");
 		}
 		
