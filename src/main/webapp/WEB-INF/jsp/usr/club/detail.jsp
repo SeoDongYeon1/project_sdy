@@ -4,10 +4,19 @@
 <%@ include file="../common/head.jspf"%>
 
 <div class="mt-8 text-xl mx-auto px-3">
+	<form action="../club/profileUpload" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="${param.id}" />
 		<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
 				<tr>
 						<th>프로필 사진</th>
-						<th></th>
+						<th>
+							<img class="w-full rounded-xl" src="${rq.getImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+								<div>첨부 이미지</div>
+								<div>
+										<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
+								</div>
+								<button class="btn btn-outline" type="submit" value="업로드">업로드</button>
+						</th>
 				</tr>
 				<tr>
 						<th>동호회 이름</th>
@@ -32,8 +41,9 @@
 						<th><a href="../chat/ClubChatroom?id=${club.id }" class="btn btn-outline btn-xs">채팅</a></th>
 				</tr>
 		</table>
-		<br />
-		<a href="../club/join?id=${club.id }">
+		
+	</form>
+		<br /> <a href="../club/join?id=${club.id }">
 				<button style="width: 100px;" class="app-content-headerButton">동호회 가입</button>
 		</a>
 

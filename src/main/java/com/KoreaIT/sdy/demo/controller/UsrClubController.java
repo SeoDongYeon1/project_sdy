@@ -9,10 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.KoreaIT.sdy.demo.dto.member_club;
 import com.KoreaIT.sdy.demo.service.ChatRoomService;
 import com.KoreaIT.sdy.demo.service.ClubService;
+import com.KoreaIT.sdy.demo.service.GenFileService;
 import com.KoreaIT.sdy.demo.service.MemberService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
@@ -35,6 +38,8 @@ public class UsrClubController {
 	@Autowired
 	private Rq rq;
 	
+	@Autowired
+	private GenFileService genFileService;
 	
 
 //	@RequestMapping("/usr/club/list")
@@ -60,6 +65,27 @@ public class UsrClubController {
 		model.addAttribute("members", members);
 
 		return "usr/club/detail";
+	}
+	
+	@RequestMapping("usr/club/profileUpload")
+	@ResponseBody
+	public String upload(int id, Model model, String replaceUri, MultipartRequest multipartRequest) {
+		
+		if (Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../club/detail?id=%d", id);
+		}
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, id);
+			}
+		}
+		
+		return Ut.jsReplace("업로드 되었습니다.", replaceUri);
 	}
 	
 	
