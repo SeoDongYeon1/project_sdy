@@ -46,8 +46,7 @@
 				<c:if test="${rq.isLogined() }">
 						<div class="account-info">
 								<div class="account-info-picture">
-										<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxOX4mkcW8pH9FbpI9rTBkokiMxSY2GJ3eyw&usqp=CAU"
-												alt="Account">
+										<img class="w-full rounded-xl" src="${rq.getMemberImgUri(rq.loginedMemberId)}" onerror="${rq.getMemberProfileFallbackImgOnErrorHtml()}" alt="" />
 								</div>
 								<div class="account-info-name">${rq.loginedMember.nickname }</div>
 								<div class="account-info-more-wrapper">

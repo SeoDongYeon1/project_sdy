@@ -127,9 +127,17 @@ public class Rq {
 	public String getProfileFallbackImgUri() {
 		return "https://via.placeholder.com/150/?text=*^_^*";
 	}
+	
+	public String getMemberProfileFallbackImgUri() {
+		return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxOX4mkcW8pH9FbpI9rTBkokiMxSY2GJ3eyw&usqp=CAU";
+	}
 
 	public String getProfileFallbackImgOnErrorHtml() {
 		return "this.src = '" + getProfileFallbackImgUri() + "'";
+	}
+	
+	public String getMemberProfileFallbackImgOnErrorHtml() {
+		return "this.src = '" + getMemberProfileFallbackImgUri() + "'";
 	}
 
 }
