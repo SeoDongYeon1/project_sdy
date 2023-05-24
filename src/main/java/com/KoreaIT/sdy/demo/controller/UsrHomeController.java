@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.KoreaIT.sdy.demo.dto.ClubChatRoom;
+import com.KoreaIT.sdy.demo.dto.PersonalChatRoom;
 import com.KoreaIT.sdy.demo.service.CategoryService;
+import com.KoreaIT.sdy.demo.service.ChatRoomService;
+import com.KoreaIT.sdy.demo.service.ChatService;
 import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.vo.Category;
 import com.KoreaIT.sdy.demo.vo.Club;
@@ -18,6 +22,12 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrHomeController {
 	@Autowired
 	ClubService clubService;
+	
+	@Autowired
+	ChatRoomService chatRoomService;
+	
+	@Autowired
+	ChatService chatService;
 	
 	@Autowired
 	CategoryService categoryService;
@@ -66,6 +76,51 @@ public class UsrHomeController {
 				}
 			}
 		}
+		
+		// 해당 memberId가 속하는 개인 채팅방 가져오기
+		List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId());
+
+		// 개인채팅방에서 상대방의 이름과 읽지 않은 채팅 수를 가져오기 위한 반복문
+		for (PersonalChatRoom room : PList) {
+			if (room.getMemberId1() == rq.getLoginedMemberId()) {
+				int tmp1 = room.getMemberId1();
+				room.setMemberId1(room.getMemberId2());
+				room.setMemberId2(tmp1);
+
+				String tmp2 = room.getMember1_name();
+				room.setMember1_name(room.getMember2_name());
+				room.setMember2_name(tmp2);
+			}
+
+			String roomType = "Personal";
+
+			int lastReadId = chatService.getLastReadId(room.getId(), rq.getLoginedMemberId(), roomType);
+
+			int unreadCount = chatService.getPersonalChatUnreadCount(room.getId(), rq.getLoginedMemberId(), roomType,
+					lastReadId);
+
+			room.setUnreadCount(unreadCount);
+
+		}
+
+		model.addAttribute("PList", PList);
+
+		// 해당 memberId가 속하는 동호회 채팅방 가져오기
+		List<ClubChatRoom> CList = chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId());
+
+		// 동호회 채팅방에서 읽지 않은 채팅의 수를 가져오는 것
+		for (ClubChatRoom room : CList) {
+			String roomType = "Club";
+
+			int lastReadId = chatService.getLastReadId(room.getId(), rq.getLoginedMemberId(), roomType);
+
+			int unreadCount = chatService.getClubChatUnreadCount(room.getId(), rq.getLoginedMemberId(), roomType,
+					lastReadId);
+
+			room.setUnreadCount(unreadCount);
+		}
+
+		model.addAttribute("CList", CList);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("totalPage", totalPage);

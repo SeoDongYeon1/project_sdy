@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="pageTitle" value="채팅" />
 <%@ include file="../common/head.jspf"%>
 
 <link rel="stylesheet" href="/css/chat.css" />
@@ -39,24 +38,8 @@
 																<span class="time">2:09 PM</span>
 																<span class="preview">But we’re probably gonna need a new carpet.</span>
 														</li>
-														<li class="person" data-chat="person4">
-																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/bo-jackson.jpg" alt="" />
-																<span class="name">Bo Jackson</span>
-																<span class="time">2:09 PM</span>
-																<span class="preview">It’s not that bad...</span>
-														</li>
-														<li class="person" data-chat="person5">
-																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/michael-jordan.jpg" alt="" />
-																<span class="name">Michael Jordan</span>
-																<span class="time">2:09 PM</span>
-																<span class="preview">Wasup for the third time like is you blind bitch</span>
-														</li>
-														<li class="person" data-chat="person6">
-																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/drake.jpg" alt="" />
-																<span class="name">Drake</span>
-																<span class="time">2:09 PM</span>
-																<span class="preview">howdoyoudoaspace</span>
-														</li>
+
+
 												</ul>
 										</div>
 										<div class="right">

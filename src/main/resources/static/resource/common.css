@@ -74,7 +74,20 @@ html{
 	display: block;
 }
 
-.sidebar-list > .sidebar-list-item:nth-child(2):hover > .board-list > a{
+.sidebar-list > .sidebar-list-item:nth-child(2):hover > .board-list > li > a{
+	white-space: nowrap;
+}
+
+
+.sidebar-list > .chat > .chat-list {
+	display: none;
+}
+
+.sidebar-list > .chat:hover > .chat-list {
+	display: block;
+}
+
+.sidebar-list > .chat:hover > .chat-list > li > a{
 	white-space: nowrap;
 }
 

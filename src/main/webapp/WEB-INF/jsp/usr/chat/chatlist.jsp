@@ -19,8 +19,6 @@
 						</c:forEach>
 				</div>
 		</div>
-		<hr />
-		
 </div>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div>
