@@ -1,503 +1,194 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="pageTitle" value="메인페이지"/>
+<c:set var="pageTitle" value="채팅" />
 <%@ include file="../common/head.jspf"%>
 
-<div class="app-content">
-					<div class="app-content-actions">
-								<input class="search-bar" placeholder="Search..." type="text">
-								<div class="app-content-actions-wrapper">
-										<div class="filter-button-wrapper">
-												<button class="action-button filter jsFilter">
-														<span>Filter</span>
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-																stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-																class="feather feather-filter">
-																<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /></svg>
-												</button>
-												<div class="filter-menu">
-														<label>Category</label> <select>
-																<option>All Categories</option>
-																<option>Furniture</option>
-																<option>Decoration</option>
-																<option>Kitchen</option>
-																<option>Bathroom</option>
-														</select> <label>Status</label> <select>
-																<option>All Status</option>
-																<option>Active</option>
-																<option>Disabled</option>
-														</select>
-														<div class="filter-menu-buttons">
-																<button class="filter-button reset">Reset</button>
-																<button class="filter-button apply">Apply</button>
+<link rel="stylesheet" href="/css/chat.css" />
+<script src="/js/chat.js" defer="defer"></script>
+
+
+<style>
+/* 팝업 스타일 */
+.popup-overlay {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.1); /* 배경 색상과 투명도 조절 */
+	display: none; /* 초기에는 숨김 처리 */
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+}
+
+.popup-content {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	text-align: center;
+	
+}
+
+.popup-close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	font-size: 40px;
+	
+}
+</style>
+</head>
+<body>
+		<!-- 팝업 열기 버튼 -->
+		<button id="openBtn">팝업 열기</button>
+
+		<!-- 팝업 창 -->
+		<div id="popup" class="popup-overlay">
+				<div class="popup-content">
+
+						<div class="wrapper">
+								<div class="container">
+										<div class="left">
+												<div class="top">
+														<input type="text" placeholder="Search" />
+														<a href="javascript:;" class="search"></a>
+												</div>
+												<ul class="people">
+														<li class="person" data-chat="person1">
+																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg" alt="" />
+																<span class="name">Thomas Bangalter</span>
+																<span class="time">2:09 PM</span>
+																<span class="preview">I was wondering...</span>
+														</li>
+														<li class="person" data-chat="person2">
+																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/dog.png" alt="" />
+																<span class="name">Dog Woofson</span>
+																<span class="time">1:44 PM</span>
+																<span class="preview">I've forgotten how it felt before</span>
+														</li>
+														<li class="person" data-chat="person3">
+																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/louis-ck.jpeg" alt="" />
+																<span class="name">Louis CK</span>
+																<span class="time">2:09 PM</span>
+																<span class="preview">But we’re probably gonna need a new carpet.</span>
+														</li>
+														<li class="person" data-chat="person4">
+																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/bo-jackson.jpg" alt="" />
+																<span class="name">Bo Jackson</span>
+																<span class="time">2:09 PM</span>
+																<span class="preview">It’s not that bad...</span>
+														</li>
+														<li class="person" data-chat="person5">
+																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/michael-jordan.jpg" alt="" />
+																<span class="name">Michael Jordan</span>
+																<span class="time">2:09 PM</span>
+																<span class="preview">Wasup for the third time like is you blind bitch</span>
+														</li>
+														<li class="person" data-chat="person6">
+																<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/drake.jpg" alt="" />
+																<span class="name">Drake</span>
+																<span class="time">2:09 PM</span>
+																<span class="preview">howdoyoudoaspace</span>
+														</li>
+												</ul>
+										</div>
+										<div class="right">
+												<div class="top">
+														<span>
+																To:
+																<span class="name">Dog Woofson</span>
+														</span>
+												</div>
+												<div class="chat" data-chat="person1">
+														<div class="conversation-start">
+																<span>Today, 6:48 AM</span>
 														</div>
+														<div class="bubble you">Hello,</div>
+														<div class="bubble you">it's me.</div>
+														<div class="bubble you">I was wondering...</div>
+												</div>
+												<div class="chat" data-chat="person2">
+														<div class="conversation-start">
+																<span>Today, 5:38 PM</span>
+														</div>
+														<div class="bubble you">Hello, can you hear me?</div>
+														<div class="bubble you">I'm in California dreaming</div>
+														<div class="bubble me">... about who we used to be.</div>
+														<div class="bubble me">Are you serious?</div>
+														<div class="bubble you">When we were younger and free...</div>
+														<div class="bubble you">I've forgotten how it felt before</div>
+												</div>
+												<div class="chat" data-chat="person3">
+														<div class="conversation-start">
+																<span>Today, 3:38 AM</span>
+														</div>
+														<div class="bubble you">Hey human!</div>
+														<div class="bubble you">Umm... Someone took a shit in the hallway.</div>
+														<div class="bubble me">... what.</div>
+														<div class="bubble me">Are you serious?</div>
+														<div class="bubble you">I mean...</div>
+														<div class="bubble you">It’s not that bad...</div>
+														<div class="bubble you">But we’re probably gonna need a new carpet.</div>
+												</div>
+												<div class="chat" data-chat="person4">
+														<div class="conversation-start">
+																<span>Yesterday, 4:20 PM</span>
+														</div>
+														<div class="bubble me">Hey human!</div>
+														<div class="bubble me">Umm... Someone took a shit in the hallway.</div>
+														<div class="bubble you">... what.</div>
+														<div class="bubble you">Are you serious?</div>
+														<div class="bubble me">I mean...</div>
+														<div class="bubble me">It’s not that bad...</div>
+												</div>
+												<div class="chat" data-chat="person5">
+														<div class="conversation-start">
+																<span>Today, 6:28 AM</span>
+														</div>
+														<div class="bubble you">Wasup</div>
+														<div class="bubble you">Wasup</div>
+														<div class="bubble you">
+																Wasup for the third time like is
+																<br />
+																you blind bitch
+														</div>
+
+												</div>
+												<div class="chat" data-chat="person6">
+														<div class="conversation-start">
+																<span>Monday, 1:27 PM</span>
+														</div>
+														<div class="bubble you">So, how's your new phone?</div>
+														<div class="bubble you">You finally have a smartphone :D</div>
+														<div class="bubble me">Drake?</div>
+														<div class="bubble me">Why aren't you answering?</div>
+														<div class="bubble you">howdoyoudoaspace</div>
+												</div>
+												<div class="write">
+														<a href="javascript:;" class="write-link attach"></a>
+														<input type="text" />
+														<a href="javascript:;" class="write-link smiley"></a>
+														<a href="javascript:;" class="write-link send"></a>
 												</div>
 										</div>
-										<button class="action-button list" title="List View">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-list">
-														<line x1="8" y1="6" x2="21" y2="6" />
-														<line x1="8" y1="12" x2="21" y2="12" />
-														<line x1="8" y1="18" x2="21" y2="18" />
-														<line x1="3" y1="6" x2="3.01" y2="6" />
-														<line x1="3" y1="12" x2="3.01" y2="12" />
-														<line x1="3" y1="18" x2="3.01" y2="18" /></svg>
-										</button>
-										<button class="action-button grid" title="Grid View">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-grid">
-														<rect x="3" y="3" width="7" height="7" />
-														<rect x="14" y="3" width="7" height="7" />
-														<rect x="14" y="14" width="7" height="7" />
-														<rect x="3" y="14" width="7" height="7" /></svg>
-										</button>
 								</div>
 						</div>
-						<div class="products-area-wrapper tableView">
-								<div class="list-header">
-										<div class="item image">
-												Items
-												<button class="sort-button">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
-																<path fill="currentColor"
-																		d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" /></svg>
-												</button>
-										</div>
-										<div class="item category">
-												Category
-												<button class="sort-button">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
-																<path fill="currentColor"
-																		d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" /></svg>
-												</button>
-										</div>
-										<div class="item status-cell">
-												Status
-												<button class="sort-button">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
-																<path fill="currentColor"
-																		d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" /></svg>
-												</button>
-										</div>
-										<div class="item sales">
-												Sales
-												<button class="sort-button">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
-																<path fill="currentColor"
-																		d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" /></svg>
-												</button>
-										</div>
-										<div class="item stock">
-												Stock
-												<button class="sort-button">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
-																<path fill="currentColor"
-																		d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" /></svg>
-												</button>
-										</div>
-										<div class="item price">
-												Price
-												<button class="sort-button">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
-																<path fill="currentColor"
-																		d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" /></svg>
-												</button>
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-														alt="product"> <span>Ocean</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Furniture
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>11
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>36
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$560
-										</div>
-								</div>
-
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8a2l0Y2hlbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Lou</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Kitchen
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status disabled">Disabled</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>6
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>46
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$710
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Yellow</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Decoration
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>61
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>56
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$360
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmVkcm9vbXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Dreamy</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Bedroom
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status disabled">Disabled</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>41
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>66
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$260
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aW50ZXJpb3J8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Boheme</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Furniture
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>32
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>40
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$350
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGludGVyaW9yfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Sky</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Bathroom
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status disabled">Disabled</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>22
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>44
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$160
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzB8fGludGVyaW9yfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Midnight</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Furniture
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>23
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>45
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$340
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aW50ZXJpb3J8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Boheme</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Furniture
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>32
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>40
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$350
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1511389026070-a14ae610a1be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGludGVyaW9yfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Palm</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Decoration
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>24
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>46
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$60
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTV8fGludGVyaW9yfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Forest</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Living Room
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>41
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>16
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$270
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Njd8fGludGVyaW9yfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Sand</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Living Room
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status disabled">Disabled</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>52
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>16
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$230
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1533779283484-8ad4940aa3a8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODd8fGludGVyaW9yfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Autumn</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Decoration
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>21
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>46
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$252
-										</div>
-								</div>
-								<div class="row">
-										<button class="cell-more-button">
-												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-														stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-														class="feather feather-more-vertical">
-														<circle cx="12" cy="12" r="1" />
-														<circle cx="12" cy="5" r="1" />
-														<circle cx="12" cy="19" r="1" /></svg>
-										</button>
-										<div class="item image">
-												<img
-														src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aW50ZXJpb3J8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-														alt="product"> <span>Boheme</span>
-										</div>
-										<div class="item category">
-												<span class="cell-label">Category:</span>Furniture
-										</div>
-										<div class="item status-cell">
-												<span class="cell-label">Status:</span> <span class="status active">Active</span>
-										</div>
-										<div class="item sales">
-												<span class="cell-label">Sales:</span>32
-										</div>
-										<div class="item stock">
-												<span class="cell-label">Stock:</span>40
-										</div>
-										<div class="item price">
-												<span class="cell-label">Price:</span>$350
-										</div>
-								</div>
-						</div>	
+						<span class="popup-close" onclick="closePopup()">&times;</span>
 				</div>
+		</div>
+
+		<script>
+        // 팝업 열기
+        document.getElementById("openBtn").addEventListener("click", function() {
+            document.getElementById("popup").style.display = "flex";
+        });
+        
+        // 팝업 닫기
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
 <%@ include file="../common/foot.jspf"%>
