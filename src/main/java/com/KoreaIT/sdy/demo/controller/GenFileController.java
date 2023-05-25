@@ -70,6 +70,7 @@ public class GenFileController {
 	public ResponseEntity<Resource> showFile(HttpServletRequest request, @PathVariable String relTypeCode,
 			@PathVariable int relId, @PathVariable String typeCode, @PathVariable String type2Code,
 			@PathVariable int fileNo) throws FileNotFoundException {
+		
 		GenFile genFile = genFileService.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 
 		if (genFile == null) {

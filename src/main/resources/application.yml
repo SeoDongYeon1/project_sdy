@@ -20,7 +20,7 @@ spring:
 mybatis:
   type-aliases-package: com.KoreaIT.sdy.demo.vo
 custom:
-  genFileDirPath: C:\workspace_sdy\sts-4.18.0.RELEASE-workspace\project_sdy\images
+  genFileDirPath: C:\workspace_sdy\sts-4.18.1.RELEASE-workspace\project_sdy\images
   logging:
     dir: log
     level: debug

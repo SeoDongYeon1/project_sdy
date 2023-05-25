@@ -432,20 +432,21 @@ CREATE TABLE member_club (
   memberId INT(10) UNSIGNED NOT NULL,
   clubId INT(10) UNSIGNED NOT NULL,
   purpose TEXT NOT NULL,
-  regDate DATETIME NOT NULL
+  regDate DATETIME NOT NULL,
+  `authLevel` SMALLINT(2) UNSIGNED DEFAULT 1 COMMENT '권한 레벨 (1=일반 회원, 6=매니저 ,7=동호회 회장)'
 
 );
 
 ALTER TABLE member_club CONVERT TO CHARSET UTF8;
 
-INSERT INTO member_club (memberId, clubId, purpose, regDate)
-VALUES (1, 3, ".", NOW());
+INSERT INTO member_club (memberId, clubId, purpose, regDate, authLevel)
+VALUES (1, 3, ".", NOW(), 7);
 
-INSERT INTO member_club (memberId, clubId, purpose, regDate)
-VALUES (2, 2, ".", NOW());
+INSERT INTO member_club (memberId, clubId, purpose, regDate, authLevel)
+VALUES (2, 2, ".", NOW(), 7);
 
-INSERT INTO member_club (memberId, clubId, purpose, regDate)
-VALUES (3, 1, ".", NOW());
+INSERT INTO member_club (memberId, clubId, purpose, regDate, authLevel)
+VALUES (3, 1, ".", NOW(), 7);
 
 # chat 테이블 추가
 CREATE TABLE chat (
@@ -551,13 +552,11 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
-
-SELECT *
-FROM member_club
-WHERE memberId = 2
-AND clubId = 3;	
-
-
+		SELECT mc.*, m.name AS 'name'
+		FROM `member` m
+	INNER JOIN member_club mc
+		ON m.id = mc.memberId
+		WHERE mc.clubId = 3;
 
 
 #############################################################################################

@@ -106,4 +106,7 @@ public class ClubService {
 		return clubRepository.getClubByMemberId(memberId, clubId);
 	}
 	
+	public List<member_club> getMembersByClubId(int clubId) {
+		return clubRepository.getMembersByClubId(clubId);
+	}
 }

@@ -78,14 +78,13 @@
 	</select>
 
 	<select id="getmembersCount" resultType="Club">
-		SELECT c.id AS 'id',
-		COUNT(mc.memberId) AS 'membersCount'
+		SELECT c.id AS 'id', COUNT(mc.memberId) AS 'membersCount'
 		FROM club c
 		INNER JOIN member_club mc
 		ON c.id = mc.clubId
 		GROUP BY c.id;
 	</select>
-
+	
 	<select id="selectArea" resultType="AreaRequestDTO"
 		parameterType="Map">
 		<choose>
@@ -131,15 +130,6 @@
 		AND memberId = #{actorId};
 	</select>
 	
-	<select id="getmembers" resultType="Club">
-		SELECT c.id AS 'id',
-		COUNT(mc.memberId) AS 'membersCount'
-		FROM club c
-		INNER JOIN member_club mc
-		ON c.id = mc.clubId
-		GROUP BY c.id;
-	</select>
-	
 	<select id="getMyClubs" resultType="Club">
 		SELECT c.*, mc.memberId
 		FROM club c
@@ -153,5 +143,13 @@
 		FROM member_club
 		WHERE memberId = #{memberId}
 		AND clubId = #{clubId};	
+	</select>
+	
+	<select id="getMembersByClubId" resultType="com.KoreaIT.sdy.demo.dto.member_club">
+		SELECT mc.*, m.name AS 'name'
+		FROM `member` m
+		INNER JOIN member_club mc
+		ON m.id = mc.memberId
+		WHERE mc.clubId = #{clubId};
 	</select>
 </mapper>

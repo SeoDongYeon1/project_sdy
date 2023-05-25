@@ -11,11 +11,14 @@
 						<th>프로필 사진</th>
 						<th>
 							<img class="w-full rounded-xl" src="${rq.getClubImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
-								<div>첨부 이미지</div>
-								<div>
-										<input name="file__club__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
-								</div>
+							<c:forEach var="member" items="${members }">
+								<c:if test="${member.memberId==rq.loginedMemberId && member.authLevel==7 || member.authLevel==6 }">
+									<div>
+											<input name="file__club__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
+									</div>
 								<button class="btn btn-outline" type="submit" value="업로드">업로드</button>
+								</c:if>
+							</c:forEach>
 						</th>
 				</tr>
 				<tr>
@@ -58,6 +61,9 @@
 										<th><a href="../member/profile?id=${member.id }">${member.name }</a></th>
 								</tr>
 						</c:forEach>
+						<tr>
+							<th>등급</th>
+						</tr>
 				</table>
 		</div>
 </div>
