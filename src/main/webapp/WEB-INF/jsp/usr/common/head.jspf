@@ -43,7 +43,7 @@
 				<c:if test="${rq.isLogined() }">
 						<div class="account-info">
 								<div class="account-info-picture">
-										<img class="w-full rounded-xl" src="${rq.getMemberImgUri(rq.loginedMemberId)}"
+										<img class="w-full rounded-xl " src="${rq.getMemberImgUri(rq.loginedMemberId)}"
 												onerror="${rq.getMemberProfileFallbackImgOnErrorHtml()}" alt="" />
 								</div>
 								<div class="account-info-name">${rq.loginedMember.nickname }</div>
