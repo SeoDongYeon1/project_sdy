@@ -508,8 +508,6 @@ form {
 }
 
 .form-menu {
-	height: 800px; /* 원하는 높이 값을 지정하세요 */
-	overflow-y: auto; /* 세로 스크롤을 생성합니다 */
 	display: inline-block;
 	padding: 50px;
 	width: 100%;

@@ -1,30 +1,54 @@
 package com.KoreaIT.sdy.demo.vo;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.KoreaIT.sdy.demo.dto.ClubChatRoom;
+import com.KoreaIT.sdy.demo.dto.PersonalChatRoom;
+import com.KoreaIT.sdy.demo.service.ChatRoomService;
+import com.KoreaIT.sdy.demo.service.ChatService;
 import com.KoreaIT.sdy.demo.util.Ut;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 	@Getter
-	private boolean isLogined;
+	private boolean isLogined;	
+	
 	@Getter
 	private int loginedMemberId;
+	
 	@Getter
-	private Member loginedMember;
+	private Member loginedMember;	
+	
 	@Getter
 	private String loginedMemberLoginId;
+	
+	@Getter
+	@Setter
+	private int PunReadCount;
+	
+	@Getter
+	@Setter
+	private int CunReadCount;
+	
+	@Autowired
+	ChatRoomService chatRoomService;
+	
+	@Autowired
+	ChatService chatService;
 	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
@@ -90,7 +114,55 @@ public class Rq {
 	
 	// 삭제 x, rq 객체 자동생성
 	public void initOnBeforeActionInterceptor() {
-		
+		// 해당 memberId가 속하는 개인 채팅방 가져오기
+				List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(getLoginedMemberId());
+				
+				int PunReadCount = 0;
+				// 개인채팅방에서 상대방의 이름과 읽지 않은 채팅 수를 가져오기 위한 반복문
+				for (PersonalChatRoom room : PList) {
+					if (room.getMemberId1() == getLoginedMemberId()) {
+						int tmp1 = room.getMemberId1();
+						room.setMemberId1(room.getMemberId2());
+						room.setMemberId2(tmp1);
+
+						String tmp2 = room.getMember1_name();
+						room.setMember1_name(room.getMember2_name());
+						room.setMember2_name(tmp2);
+					}
+
+					String roomType = "Personal";
+
+					int lastReadId = chatService.getLastReadId(room.getId(), getLoginedMemberId(), roomType);
+
+					int unreadCount = chatService.getPersonalChatUnreadCount(room.getId(), getLoginedMemberId(), roomType,
+							lastReadId);
+
+					room.setUnreadCount(unreadCount);
+					
+					PunReadCount += unreadCount;
+				}
+				
+				setPunReadCount(PunReadCount);
+
+				// 해당 memberId가 속하는 동호회 채팅방 가져오기
+				List<ClubChatRoom> CList = chatRoomService.getClubChatRoomsByMemberId(getLoginedMemberId());
+				
+				int CunReadCount = 0;
+				// 동호회 채팅방에서 읽지 않은 채팅의 수를 가져오는 것
+				for (ClubChatRoom room : CList) {
+					String roomType = "Club";
+
+					int lastReadId = chatService.getLastReadId(room.getId(), getLoginedMemberId(), roomType);
+
+					int unreadCount = chatService.getClubChatUnreadCount(room.getId(), getLoginedMemberId(), roomType,
+							lastReadId);
+
+					room.setUnreadCount(unreadCount);
+					
+					CunReadCount += unreadCount;
+				}
+				
+				setCunReadCount(CunReadCount);
 	}
 
 	public String jsHistoryBackOnView(String resultCode, String msg) {

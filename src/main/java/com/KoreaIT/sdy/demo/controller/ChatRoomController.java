@@ -41,6 +41,7 @@ public class ChatRoomController {
 
 		// 해당 memberId가 속하는 개인 채팅방 가져오기
 		List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId());
+		int PunReadCount = 0;
 
 		// 개인채팅방에서 상대방의 이름과 읽지 않은 채팅 수를 가져오기 위한 반복문
 		for (PersonalChatRoom room : PList) {
@@ -62,13 +63,19 @@ public class ChatRoomController {
 					lastReadId);
 
 			room.setUnreadCount(unreadCount);
+			
+			PunReadCount += unreadCount;
 
 		}
+		
+		rq.setPunReadCount(PunReadCount);
 
 		model.addAttribute("PList", PList);
 
 		// 해당 memberId가 속하는 동호회 채팅방 가져오기
 		List<ClubChatRoom> CList = chatRoomService.getClubChatRoomsByMemberId(rq.getLoginedMemberId());
+		
+		int CunReadCount = 0;
 
 		// 동호회 채팅방에서 읽지 않은 채팅의 수를 가져오는 것
 		for (ClubChatRoom room : CList) {
@@ -80,7 +87,11 @@ public class ChatRoomController {
 					lastReadId);
 
 			room.setUnreadCount(unreadCount);
+			
+			CunReadCount += unreadCount;
 		}
+		
+		rq.setCunReadCount(CunReadCount);
 
 		model.addAttribute("CList", CList);
 
