@@ -562,8 +562,10 @@ schedule_desc VARCHAR(45),
 schedule_startdate DATE,
 schedule_enddate DATE,
 memberId INT(10) NOT NULL,
-color VARCHAR(45)
+color VARCHAR(45),
+clubid INT(11) UNSIGNED NOT NULL DEFAULT 0
 );
+
 
 
 #############################################################################################
