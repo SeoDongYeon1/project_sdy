@@ -118,7 +118,7 @@
 										</li>
 								</c:if>
 								<li class="sidebar-list-item">
-										<a href="#">
+										<a href="../calendar/do">
 												<d>📆&nbsp;&nbsp;</d>
 												<span>일정</span>
 										</a>

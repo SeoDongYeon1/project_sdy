@@ -43,12 +43,12 @@
 						<!--날짜 네비게이션  -->
 						<div class="navigation">
 								<a class="before_after_year"
-										href="./calendar.do?year=${today_info.search_year-1}&month=${today_info.search_month-1}">
+										href="../calendar/do?year=${today_info.search_year-1}&month=${today_info.search_month-1}">
 										&lt;&lt;
 										<!-- 이전해 -->
 								</a>
 								<a class="before_after_month"
-										href="./calendar.do?year=${today_info.before_year}&month=${today_info.before_month}">
+										href="../calendar/do?year=${today_info.before_year}&month=${today_info.before_month}">
 										&lt;
 										<!-- 이전달 -->
 								</a>
@@ -56,12 +56,12 @@
 										&nbsp;${today_info.search_year}.
 										<c:if test="${today_info.search_month<10}">0</c:if>${today_info.search_month}
 								</span>
-								<a class="before_after_month" href="/calendar.do?year=${today_info.after_year}&month=${today_info.after_month}">
+								<a class="before_after_month" href="../calendar/do?year=${today_info.after_year}&month=${today_info.after_month}">
 										<!-- 다음달 -->
 										&gt;
 								</a>
 								<a class="before_after_year"
-										href="/calendar.do?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
+										href="../calendar/do?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
 										<!-- 다음해 -->
 										&gt;&gt;
 								</a>
@@ -69,7 +69,7 @@
 
 						<div class="today_button_div mb-8">
 								<input type="button" class="btn-text-link btn btn-outline btn-sm"
-										onclick="javascript:location.href='/calendar.do'" value="go today" />
+										onclick="javascript:location.href='../calendar/do'" value="go today" />
 						</div>
 						<table class="calendar_body">
 
@@ -297,6 +297,7 @@
 		form.submit();
 	}
 </script>
+
 <!-- 이벤트 위임을 사용하여 일정 요소에 이벤트 핸들러를 등록 -->
 <script>
 	document.addEventListener("click", function(event) {
@@ -329,7 +330,7 @@
 				<div class="info"></div>
 				<div style="text-align: right; cursor: pointer;" class="close-button" onclick="closeFormPopup()">&times;</div>
 				<!-- 닫기 버튼 추가 -->
-				<form name="schedule_add" action="schedule_add.do">
+				<form name="schedule_add" action="../calendar/add">
 						<input type="hidden" name="year" value="${today_info.search_year}" />
 						<input type="hidden" name="month" value="${today_info.search_month-1}" />
 
@@ -397,7 +398,7 @@
 				<div class="info"></div>
 				<div style="text-align: right; cursor: pointer;" class="close-button" onclick="closeEditFormPopup()">&times;</div>
 				<!-- 닫기 버튼 추가 -->
-				<form name="schedule_edit" action="../usr/calender/edit">
+				<form name="schedule_edit" action="../calender/edit">
 						<input type="hidden" id="scheduleIdxField" name="schedule_idx" />
 
 						<div class="contents">

@@ -34,7 +34,7 @@ public class UsrCalenderController {
 	@Autowired
 	Rq rq;
 
-	@RequestMapping(value = "calendar.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/usr/calendar/do", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest request, DateData dateData) {
 
 		Calendar cal = Calendar.getInstance();
@@ -60,6 +60,7 @@ public class UsrCalenderController {
 			schedule_data_arr.add(new ArrayList<>());
 		}
 
+		// 이전에 스케줄 추가한 데이터 DB에서 가져오기
 		if (!Schedule_list.isEmpty()) {
 			int j = 0;
 			for (int i = 0; i < Schedule_list.size(); i++) {
@@ -128,12 +129,12 @@ public class UsrCalenderController {
 
 
 
-	@RequestMapping(value = "schedule_add.do", method = RequestMethod.GET)
+	@RequestMapping(value = "usr/calendar/add", method = RequestMethod.GET)
 	public String schedule_add(HttpServletRequest request, ScheduleDto scheduleDto, RedirectAttributes rttr) {
 		ScheduleDao scheduleRepository = sqlsession.getMapper(ScheduleDao.class);
 		
 		String message = "";
-		String url = "redirect:calendar.do";
+		String url = "redirect:../calendar/do";
 
 		scheduleRepository.schedule_add(scheduleDto);
 		message = "스케쥴이 등록되었습니다";
@@ -154,7 +155,7 @@ public class UsrCalenderController {
 
 		scheduleDao.deleteSchedule(idx);
 
-		return Ut.jsReplace("S-1", "삭제완료", "/calendar.do");
+		return Ut.jsReplace("S-1", "삭제완료", "../calendar/do");
 
 	}
 	@RequestMapping("/usr/calender/edit")
@@ -169,7 +170,7 @@ public class UsrCalenderController {
 		
 		scheduleDao.editSchedule(schedule_idx, schedule_subject, schedule_desc, schedule_startdate, schedule_enddate);
 		
-		return Ut.jsReplace("S-1", "수정완료", "/calendar.do");
+		return Ut.jsReplace("S-1", "수정완료", "../calendar/do");
 		
 	}
 
