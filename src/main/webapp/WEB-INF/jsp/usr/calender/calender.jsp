@@ -317,6 +317,7 @@
 		var popup = document.getElementById("scheduleEditPopup");
 		popup.style.display = "none";
 	}
+	
 </script>
 
 <div id="scheduleDetailsPopup" class="popup">

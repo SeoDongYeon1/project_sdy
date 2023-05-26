@@ -552,11 +552,18 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
-		SELECT mc.*, m.name AS 'name'
-		FROM `member` m
-	INNER JOIN member_club mc
-		ON m.id = mc.memberId
-		WHERE mc.clubId = 3;
+
+# 달력 테이블 생성
+CREATE TABLE `schedule` (
+schedule_idx INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+schedule_num INT(11),
+schedule_subject VARCHAR(45),
+schedule_desc VARCHAR(45),
+schedule_startdate DATE,
+schedule_enddate DATE,
+memberId INT(10) NOT NULL,
+color VARCHAR(45)
+);
 
 
 #############################################################################################
@@ -575,6 +582,7 @@ SELECT * FROM PersonalchatRoom;
 SELECT * FROM chat_user;
 SELECT * FROM read_chat;
 SELECT * FROM genFile;
+SELECT * FROM `schedule`;
 
 # 동호회 채팅방 안읽은 채팅 개수 구하기
 SELECT COUNT(c.id) 
