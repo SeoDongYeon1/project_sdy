@@ -39,6 +39,12 @@
 								<th>사진첩</th>
 								<th></th>
 						</tr>
+						<tr>
+								<th>일정</th>
+								<th>
+									<a href="../calendar/do" class="btn btn-outline btn-xs">일정</a>
+								</th>
+						</tr>
 
 						<tr>
 								<th>채팅</th>
