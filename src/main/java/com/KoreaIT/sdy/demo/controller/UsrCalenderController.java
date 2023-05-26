@@ -36,6 +36,10 @@ public class UsrCalenderController {
 
 	@RequestMapping(value = "/usr/calendar/do", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest request, DateData dateData) {
+		
+		if(rq.getLoginedMemberId()==0) {
+			return rq.jsHistoryBackOnView("F-1", "로그인 후 이용해주세요.");
+		}
 
 		Calendar cal = Calendar.getInstance();
 		DateData calendarData;
