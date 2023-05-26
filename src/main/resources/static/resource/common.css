@@ -145,7 +145,7 @@ body {
   overflow: scroll;
   background-color: var(--app-bg);
   color: var(--app-content-main-color);
-  height: auto;
+  height: 100%;
 }
 
 .app-container {
