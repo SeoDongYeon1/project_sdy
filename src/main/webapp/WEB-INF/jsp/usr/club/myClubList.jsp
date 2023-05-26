@@ -4,7 +4,7 @@
 <%@ include file="../common/head.jspf"%>
 
 <c:set var="pageTitle" value="내 동호회" />
-<div class="products-area-wrapper gridView">
+<div class="products-area-wrapper3 gridView">
 				<div class="list-header club">
 						<div class="item image">
 								동호회명

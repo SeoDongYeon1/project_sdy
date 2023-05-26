@@ -627,6 +627,15 @@ th {
   padding: 0 4px;
 }
 
+.products-area-wrapper3 {
+  margin: 0 auto;
+  width: 80%;
+  height: 30%;
+  overflow: auto;
+  padding: 0 4px;
+}
+
+
 .tableView .list-header {
   display: flex;
   align-items: center;
