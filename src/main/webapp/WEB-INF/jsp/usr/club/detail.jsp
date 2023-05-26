@@ -42,7 +42,7 @@
 						<tr>
 								<th>일정</th>
 								<th>
-									<a href="../calendar/do" class="btn btn-outline btn-xs">일정</a>
+									<a href="../calendar/do?id=${club.id }" class="btn btn-outline btn-xs">일정</a>
 								</th>
 						</tr>
 
