@@ -20,12 +20,5 @@ public class ScheduleDto {
 	String color;
 	
 	int clubId;
-
-	@Override
-	public String toString() {
-		return "ScheduleDto [schedule_idx=" + schedule_idx + ", schedule_num=" + schedule_num + ", schedule_subject="
-				+ schedule_subject + ", schedule_desc=" + schedule_desc
-				+ ", schedule_startdate=\" + schedule_startdate + \", schedule_enddate=" + schedule_enddate + "]";
-	}
-
+	
 }

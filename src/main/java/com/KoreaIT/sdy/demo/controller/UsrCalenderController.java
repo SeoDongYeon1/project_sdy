@@ -36,7 +36,7 @@ public class UsrCalenderController {
 	Rq rq;
 
 	@RequestMapping(value = "/usr/calendar/do", method = RequestMethod.GET)
-	public String calendar(Model model, HttpServletRequest request, DateData dateData, @RequestParam(defaultValue = "0") int id) {
+	public String calendar(Model model, HttpServletRequest request, DateData dateData, @RequestParam(defaultValue = "0") int clubId) {
 		
 		if(rq.getLoginedMemberId()==0) {
 			return rq.jsHistoryBackOnView("F-1", "로그인 후 이용해주세요.");
@@ -139,7 +139,16 @@ public class UsrCalenderController {
 		ScheduleDao scheduleRepository = sqlsession.getMapper(ScheduleDao.class);
 		
 		String message = "";
-		String url = "redirect:../calendar/do";
+		
+		
+		String url = "";
+		
+		if(scheduleDto.getClubId()==0) {
+			url = "redirect:../calendar/do";
+		}
+		else {
+			url = "redirect:../calendar/do?clubId=" + scheduleDto.getClubId();
+		}
 
 		scheduleRepository.schedule_add(scheduleDto);
 		message = "스케쥴이 등록되었습니다";
