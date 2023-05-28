@@ -1,6 +1,8 @@
 package com.KoreaIT.sdy.demo.util;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -438,4 +440,14 @@ public class Ut {
 		return (T) ifNull(req.getAttribute(attrName), defaultValue);
 	}
 	
+	public static String getEncodedCurrentUri(String currentUri) {
+
+		try {
+			return URLEncoder.encode(currentUri, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return currentUri;
+		}
+
+	}
 }

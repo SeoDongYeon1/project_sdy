@@ -32,13 +32,18 @@ public class UsrHomeController {
 	@Autowired
 	CategoryService categoryService;
 	
-	@Autowired
-	Rq rq;
+	private Rq rq;
+
+	public UsrHomeController(Rq rq) {
+		this.rq = rq;
+	}
 	
 	@RequestMapping("/usr/home/main")
 	public String showList(Model model, @RequestParam(defaultValue = "0") int categoryId,
 			@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "") String searchKeyword) {
+		
+		rq.run();
 		
 		Category category = categoryService.getCategoryById(categoryId);
 

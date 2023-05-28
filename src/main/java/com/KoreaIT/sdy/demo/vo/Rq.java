@@ -211,5 +211,34 @@ public class Rq {
 	public String getMemberProfileFallbackImgOnErrorHtml() {
 		return "this.src = '" + getMemberProfileFallbackImgUri() + "'";
 	}
+	
+	public String getEncodedCurrentUri() {
+		return Ut.getEncodedCurrentUri(getCurrentUri());
+	}
+	
+	public String getCurrentUri() {
+		String currentUri = req.getRequestURI();
+		String queryString = req.getQueryString();
+
+		System.out.println(currentUri);
+		System.out.println(queryString);
+
+		if (queryString != null && queryString.length() > 0) {
+			currentUri += "?" + queryString;
+		}
+
+		System.out.println(currentUri);
+		return currentUri;
+	}
+	
+	public void run() {
+		System.out.println("===========================run A");
+	}
+	
+	public void jsprintReplace(String msg, String replaceUri) {
+		resp.setContentType("text/html; charset=UTF-8");
+		print(Ut.jsReplace(msg, replaceUri));
+
+	}
 
 }
