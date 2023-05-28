@@ -126,6 +126,18 @@ updateDate = NOW(),
 `code` = 'QnA',
 `name` = '질의응답';
 
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'SearchClub',
+`name` = '이런 동호회 없나?';
+
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'SearchMember',
+`name` = '여기 동호회 어때?';
+
 # article 테이블에 boardId 컬럼 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
 
