@@ -15,7 +15,7 @@
 			<div>
 				<form class="flex">
 
-					<select data-value="${authLevel }" name="authLevel" class="select select-bordered">
+					<select data-value="${param.authLevel }" name="authLevel" class="select select-bordered">
 						<option disabled="disabled">회원 타입</option>
 						<option value="1">일반</option>
 						<option value="7">관리자</option>
@@ -114,12 +114,12 @@
 					<div class="flex-grow"></div>
 					<form action="">
 						<input type="hidden" name="boardId" value="${param.boardId }" />
-						<select data-value="${param.searchKeywordTypeCode }" name="AsearchKeywordTypeCode" class="select select-ghost">
+						<select data-value="${param.AsearchKeywordTypeCode }" name="AsearchKeywordTypeCode" class="select select-ghost">
 							<option value="title">제목</option>
 							<option value="body">내용</option>
 							<option value="title,body">제목 + 내용</option>
 						</select>
-						<input value="${param.searchKeyword }" maxlength="20" name="AsearchKeyword" class="input input-bordered"
+						<input value="${param.AsearchKeyword }" maxlength="20" name="AsearchKeyword" class="input input-bordered"
 							type="text" placeholder="검색어를 입력해주세요" />
 						<button class="btn btn-ghost" type=submit>검색</button>
 					</form>
