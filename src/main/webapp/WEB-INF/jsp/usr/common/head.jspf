@@ -33,15 +33,15 @@
 		          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
 		        </svg>
 				</button>
-				<c:if test="${!rq.isLogined() }">
-						<a href="../member/login" class="btn btn-outline btn-xs">로그인</a>
+				<c:if test="${!rq.logined }">
+						<a href="${rq.loginUri }" class="btn btn-outline btn-xs">로그인</a>
 				</c:if>
 				&nbsp;
-				<c:if test="${!rq.isLogined() }">
+				<c:if test="${!rq.logined }">
 						<a href="../member/join" class="btn btn-outline btn-xs">회원가입</a>
 				</c:if>
 				&nbsp;
-				<c:if test="${rq.isLogined() }">
+				<c:if test="${rq.logined }">
 						<div class="account-info">
 								<div class="account-info-picture">
 										<img class="w-full rounded-xl " src="${rq.getMemberImgUri(rq.loginedMemberId)}"

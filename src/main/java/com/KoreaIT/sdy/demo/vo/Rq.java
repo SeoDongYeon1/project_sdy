@@ -211,11 +211,7 @@ public class Rq {
 	public String getMemberProfileFallbackImgOnErrorHtml() {
 		return "this.src = '" + getMemberProfileFallbackImgUri() + "'";
 	}
-	
-	public String getEncodedCurrentUri() {
-		return Ut.getEncodedCurrentUri(getCurrentUri());
-	}
-	
+		
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();
 		String queryString = req.getQueryString();
@@ -239,6 +235,18 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, replaceUri));
 
+	}
+	
+	public String getLoginUri() {
+		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+
+	private String getAfterLoginUri() {
+		return getEncodedCurrentUri();
+	}
+
+	public String getEncodedCurrentUri() {
+		return Ut.getEncodedCurrentUri(getCurrentUri());
 	}
 
 }

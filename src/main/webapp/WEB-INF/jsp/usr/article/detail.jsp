@@ -166,8 +166,10 @@ function doBadReaction(articleId) {
 				</tr>
 				<tr>
 						<th>첨부 이미지</th>
-						<th><img class="w-full rounded-xl" src="${rq.getArticleImgUri(article.id)}"
-								onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" /></th>
+						<th>
+								<img class="w-full rounded-xl" src="${rq.getArticleImgUri(article.id)}"
+										onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+						</th>
 				</tr>
 				<tr>
 						<th>내용</th>
@@ -183,7 +185,9 @@ function doBadReaction(articleId) {
 				</tr>
 				<tr>
 						<th>조회수</th>
-						<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
+						<th>
+								<span class="article-detail__hit-count">${article.hitCount }</span>
+						</th>
 				</tr>
 				<tr>
 						<th>좋아요</th>
@@ -224,12 +228,13 @@ function doBadReaction(articleId) {
 						<form onsubmit="ReplyWrite__SubmitForm(this); return false;"
 								style="width: 700px; height: 320px; border: 2px solid black; display: inline-block; border-radius: 8px;"
 								method="post" action="../reply/doWrite">
-								<input type="hidden" name="relTypeCode" value="article" /> <input type="hidden" name="relId"
-										value="${article.id }" />
+								<input type="hidden" name="relTypeCode" value="article" />
+								<input type="hidden" name="relId" value="${article.id }" />
 								<div style="display: inline-block; text-align: left;">
 										<br />
 										<div style="font-size: 17px; font-weight: bold;">
-												내용 <br />
+												내용
+												<br />
 												<textarea class="body textarea textarea-bordered"
 														style="border: 2px solid black; border-radius: 8px; border-color: black; width: 650px; height: 130px;"
 														name="body"></textarea>
@@ -245,6 +250,7 @@ function doBadReaction(articleId) {
 		</c:if>
 
 		<div class="mt-8 text-xl mx-auto px-3">
+		<c:if test="${rq.logined }">
 				<table class="table-box-type-1 table table-zebra w-full" style="text-align: left;">
 						<c:forEach var="reply" items="${replies}">
 								<div class="reply_top flex justify-between">
@@ -254,8 +260,9 @@ function doBadReaction(articleId) {
 
 								<c:if test="${reply.memberId == loginedMemberId}">
 										<div class="reply-btn-box">
-												<a class="button" href="#" onclick="showModifyForm(${reply.id})">수정</a> <a class="button"
-														href="../reply/doDelete?id=${reply.id}" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;">삭제</a>
+												<a class="button" href="#" onclick="showModifyForm(${reply.id})">수정</a>
+												<a class="button" href="../reply/doDelete?id=${reply.id}"
+														onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;">삭제</a>
 										</div>
 								</c:if>
 
@@ -276,6 +283,10 @@ function doBadReaction(articleId) {
 								<br />
 						</c:forEach>
 				</table>
+				</c:if>
+				<c:if test="${rq.notLogined }">
+						<a class="btn-text-link btn btn-active btn-ghost" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
+				</c:if>
 		</div>
 </div>
 <!-- 댓글 작성 관련 -->
