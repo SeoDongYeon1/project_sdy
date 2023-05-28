@@ -1,5 +1,7 @@
 package com.KoreaIT.sdy.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +66,26 @@ public class MemberService {
 	public Member getMemberByNameAndEmail(String name, String email) {
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
+
+	public void deleteMembers(List<Integer> memberIds) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword) {
+		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
+	}
+
+	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword,
+			int itemsInAPage, int page) {
+
+		int limitStart = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+		List<Member> members = memberRepository.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
+				limitStart, limitTake);
+
+		return members;
+	}
+
 }
 

@@ -158,4 +158,14 @@ public class ArticleService {
 		return articleRepository.getRepliesCount();
 	}
 
+	public void deleteArticles(List<Integer> articleIds) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getArticlesCount(Integer boardId, Integer searchId, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

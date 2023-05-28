@@ -44,7 +44,6 @@
 				<c:if test="${!rq.logined}">
 						<a class="btn btn-outline btn-xs" href="${rq.joinUri }">회원가입</a>
 				</c:if>
-				
 				<c:if test="${rq.admin}">
 						<a class="btn btn-outline btn-xs" href="/adm/memberAndArticle/list">
 							<span>관리자</span>

@@ -1,5 +1,7 @@
 package com.KoreaIT.sdy.demo.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.KoreaIT.sdy.demo.vo.Member;
@@ -20,5 +22,10 @@ public interface MemberRepository {
 	public Member getMemberByNickname(String nickname);
 
 	public void modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum);
+
+	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword);
+
+	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword,
+			int limitStart, int limitTake);
 
 }

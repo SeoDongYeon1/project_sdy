@@ -51,6 +51,9 @@ public class Rq {
 	@Autowired
 	ChatService chatService;
 	
+	@Getter
+	boolean isAjax;
+	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
@@ -83,16 +86,29 @@ public class Rq {
 		this.loginedMemberLoginId = loginedMemberLoginId;
 		
 		this.req.setAttribute("rq", this);
+		
+		String requestUri = req.getRequestURI();
+
+		boolean isAjax = requestUri.endsWith("Ajax");
+
+		if (isAjax == false) {
+			if (paramMap.containsKey("ajax") && paramMap.get("ajax").equals("Y")) {
+				isAjax = true;
+			} else if (paramMap.containsKey("isAjax") && paramMap.get("isAjax").equals("Y")) {
+				isAjax = true;
+			}
+		}
+		if (isAjax == false) {
+			if (requestUri.contains("/get")) {
+				isAjax = true;
+			}
+		}
+		this.isAjax = isAjax;
 	}
 
-	public void printHitoryBackJs(String msg) throws IOException {
+	public void printHistoryBackJs(String msg) throws IOException {
 		resp.setContentType("text/html; charset=UTF-8");
-		println("<script>");
-		if (!Ut.empty(msg)) {
-			println("alert('" + msg + "');");
-		}
-		println("history.back();");
-		println("</script>");
+		print(Ut.jsHistoryBack("F-B", msg));
 	}
 
 	public void print(String str) {
@@ -243,10 +259,10 @@ public class Rq {
 	}
 	
 	public String getLoginUri() {
-		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+		return "/usr/member/login?afterLoginUri=" + getAfterLoginUri();
 	}
 
-	private String getAfterLoginUri() {
+	public String getAfterLoginUri() {
 //		로그인 후 접근 불가 페이지
 
 		String requestUri = req.getRequestURI();
@@ -276,6 +292,8 @@ public class Rq {
 		switch (requestUri) {
 		case "/usr/member/doLogout":
 			return Ut.getEncodedUri(paramMap.get("afterLogoutUri"));
+		case "/adm/member/list":
+			return "../member/doLogout?afterLogoutUri=" + "/";
 
 		}
 
@@ -283,11 +301,11 @@ public class Rq {
 	}
 	
 	public String getJoinUri() {
-		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+		return "/usr/member/join?afterLoginUri=" + getAfterLoginUri();
 	}
 	
 	public String getArticleDetailUriFromArticleList(Article article) {
-		return "../article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
+		return "/usr/article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
 	}
 	
 	public String getFindLoginIdUri() {
@@ -299,12 +317,19 @@ public class Rq {
 	}
 
 	public String getFindLoginPwUri() {
-		return "../member/findLoginPw?afterFindLoginPwUri=" + getAfterFindLoginPwUri();
+		return "/usr/member/findLoginPw?afterFindLoginPwUri=" + getAfterFindLoginPwUri();
 	}
 
 	private String getAfterFindLoginPwUri() {
 		return getEncodedCurrentUri();
 	}
 
+	public boolean isAdmin() {
+		if (loginedMember == null) {
+			return false;
+		}
+
+		return loginedMember.isAdmin();
+	}
 
 }
