@@ -101,10 +101,16 @@
 										</a>
 										<ul class="z-10 board-list">
 												<li class="hover:underline">
-														<a href="/usr/article/list?boardId=2">자유게시판</a>
+														<a href="/usr/article/list?boardId=2">◾ 자유게시판</a>
 												</li>
 												<li class="hover:underline">
-														<a href="/usr/article/list?boardId=3">QnA</a>
+														<a href="/usr/article/list?boardId=3">◾ QnA</a>
+												</li>
+												<li class="hover:underline">
+														<a href="/usr/article/list?boardId=4">◾ 이런 동호회 없나?</a>
+												</li>
+												<li class="hover:underline">
+														<a href="/usr/article/list?boardId=5">◾ 여기 동호회 어때?</a>
 												</li>
 										</ul>
 								</li>
