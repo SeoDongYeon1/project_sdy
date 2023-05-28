@@ -25,7 +25,10 @@
 <body>
 
 		<div class="app-content-header" style="padding: 20px 35px;">
-				<a href="/" class="app-content-headerText">로고</a>
+				<a href="/" style="font-size:30px; color:#42a7f5;"class="app-content-headerText">L</a>
+				<a href="/" style="font-size:10px;"class="app-content-headerText">eisure</a>
+				<a href="/" style="font-size:30px; color:#42a7f5;"class="app-content-headerText">P</a>
+				<a href="/" style="font-size:10px;"class="app-content-headerText">eople</a>
 				<button class="mode-switch" title="Switch Theme">
 						<svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
 								stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
