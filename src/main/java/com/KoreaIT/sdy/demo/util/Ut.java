@@ -450,4 +450,15 @@ public class Ut {
 		}
 
 	}
+	
+	public static String getEncodedUri(String uri) {
+		try {
+			return URLEncoder.encode(uri, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return uri;
+		}
+
+	}
+	
 }
