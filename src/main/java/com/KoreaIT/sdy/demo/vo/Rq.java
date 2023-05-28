@@ -270,10 +270,24 @@ public class Rq {
 	}
 
 	private String getAfterLogoutUri() {
-
+		//로그아웃 후 접근 불가 페이지 방지
 		String requestUri = req.getRequestURI();
 
+		switch (requestUri) {
+		case "/usr/member/doLogout":
+			return Ut.getEncodedUri(paramMap.get("afterLogoutUri"));
+
+		}
+
 		return getEncodedCurrentUri();
+	}
+	
+	public String getJoinUri() {
+		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+	}
+	
+	public String getArticleDetailUriFromArticleList(Article article) {
+		return "../article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
 	}
 
 

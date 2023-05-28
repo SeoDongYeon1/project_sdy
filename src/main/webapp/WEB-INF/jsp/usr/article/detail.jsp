@@ -229,6 +229,7 @@ function doBadReaction(articleId) {
 								style="width: 700px; height: 320px; border: 2px solid black; display: inline-block; border-radius: 8px;"
 								method="post" action="../reply/doWrite">
 								<input type="hidden" name="relTypeCode" value="article" />
+								<input type="hidden" name="replaceUri" value="${rq.currentUri }" />
 								<input type="hidden" name="relId" value="${article.id }" />
 								<div style="display: inline-block; text-align: left;">
 										<br />
@@ -261,7 +262,8 @@ function doBadReaction(articleId) {
 								<c:if test="${reply.memberId == loginedMemberId}">
 										<div class="reply-btn-box">
 												<a class="button" href="#" onclick="showModifyForm(${reply.id})">수정</a>
-												<a class="button" href="../reply/doDelete?id=${reply.id}"
+												<!-- href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}" -->
+												<a class="button" href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}"
 														onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;">삭제</a>
 										</div>
 								</c:if>

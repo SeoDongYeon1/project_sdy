@@ -82,7 +82,7 @@ form {
 								</c:if>
 
 								<div class="item status-cell">
-										<a class="title" href="../article/detail?id=${article.id }">${article.title }</a>
+										<a class="title" href="${rq.getArticleDetailUriFromArticleList(article) }">${article.title}</a>
 										<c:if test="${article.repliesCount!=0}">
 												<a class="reply" href="detail?id=${article.id }" style="color: red;">&nbsp;[${article.repliesCount }]</a>
 										</c:if>

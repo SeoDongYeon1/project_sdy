@@ -38,7 +38,7 @@ public class UsrMemberController {
 	// 회원가입
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, Integer age, String nickname, String cellphoneNum, String email) {
+	public String doJoin(String loginId, String loginPw, String name, Integer age, String nickname, String cellphoneNum, String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
 		if (Ut.empty(loginId)) {
 			return Ut.jsHistoryBack("F-1", "아이디를 입력해주세요");
 		}
@@ -68,7 +68,9 @@ public class UsrMemberController {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
 		
-		return  Ut.jsReplace(joinRd.getResultCode(), joinRd.getMsg(), "../member/login");
+		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getEncodedUri(afterLoginUri);
+
+		return Ut.jsReplace("S-1", "회원가입이 완료되었습니다", afterJoinUri);
 	}
 
 	// 로그인 페이지로

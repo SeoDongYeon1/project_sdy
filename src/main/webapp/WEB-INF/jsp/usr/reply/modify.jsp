@@ -28,6 +28,7 @@
 	<div class="text-box mt-2 text-xl mx-auto px-3">
 		<form onsubmit="ReplyModify__submit(this) return false;" method= "post" action="../reply/doModify">
 			<input value= "${reply.id }" type="hidden" name="id"/>
+			<input type="hidden" name="replaceUri" value="${param.replaceUri }" />
 			<textarea class="textarea textarea-bordered w-full body" name="body">${reply.body }</textarea>
 				
 			<div style="border-radius: 8px; display: inline-block; width: 200px;">

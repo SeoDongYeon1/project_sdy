@@ -37,8 +37,9 @@
 						<a href="${rq.loginUri }" class="btn btn-outline btn-xs">로그인</a>
 				</c:if>
 				&nbsp;
-				<c:if test="${!rq.logined }">
-						<a href="../member/join" class="btn btn-outline btn-xs">회원가입</a>
+
+				<c:if test="${!rq.logined}">
+						<a class="btn btn-outline btn-xs" href="${rq.joinUri }">회원가입</a>
 				</c:if>
 				&nbsp;
 				<c:if test="${rq.logined }">
