@@ -109,10 +109,10 @@ public class UsrMemberController {
 	// 로그아웃
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
-	public String doLogout() {
+	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
 		rq.logout();
 
-		return Ut.jsReplace("S-1", "로그아웃 되었습니다.", "../home/main");
+		return Ut.jsReplace("S-1", "로그아웃 되었습니다", afterLogoutUri);
 	}
 	
 	// 아이디 중복 체크
