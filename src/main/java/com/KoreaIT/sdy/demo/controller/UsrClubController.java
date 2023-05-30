@@ -179,13 +179,20 @@ public class UsrClubController {
 	
 	@RequestMapping("usr/club/gallery")
 	public String showGallery(int id, Model model) {
+		Club club = clubService.getClubById(id);	
+		
+		model.addAttribute("club", club);
 		
 		return "usr/club/gallery";
 	}
 	
 	@RequestMapping("usr/club/user_list")
 	public String showUser_list(int id, Model model) {
+		Club club = clubService.getClubById(id);	
+		
+		model.addAttribute("club", club);
 		
 		return "usr/club/user_list";
 	}
+	
 }

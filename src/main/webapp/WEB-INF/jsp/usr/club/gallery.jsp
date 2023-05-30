@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="pageTitle" value="${club.name }" />
+<c:set var="pageTitle" value="${club.name } 사진첩" />
 <%@ include file="../common/head.jspf"%>
 
 <div class="img_container">
 <%@ include file="../common/clubhead.jspf"%>
-		<h1 class="heading">
-				Image Gallery with CSS Grid
-				<span>& Flexbox Fallback</span>
-		</h1>
-
+		<br/>
+		<nav style="margin: 0 65px;">
 		<div class="gallery">
 				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">
 						<div >
@@ -67,7 +64,7 @@
 						<span class="img_name">ㅇㄴㄴㄴ</span>
 				</div>
 		</div>
-
+</nav>
 </div>
 
 <style>
@@ -82,17 +79,15 @@
 
 body {
 	min-height: 100vh;
-	background-color: #fafafa;
 }
 
 .img_container {
-	max-width: 70%;
+	max-width: 100%;
 	margin: 0 auto;
-	padding: 0 2rem 2rem;
+	padding: 0 12px;
 }
 
 .heading {
-	font-family: "Montserrat", Arial, sans-serif;
 	font-size: 4rem;
 	font-weight: 500;
 	line-height: 1.5;

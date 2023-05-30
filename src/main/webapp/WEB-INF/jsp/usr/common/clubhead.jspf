@@ -1,23 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <nav class="navbar navbar-expand-custom navbar-mainbg">
-		<div style="width: 100px;"></div>
-		<a class="nav-link"
-										href="../club/detail?id=<c:choose>
-       <c:when test='${not empty param.clubId}'>
-           ${param.clubId}
-       </c:when>
-       <c:when test='${not empty param.id}'>
-           ${param.id}
-       </c:when>
-       <c:otherwise>
-           ${club.id}
-       </c:otherwise>
-   </c:choose>">${club.name }</a>
+		<a style="margin-left:70px; margin-right: 300px; font-size: 18px;" class="nav-link"
+  href="../club/detail?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
+  ${club.name }</a>
 		<button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<i class="fas fa-bars text-white"></i>
 		</button>
-		<div style="width: 180px;"></div>
+		<div style="width: 400px;"></div>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
 						<div class="hori-selector">
@@ -26,99 +16,51 @@
 						</div>
 						<li class="nav-item">
 								<a class="nav-link"
-										href="../club/detail?id=<c:choose>
-       <c:when test='${not empty param.clubId}'>
-           ${param.clubId}
-       </c:when>
-       <c:when test='${not empty param.id}'>
-           ${param.id}
-       </c:when>
-       <c:otherwise>
-           ${club.id}
-       </c:otherwise>
-   </c:choose>">
+										href="../club/detail?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
 										<i class="fas fa-tachometer-alt"></i>
 										Home
 								</a>
 						</li>
 						<li class="nav-item">
 								<a class="nav-link"
-										href="../club/user_list?id=<c:choose>
-       <c:when test='${not empty param.clubId}'>
-           ${param.clubId}
-       </c:when>
-       <c:when test='${not empty param.id}'>
-           ${param.id}
-       </c:when>
-       <c:otherwise>
-           ${club.id}
-       </c:otherwise>
-   </c:choose>">
+										href="../club/user_list?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
 										<i class="far fa-address-book"></i>
-										동호회 회원
-								</a>
-						</li>
-						<li class="nav-item">
-								<a class="nav-link" href="javascript:void(0);">
-										<i class="far fa-clone"></i>
-										Components
-								</a>
+										동호회 회원</a>
 						</li>
 						<li class="nav-item">
 								<a class="nav-link"
-										href="../calendar/do?clubId<c:choose>
-       <c:when test='${not empty param.clubId}'>
-           ${param.clubId}
-       </c:when>
-       <c:when test='${not empty param.id}'>
-           ${param.id}
-       </c:when>
-       <c:otherwise>
-           ${club.id}
-       </c:otherwise>
-   </c:choose>">
+										href="../calendar/do?id<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
 										<i class="far fa-calendar-alt"></i>
 										일정
 								</a>
 						</li>
 						<li class="nav-item">
 								<a class="nav-link"
-										href="../club/gallery?id=<c:choose>
-       <c:when test='${not empty param.clubId}'>
-           ${param.clubId}
-       </c:when>
-       <c:when test='${not empty param.id}'>
-           ${param.id}
-       </c:when>
-       <c:otherwise>
-           ${club.id}
-       </c:otherwise>
-   </c:choose>">
+										href="../club/gallery?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
 										<i class="far fa-chart-bar"></i>
 										사진첩
 								</a>
 						</li>
 						<li class="nav-item">
 								<a class="nav-link"
-										href="../chat/ClubChatroom?id=<c:choose>
-       <c:when test='${not empty param.clubId}'>
-           ${param.clubId}
-       </c:when>
-       <c:when test='${not empty param.id}'>
-           ${param.id}
-       </c:when>
-       <c:otherwise>
-           ${club.id}
-       </c:otherwise>
-   </c:choose>">
+										href="../chat/ClubChatroom?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
 										<i class="far fa-copy"></i>
 										채팅
 								</a>
 						</li>
+						
+						<li class="nav-item">
+								<a class="nav-link"
+										href="../club/join?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
+
+										<button style="width: 100px; font-size: 13px;" class="app-content-headerButton">동호회 가입</button>
+								</a>
+						</li>
+
 				</ul>
 		</div>
 </nav>
-
+<a href="../club/join?id=${club.id }"> </a>
 <style>
 /*----------bootstrap-navbar-css------------*/
 .navbar-logo {
@@ -127,7 +69,7 @@
 }
 
 .navbar-mainbg {
-	background-color: #dde4f0;
+	background-color: var(--sidebar);
 	padding: 0px;
 }
 
@@ -153,12 +95,13 @@
 #navbarSupportedContent ul li a {
 	color: black;
 	text-decoration: none;
-	font-size: 15px;
+	font-size: 18px;
 	display: block;
 	padding: 20px 20px;
 	transition-duration: 0.6s;
 	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 	position: relative;
+	right: 0px;
 }
 
 #navbarSupportedContent>ul>li.active>a {
@@ -170,7 +113,7 @@
 #navbarSupportedContent a:not(:only-child):after {
 	content: "\f105";
 	position: absolute;
-	right: 20px;
+	right: 10px;
 	top: 10px;
 	font-size: 14px;
 	font-family: "Font Awesome 5 Free";
@@ -190,13 +133,13 @@
 	position: absolute;
 	height: 100%;
 	top: 0px;
-	left: 0px;
-	transition-duration: 0.6s;
+	left: 10px;
+	transition-duration: 0.4s;
 	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 	background-color: #fff;
 	border-top-left-radius: 15px;
 	border-top-right-radius: 15px;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .hori-selector .right, .hori-selector .left {
@@ -221,7 +164,7 @@
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background-color: #dde4f0;
+	background-color: var(--sidebar);
 }
 
 .hori-selector .right:before {
