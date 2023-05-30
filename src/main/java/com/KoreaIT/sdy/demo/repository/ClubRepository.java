@@ -34,7 +34,7 @@ public interface ClubRepository {
 
 	public List<Club> getMyClubs(int memberId);
 
-	public void doJoin(int clubId, int memberId, String purpose);
+	public void doJoin(int clubId, int memberId, String purpose, int authLevel);
 
 	public member_club getClubByMemberId(int memberId, int clubId);
 	

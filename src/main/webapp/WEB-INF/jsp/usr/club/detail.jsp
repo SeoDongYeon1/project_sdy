@@ -7,7 +7,7 @@
 <%@ include file="../common/clubhead.jspf"%>
 		<form action="../club/profileUpload" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="id" value="${param.id}" />
-				<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
+				<table class="table-box-type-1 table table-zebra" style="text-align: center;">
 						<tr>
 								<th>프로필 사진</th>
 								<th>
@@ -69,10 +69,10 @@
 										<th>
 												<c:choose>
 														<c:when test="${member.authLevel == 7 || member.authLevel == 6}">
-																<a href="../member/profile?id=${member.id}" style="color: blue;">${member.name}</a>
+																<a href="../member/profile?id=${member.memberId}" style="color: blue;">${member.name}</a>
 														</c:when>
 														<c:otherwise>
-																<a href="../member/profile?id=${member.id}" style="color: black;">${member.name}</a>
+																<a href="../member/profile?id=${member.memberId}" style="color: black;">${member.name}</a>
 														</c:otherwise>
 												</c:choose>
 										</th>

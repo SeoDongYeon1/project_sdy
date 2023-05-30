@@ -1,43 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="pageTitle" value="${club.name }" />
 <%@ include file="../common/head.jspf"%>
 
+<div>
+		<div class="container">
+				<%@ include file="../common/clubhead.jspf"%>
+				<br/>
+				<br/>
+				<c:forEach var="member" items="${members}">
+						<div class="card">
 
-<div class="container">
-<%@ include file="../common/clubhead.jspf"%>
-		<c:forEach var="member" items="${members}">
-				<div class="card">
-				
-						
-						
-						<div class="card-header">
-								<img class="w-full rounded-xl" src="${rq.getMemberImgUri(member.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}"
-										alt="" />
-						</div>
-						
 
-						<div class="card-body">
-						<span class="tag tag-teal">${member.name}</span>
 
-								<div class="title">
-										<div class="title-text">
-												<a href="../member/profile?id=${member.id}">이름 : ${member.name}</a>
+								<div class="card-header">
+										<img class="w-full rounded-xl" src="${rq.getMemberImgUri(member.memberId)}"
+												onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+								</div>
+
+
+								<div class="card-body">
+										<c:choose>
+												<c:when test="${member.authLevel == 7 }">
+														<span class="tag tag-teal">회장</span>
+												</c:when>
+												<c:when test="${member.authLevel == 6 }">
+														<span class="tag tag-purple">매니저</span>
+												</c:when>
+												<c:otherwise>
+														<span class="tag">일반 회원</span>
+												</c:otherwise>
+										</c:choose>
+
+
+										<div class="title">
+												<div class="title-text">
+														<a href="../member/profile?id=${member.memberId}">이름 : ${member.name}</a>
+												</div>
 										</div>
-								</div>
-								
-								<div class="user">
+
+										<div class="user"></div>
 
 								</div>
-
 						</div>
-				</div>
-		</c:forEach>
+				</c:forEach>
+		</div>
 </div>
 <style>
-@import
-	url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
 * {
 	box-sizing: border-box;
 }
@@ -46,6 +54,8 @@
 	max-width: 100%;
 	margin: 0 auto;
 	padding: 0 12px;
+	flex-wrap: wrap;
+	display: flex;
 }
 
 .card {

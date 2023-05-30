@@ -171,7 +171,7 @@ public class UsrClubController {
 			return rq.jsHistoryBackOnView("F-2", "이미 가입한 동호회입니다.");
 		}
 		
-		clubService.doJoin(clubId, purpose, rq.getLoginedMemberId());
+		clubService.doJoin(clubId, purpose, rq.getLoginedMemberId(), 1);
 		
 		return  Ut.jsReplace("동호회에 가입되었습니다.", "../club/detail?id="+clubId);
 	}

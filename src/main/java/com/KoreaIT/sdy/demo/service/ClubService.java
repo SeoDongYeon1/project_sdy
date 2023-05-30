@@ -40,7 +40,7 @@ public class ClubService {
 		int clubId = clubRepository.getLastInsertId();
 		
 		// 클럽 만든 사람 자동으로 클럽에 가입되도록
-		clubRepository.doJoin(clubId, loginedMemberId, purpose);
+		clubRepository.doJoin(clubId, loginedMemberId, purpose, 7);
 
 		return ResultData.from("S-1", "동호회가 생성되었습니다.", clubId);
 	}
@@ -96,8 +96,8 @@ public class ClubService {
 	}
 
 	// 동호회 가입
-	public void doJoin(int clubId, String purpose, int memberId) {
-		clubRepository.doJoin(clubId, memberId, purpose);
+	public void doJoin(int clubId, String purpose, int memberId, int authLevel) {
+		clubRepository.doJoin(clubId, memberId, purpose, authLevel);
 	}
 
 	// 해당 회원이 가입한 동호회 가져오기

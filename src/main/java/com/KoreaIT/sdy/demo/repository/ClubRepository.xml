@@ -120,7 +120,8 @@
 		SET memberId = #{memberId},
 		clubId = #{clubId},
 		purpose = #{purpose},
-		regDate = NOW();
+		regDate = NOW(),
+		authLevel = #{authLevel};
 	</insert>
 	
 	<select id="actorCanChat" resultType="int">
