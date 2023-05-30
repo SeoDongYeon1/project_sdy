@@ -182,4 +182,10 @@ public class UsrClubController {
 		
 		return "usr/club/gallery";
 	}
+	
+	@RequestMapping("usr/club/user_list")
+	public String showUser_list(int id, Model model) {
+		
+		return "usr/club/user_list";
+	}
 }

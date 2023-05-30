@@ -3,15 +3,15 @@
 <c:set var="pageTitle" value="${club.name }" />
 <%@ include file="../common/head.jspf"%>
 
-<div class="mt-8 text-xl mx-auto px-3" style="width: 80%;">
-<%@ include file="../common/galleryhead.jspf"%>
+<div class=" text-xl mx-auto px-3" style="width: 70%;">
+<%@ include file="../common/clubhead.jspf"%>
 		<form action="../club/profileUpload" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="id" value="${param.id}" />
 				<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
 						<tr>
 								<th>프로필 사진</th>
 								<th>
-										<img class="w-full rounded-xl" src="${rq.getClubImgUri(club.id)}"
+										<img style="width:500px;"class="rounded-xl" src="${rq.getClubImgUri(club.id)}"
 												onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 										<c:forEach var="member" items="${members }">
 												<c:if test="${member.memberId==rq.loginedMemberId && member.authLevel==7 || member.authLevel==6 }">
