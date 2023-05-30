@@ -29,7 +29,7 @@
 						</li>
 						<li class="nav-item">
 								<a class="nav-link"
-										href="../calendar/do?id<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
+										href="../calendar/do?clubId=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
 										<i class="far fa-calendar-alt"></i>
 										일정
 								</a>
@@ -60,7 +60,7 @@
 				</ul>
 		</div>
 </nav>
-<a href="../club/join?id=${club.id }"> </a>
+<br/>
 <style>
 /*----------bootstrap-navbar-css------------*/
 .navbar-logo {

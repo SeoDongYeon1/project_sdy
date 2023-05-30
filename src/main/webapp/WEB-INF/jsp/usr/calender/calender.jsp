@@ -22,10 +22,9 @@
 
 <link rel="stylesheet" href="/resource/calendar.css" />
 <div class="cal-con">
-<c:if test="${not empty param.clubId }">
+<c:if test="${not empty param.clubId || not empty param.id}">
   <%@ include file="../common/clubhead.jspf"%>
 </c:if>
-
 		<form name="calendarFrm" id="calendarFrm" action="" method="GET">
 
 				<input type="hidden" name="year" value="${today_info.search_year}" />

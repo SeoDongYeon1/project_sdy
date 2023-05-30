@@ -5,10 +5,6 @@
 
 <div class="img_container">
 <%@ include file="../common/clubhead.jspf"%>
-		<h1 class="heading">
-				Image Gallery with CSS Grid
-				<span>& Flexbox Fallback</span>
-		</h1>
 
 		<div class="gallery">
 				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">

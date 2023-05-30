@@ -5,7 +5,6 @@
 
 <div class="img_container">
 <%@ include file="../common/clubhead.jspf"%>
-		<br/>
 		<nav style="margin: 0 65px;">
 		<div class="gallery">
 				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">

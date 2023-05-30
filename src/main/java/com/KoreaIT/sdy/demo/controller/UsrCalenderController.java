@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.KoreaIT.sdy.demo.repository.ScheduleDao;
+import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.util.Ut;
+import com.KoreaIT.sdy.demo.vo.Club;
 import com.KoreaIT.sdy.demo.vo.DateData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 import com.KoreaIT.sdy.demo.vo.ScheduleDto;
@@ -31,6 +33,9 @@ public class UsrCalenderController {
 	
 	@Autowired
 	ScheduleDao scheduleDao;
+	
+	@Autowired
+	ClubService clubService;
 	
 	@Autowired
 	Rq rq;
@@ -125,10 +130,13 @@ public class UsrCalenderController {
 				dateList.add(calendarData);
 			}
 		}
+		
+		Club club = clubService.getClubById(clubId);
 
 		// 배열에 담음
 		model.addAttribute("dateList", dateList); // 날짜 데이터 배열
 		model.addAttribute("today_info", today_info);
+		model.addAttribute("club", club);
 		return "usr/calender/calender";
 	}
 

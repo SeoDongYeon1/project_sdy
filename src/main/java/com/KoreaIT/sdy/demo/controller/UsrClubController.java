@@ -190,7 +190,10 @@ public class UsrClubController {
 	public String showUser_list(int id, Model model) {
 		Club club = clubService.getClubById(id);	
 		
+		List<member_club> members = clubService.getMembersByClubId(id);
+		
 		model.addAttribute("club", club);
+		model.addAttribute("members", members);
 		
 		return "usr/club/user_list";
 	}
