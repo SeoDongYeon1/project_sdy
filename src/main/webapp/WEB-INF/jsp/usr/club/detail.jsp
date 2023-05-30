@@ -3,7 +3,8 @@
 <c:set var="pageTitle" value="${club.name }" />
 <%@ include file="../common/head.jspf"%>
 
-<div class="mt-8 text-xl mx-auto px-3">
+<div class="mt-8 text-xl mx-auto px-3" style="width: 80%;">
+<%@ include file="../common/galleryhead.jspf"%>
 		<form action="../club/profileUpload" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="id" value="${param.id}" />
 				<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
@@ -37,7 +38,7 @@
 						</tr>
 						<tr>
 								<th>사진첩</th>
-								<th></th>
+								<th><a href="../club/gallery?id=${club.id }">사진첩</a></th>
 						</tr>
 						<tr>
 								<th>일정</th>

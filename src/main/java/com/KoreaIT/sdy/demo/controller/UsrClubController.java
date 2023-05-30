@@ -176,5 +176,10 @@ public class UsrClubController {
 		
 		return  Ut.jsReplace("동호회에 가입되었습니다.", "../club/detail?id="+clubId);
 	}
-
+	
+	@RequestMapping("usr/club/gallery")
+	public String showGallery(int id, Model model) {
+		
+		return "usr/club/gallery";
+	}
 }

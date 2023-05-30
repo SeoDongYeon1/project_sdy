@@ -30,7 +30,9 @@ public class UsrReactionPointController {
 		}
 		else if (actorCanMakeReaction == -1) {
 			ResultData rd = reactionPointService.deleteBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+			
 			rd = reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+			
 			return ResultData.from("S-2", "싫어요 누른 상태입니다.");
 		}
 
