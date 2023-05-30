@@ -58,7 +58,6 @@ public class UsrClubController {
 		
 		List<member_club> members = clubService.getMembersByClubId(id);
 		
-		
 		model.addAttribute("club", club);
 		model.addAttribute("members", members);
 

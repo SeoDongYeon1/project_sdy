@@ -3,147 +3,122 @@
 <c:set var="pageTitle" value="${club.name }" />
 <%@ include file="../common/head.jspf"%>
 
-<div class="img_container">
+
+<div class="container">
 <%@ include file="../common/clubhead.jspf"%>
+		<c:forEach var="member" items="${members}">
+				<div class="card">
+				
+						
+						
+						<div class="card-header">
+								<img class="w-full rounded-xl" src="${rq.getMemberImgUri(member.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}"
+										alt="" />
+						</div>
+						
 
-		<div class="gallery">
-				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">
-						<div >
-								<img class="gallery-image"
-										src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=500&h=500&fit=crop"
-										alt="person writing in a notebook beside by an iPad, laptop, printed photos, spectacles, and a cup of coffee on a saucer">
+						<div class="card-body">
+						<span class="tag tag-teal">${member.name}</span>
+
+								<div class="title">
+										<div class="title-text">
+												<a href="../member/profile?id=${member.id}">이름 : ${member.name}</a>
+										</div>
+								</div>
+								
+								<div class="user">
+
+								</div>
 
 						</div>
-						<br />
-						<span class="img_name">ㅇㄴㄴㄴ</span>
 				</div>
-				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">
-						<div >
-								<img class="gallery-image" src="https://images.unsplash.com/photo-1515260268569-9271009adfdb?w=500&h=500&fit=crop"
-								alt="sunset behind San Francisco city skyline">
-
-						</div>
-						<br />
-						<span class="img_name">ㅇㄴㄴㄴ</span>
-				</div>
-				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">
-						<div >
-								<img class="gallery-image" src="https://images.unsplash.com/photo-1506045412240-22980140a405?w=500&h=500&fit=crop"
-								alt="people holding umbrellas on a busy street at night lit by street lights and illuminated signs in Tokyo, Japan">
-
-						</div>
-						<br />
-						<span class="img_name">ㅇㄴㄴㄴ</span>
-				</div>
-				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">
-						<div >
-								<img class="gallery-image" src="https://images.unsplash.com/photo-1514041181368-bca62cceffcd?w=500&h=500&fit=crop"
-								alt="car interior from central back seat position showing driver and blurred view through windscreen of a busy road at night">
-
-						</div>
-						<br />
-						<span class="img_name">ㅇㄴㄴㄴ</span>
-				</div>
-				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">
-						<div >
-								<img class="gallery-image" src="https://images.unsplash.com/photo-1445810694374-0a94739e4a03?w=500&h=500&fit=crop"
-								alt="back view of woman wearing a backpack and beanie waiting to cross the road on a busy street at night in New York City, USA">
-
-						</div>
-						<br />
-						<span class="img_name">ㅇㄴㄴㄴ</span>
-				</div>
-				<div class="gallery-item" style="border: 1px solid gray; border-radius: 8px; padding: 8px;">
-						<div >
-								<img class="gallery-image" src="https://images.unsplash.com/photo-1486334803289-1623f249dd1e?w=500&h=500&fit=crop"
-								alt="man wearing a black jacket, white shirt, blue jeans, and brown boots, playing a white electric guitar while sitting on an amp">
-
-						</div>
-						<br />
-						<span class="img_name">ㅇㄴㄴㄴ</span>
-				</div>
-		</div>
-
+		</c:forEach>
 </div>
-
 <style>
-:root {
-	/* Base font size */
-	font-size: 10px;
-}
+@import
+	url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-*, *::before, *::after {
+* {
 	box-sizing: border-box;
 }
 
-body {
-	min-height: 100vh;
-	background-color: #fafafa;
-}
-
-.img_container {
+.container {
 	max-width: 100%;
 	margin: 0 auto;
-	padding: 0 2rem 2rem;
+	padding: 0 12px;
 }
 
-.heading {
-	font-family: "Montserrat", Arial, sans-serif;
-	font-size: 4rem;
-	font-weight: 500;
-	line-height: 1.5;
-	text-align: center;
-	padding: 3.5rem 0;
-	color: #1a1a1a;
-}
-
-.heading span {
-	display: block;
-}
-
-.gallery {
-	display: flex;
-	flex-wrap: wrap;
-	/* Compensate for excess margin on outer gallery flex items */
-	margin: -1rem -1rem;
-}
-
-.gallery-item {
-	/* Minimum width of 24rem and grow to fit available space */
-	flex: 0 0 24rem;
-	/* Margin value should be half of grid-gap value as margins on flex items don't collapse */
-	margin: 1rem;
-	box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+.card {
+	margin: 10px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
 	overflow: hidden;
+	width: 200px;
 }
 
-.gallery-image {
-	display: block;
+.card-header img {
 	width: 100%;
-	height: 100%;
+	height: 100px;
 	object-fit: cover;
-	transition: transform 400ms ease-out;
 }
 
-.gallery-image:hover {
-	transform: scale(1.15);
+.card-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 20px;
+	min-height: 100px;
 }
 
-@
-supports (display: grid) { .gallery { display:grid;
-	grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-	grid-gap: 2rem;
+.tag {
+	background: #cccccc;
+	border-radius: 50px;
+	font-size: 12px;
+	margin: 0;
+	color: #fff;
+	padding: 2px 10px;
+	text-transform: uppercase;
+	cursor: pointer;
 }
 
-.gallery, .gallery-item {
+.tag-teal {
+	background-color: #47bcd4;
+}
+
+.tag-purple {
+	background-color: #5e76bf;
+}
+
+.tag-pink {
+	background-color: #cd5b9f;
+}
+
+.card-body p {
+	font-size: 13px;
+	margin: 0 0 40px;
+}
+
+.user {
+	display: flex;
+	margin-top: auto;
+}
+
+.user img {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+}
+
+.user-info h5 {
 	margin: 0;
 }
 
-}
-.img_name {
-	font-size: 20px;
+.user-info small {
+	color: #545d7a;
 }
 </style>
-
 
 <%@ include file="../common/foot.jspf"%>

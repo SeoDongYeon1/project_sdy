@@ -61,6 +61,8 @@
 								<option class="notice" value="1">공지사항</option>
 								<option class="free" value="2">자유게시판</option>
 								<option class="qna" value="3">QnA</option>
+								<option class="free" value="4">이런 동호회 없나?</option>
+								<option class="qna" value="5">여기 동호회 어때?</option>
 						</select>
 				</div>
 				<br />
