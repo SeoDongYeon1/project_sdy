@@ -42,7 +42,7 @@ int endPage = startPage + displayPage - 1;
 						</div>
 				</form>
 				<a href="../club/create">
-					<button style="width:100px;" class="app-content-headerButton">동호회 개설</button>
+						<button style="width: 100px;" class="app-content-headerButton">동호회 개설</button>
 				</a>
 				<div></div>
 				<div class="app-content-actions-wrapper">
@@ -129,15 +129,29 @@ int endPage = startPage + displayPage - 1;
 														<circle cx="12" cy="12" r="1" />
 														<circle cx="12" cy="5" r="1" />
 														<circle cx="12" cy="19" r="1" /></svg>
-								</button> <span class="item image"> <img
-										src="${rq.getClubImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}"
-										alt=""> <span>${club.name }</span>
-						</span> <span class="item"> <span class="cell-label">지역:</span>${club.region_name }
-						</span> <span class="item "> <span class="cell-label">카테고리:</span> ${club.category_name }
-						</span> <span class="item"> <span class="cell-label">내용:</span> ${club.purpose }
-						</span> <span class="item"> <span class="cell-label">회원수:</span>${club.membersCount }
-						</span> <span class="item"> <span class="cell-label">평균나이:</span>${club.avgAge }
-						</span>
+								</button>
+								<span class="item image block">
+										<img src="${rq.getClubImgUri(club.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="">
+										<span class="cell-label" style="font-size: 13px;">동호회명:</span>
+										<span>${club.name }</span>
+								</span>
+								<span class="item block">
+										<span class="cell-label">지역:</span>${club.region_name }
+								</span>
+								<span class="item block">
+										<span class="cell-label">카테고리:</span>
+										${club.category_name }
+								</span>
+								<span class="item block">
+										<span class="cell-label">내용:</span>
+										${club.purpose }
+								</span>
+								<span class="item block">
+										<span class="cell-label">회원수:</span>${club.membersCount }
+								</span>
+								<span class="item block">
+										<span class="cell-label">평균나이:</span>${club.avgAge }
+								</span>
 
 						</a>
 				</c:forEach>
