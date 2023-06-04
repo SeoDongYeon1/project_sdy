@@ -11,12 +11,109 @@ int startPage = ((cur_Page - 1) / displayPage) * displayPage + 1;
 int endPage = startPage + displayPage - 1;
 %>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#categoryId').on('change', function() {
+			$('input[name="categoryId"]').val($(this).val());
+		});
+		
+		$('#step1').on('change', function() {
+			$('input[name="step1"]').val($(this).val());
+		});
+		
+		$('#step2').on('change', function() {
+			$('input[name="step2"]').val($(this).val());
+		});
+		
+		$('#step3').on('change', function() {
+			$('input[name="step3"]').val($(this).val());
+		});
+	});
+
+	window.onload = function() {
+		// 추가된 코드
+		loadArea('city');
+
+		// 지역 DB AJAX로 가져오기
+		$('#step1').on("change", function() {
+			loadArea('county', $(this));
+		});
+
+		$('#step2').on("change", function() {
+			loadArea('town', $(this));
+		});
+
+		function loadArea(type, element) {
+			var value = $(element).find('option:selected').text();
+			var data = {
+				type : type,
+				keyword : value
+			};
+
+			console.log(data);
+			$.ajax({
+				url : "../club/getArea",
+				data : data,
+				dataType : "JSON",
+				method : "POST",
+				success : function(res) {
+					if (type == 'city') {
+						res.forEach(function(city) {
+							$('#step1').append(
+									'<option value="'+city.step1+'">'
+											+ city.step1 + '</option>')
+						});
+					} else if (type == 'county') {
+						$('#county').siblings().remove();
+						$('#town').siblings().remove();
+						res.forEach(function(county) {
+							$('#step2').append(
+									'<option value="'+county.step2+'">'
+											+ county.step2 + '</option>')
+						});
+					} else {
+						$('#town').siblings().remove();
+						res.forEach(function(town) {
+							$('#step3').append(
+									'<option value="'+town.step3+'">'
+											+ town.step3 + '</option>')
+						});
+					}
+				},
+				error : function(xhr) {
+					alert(xhr.responseText);
+				}
+			});
+		}
+	};
+</script>
+
 
 <div class="app-content">
 		<div class="app-content-actions">
 				<form action="" style="width: 90%;">
+				
+						<input class="step1" type="hidden" name="step1" />
+						<input class="step2" type="hidden" name="step2" />
+						<input class="step3" type="hidden" name="step3" />
+						
+						<input class="categoryId" type="hidden" name="categoryId" />
+						<div class="form-group " style="display: inline-block;">
+								<select class="select select-ghost select-sm" id="step1" title="시/도">
+										<option id="city" value="">시/도</option>
+								</select>
+
+								<select id="step2" class="select select-ghost select-sm">
+										<option id="county" value="">시/군/구</option>
+								</select>
+
+								<select id="step3" class="select select-ghost select-sm">
+										<option id="town" value="">읍/면/동</option>
+								</select>
+						</div>
+
 						<div class="select_box" style="display: inline-block;">
-								<select name="categoryId" class="select select-ghost select-sm">
+								<select id="categoryId" class="select select-ghost select-sm">
 										<option disabled selected>카테고리 선택</option>
 										<option value="1">운동/스포츠</option>
 										<option value="2">아웃도어/여행</option>
@@ -33,6 +130,7 @@ int endPage = startPage + displayPage - 1;
 										<option value="13">자유주제</option>
 								</select>
 						</div>
+
 						<div class="search_box" style="display: inline-block;">
 								<input type="text" value="${param.searchKeyword }" max-length="20" name="searchKeyword" class="search-bar"
 										placeholder="검색어를 입력해주세요" />

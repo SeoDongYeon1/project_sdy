@@ -47,6 +47,16 @@
 			OR
 			c.purpose LIKE CONCAT('%',#{searchKeyword},'%'))
 		</if>
+		
+		<if test="step1 != '' and step1 != null">
+			AND r.step1 = #{step1}
+		</if>
+		<if test="step2 != '' and step2 != null">
+			AND r.step2 = #{step2}
+		</if>
+		<if test="step3 != '' and step3 != null">
+			AND r.step3 = #{step3}
+		</if>
 		ORDER BY c.id DESC
 		<if test="limitFrom >= 0">
 			LIMIT #{limitFrom}, #{limitTake}

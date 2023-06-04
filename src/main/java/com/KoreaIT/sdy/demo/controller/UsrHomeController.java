@@ -22,29 +22,30 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrHomeController {
 	@Autowired
 	ClubService clubService;
-	
+
 	@Autowired
 	ChatRoomService chatRoomService;
-	
+
 	@Autowired
 	ChatService chatService;
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
+
 	private Rq rq;
 
 	public UsrHomeController(Rq rq) {
 		this.rq = rq;
 	}
-	
+
 	@RequestMapping("/usr/home/main")
 	public String showList(Model model, @RequestParam(defaultValue = "0") int categoryId,
-			@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "") String searchKeyword) {
-		
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "") String step1, @RequestParam(defaultValue = "") String step2,
+			@RequestParam(defaultValue = "") String step3) {
+
 		rq.run();
-		
+
 		Category category = categoryService.getCategoryById(categoryId);
 
 		if (categoryId != 0 && category == null) {
@@ -58,30 +59,30 @@ public class UsrHomeController {
 		int itemsInAPage = 12;
 		int totalPage = (int) Math.ceil(clubsCount / (double) itemsInAPage);
 
-		List<Club> clubs = clubService.getForPrintClubs(categoryId, itemsInAPage, page, searchKeyword);
-		
+		List<Club> clubs = clubService.getForPrintClubs(categoryId, itemsInAPage, page, searchKeyword, step1, step2, step3);
+
 		List<Club> avgAge = clubService.getavgAge();
 
 		List<Club> membersCount = clubService.getmembersCount();
-		
+
 		// 평균 나이 결합
-		for(Club club: clubs) {
-			for(Club clubAge: avgAge) {
-				if(club.getId()==clubAge.getId()) {
+		for (Club club : clubs) {
+			for (Club clubAge : avgAge) {
+				if (club.getId() == clubAge.getId()) {
 					club.setAvgAge(clubAge.getAvgAge());
 				}
 			}
 		}
-		
+
 		// 회원수 결합
-		for(Club club: clubs) {
-			for(Club clubMembers: membersCount) {
-				if(club.getId()==clubMembers.getId()) {
+		for (Club club : clubs) {
+			for (Club clubMembers : membersCount) {
+				if (club.getId() == clubMembers.getId()) {
 					club.setMembersCount(clubMembers.getMembersCount());
 				}
 			}
 		}
-		
+
 		// 해당 memberId가 속하는 개인 채팅방 가져오기
 		List<PersonalChatRoom> PList = chatRoomService.getPersonalChatRoomsByMemberId(rq.getLoginedMemberId());
 
@@ -126,7 +127,7 @@ public class UsrHomeController {
 		}
 
 		model.addAttribute("CList", CList);
-		
+
 		model.addAttribute("page", page);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("clubsCount", clubsCount);
@@ -134,12 +135,12 @@ public class UsrHomeController {
 
 		return "usr/home/main";
 	}
-	
+
 	@RequestMapping("/")
 	public String showRoot() {
 		return "redirect:/usr/home/main";
 	}
-	
+
 	@RequestMapping("/usr/home/main2")
 	public String showmain2() {
 		return "/usr/home/main2";

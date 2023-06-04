@@ -61,11 +61,11 @@ public class ClubService {
 	}
 
 	// 검색어에 해당되는 동호회들을 한페이지 limitFrom과 limitTake의 조건에 맞게 보여주기 
-	public List<Club> getForPrintClubs(int categoryId, int itemsInAPage, int page, String searchKeyword) {
+	public List<Club> getForPrintClubs(int categoryId, int itemsInAPage, int page, String searchKeyword, String step1, String step2, String step3) {
 		int limitFrom = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 
-		return clubRepository.getForPrintClubs(categoryId, limitFrom, limitTake, searchKeyword);
+		return clubRepository.getForPrintClubs(categoryId, limitFrom, limitTake, searchKeyword, step1, step2, step3);
 	}
 
 	// 전체 동호회별 평균 나이 가져오기
