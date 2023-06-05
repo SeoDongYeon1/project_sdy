@@ -25,6 +25,14 @@
 		WHERE id = #{id};
 	</select>
 
+	<select id="getArticleByClubId" resultType="Article">
+		SELECT a.*
+		FROM club c
+		INNER JOIN article a
+		ON c.id = a.clubId
+		WHERE c.id = #{id};
+	</select>
+	
 	<select id="getClubs" resultType="Club">
 		SELECT *
 		FROM club;

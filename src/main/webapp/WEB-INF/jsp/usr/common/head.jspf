@@ -25,10 +25,10 @@
 <body>
 
 		<div class="app-content-header" style="padding: 20px 35px;">
-				<a href="/" style="font-size:30px; color:#2869ff;"class="app-content-headerText">L</a>
-				<a href="/" style="font-size:10px;"class="app-content-headerText">eisure</a>
-				<a href="/" style="font-size:30px; color:#2869ff;"class="app-content-headerText">P</a>
-				<a href="/" style="font-size:10px;"class="app-content-headerText">eople</a>
+				<a href="/" style="font-size: 30px; color: #2869ff;" class="app-content-headerText">L</a>
+				<a href="/" style="font-size: 10px;" class="app-content-headerText">eisure</a>
+				<a href="/" style="font-size: 30px; color: #2869ff;" class="app-content-headerText">P</a>
+				<a href="/" style="font-size: 10px;" class="app-content-headerText">eople</a>
 				<button class="mode-switch" title="Switch Theme">
 						<svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
 								stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
@@ -44,10 +44,10 @@
 				<c:if test="${!rq.logined}">
 						<a class="btn btn-outline btn-xs" href="${rq.joinUri }">회원가입</a>
 				</c:if>
-				
+
 				<c:if test="${rq.admin}">
 						<a class="btn btn-outline btn-xs" href="/adm/memberAndArticle/list">
-							<span>관리자</span>
+								<span>관리자</span>
 						</a>
 				</c:if>
 				&nbsp;
@@ -123,17 +123,15 @@
 												</li>
 										</ul>
 								</li>
-								<c:if test="${rq.isLogined() }">
-										<li class="sidebar-list-item">
-												<a href="../article/write">
-														<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+								<li class="sidebar-list-item">
+										<a href="../article/write">
+												<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
 																<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
 																<path d="m7.5 9l-3 .54L5 6.5L10.73.79a1 1 0 0 1 1.42 0l1.06 1.06a1 1 0 0 1 0 1.42Z" />
 																<path d="M12 9.5v3a1 1 0 0 1-1 1H1.5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3" /></g></svg>
-														<span>글쓰기</span>
-												</a>
-										</li>
-								</c:if>
+												<span>글쓰기</span>
+										</a>
+								</li>
 								<li class="sidebar-list-item">
 										<a href="../calendar/do">
 												<d>📆&nbsp;&nbsp;</d>
@@ -153,7 +151,8 @@
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 														<path fill="currentColor"
 																d="m20.34 9.32l-14-7a3 3 0 0 0-4.08 3.9l2.4 5.37a1.06 1.06 0 0 1 0 .82l-2.4 5.37A3 3 0 0 0 5 22a3.14 3.14 0 0 0 1.35-.32l14-7a3 3 0 0 0 0-5.36Zm-.89 3.57l-14 7a1 1 0 0 1-1.35-1.3l2.39-5.37a2 2 0 0 0 .08-.22h6.89a1 1 0 0 0 0-2H6.57a2 2 0 0 0-.08-.22L4.1 5.41a1 1 0 0 1 1.35-1.3l14 7a1 1 0 0 1 0 1.78Z" /></svg>
-												<span>채팅</span>&nbsp;
+												<span>채팅</span>
+												&nbsp;
 												<c:if test="${rq.getPunReadCount() + rq.getCunReadCount() != 0}">
 														<span class="badge badge-sm ml-auto"> + ${rq.getPunReadCount() + rq.getCunReadCount()}</span>
 												</c:if>

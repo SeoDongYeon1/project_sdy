@@ -43,16 +43,18 @@ public class UsrArticleController {
 	
 	@Autowired
 	private GenFileService genFileService;
-
+	
 	@RequestMapping("usr/article/write")
-	public String write(String title, String body, Integer boardId) {
-
+	public String write(@RequestParam(defaultValue = "0") int clubId) {
+		if(clubId != 0) {
+			return "usr/article/write2";
+		}
 		return "usr/article/write";
 	}
 
 	@RequestMapping("usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(String title, String body, int boardId, String replaceUri, MultipartRequest multipartRequest) {
+	public String doWrite(String title, String body, @RequestParam(defaultValue = "0") int boardId, String replaceUri, MultipartRequest multipartRequest, @RequestParam(defaultValue = "0") int clubId) {
 		
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력하세요.");
@@ -61,10 +63,13 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
 		}
 
-		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
+		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId, clubId);
 		
 		int id = (int)writeArticleRd.getData1();
 		
+		if (boardId == 0 && Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../club/gallery?id=%d", clubId);
+		}
 		if (Ut.empty(replaceUri)) {
 			replaceUri = Ut.f("../article/detail?id=%d", id);
 		}

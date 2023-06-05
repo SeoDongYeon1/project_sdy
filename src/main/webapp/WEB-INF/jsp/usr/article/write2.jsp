@@ -2,28 +2,19 @@
 <%@ page import="com.KoreaIT.sdy.demo.vo.Article"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="pageTitle" value="게시글 작성" />
+<c:set var="pageTitle" value="동호회 글작성" />
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../common/toastUIEditorLib.jspf"%>
 
 <!-- Article write 관련 -->
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#boardId').on('change', function() {
-			$('input[name="boardId"]').val($(this).val());
-		});
-	});
+	
 	let ArticleWrite__submitDone = false;
 
 	function ArticleWrite__submit(form) {
 		var title = form.title.value.trim();
 		var body = form.body.value.trim();
-		var boardId = $('input[name="boardId"]').val().trim();
-
-		if (boardId.length == 0) {
-			alert('게시판을 선택해주세요.');
-			return false;
-		}
+		
 
 		if (title.length == 0) {
 			alert('제목을 입력해주세요.');
@@ -57,19 +48,8 @@
 				<hr style="width: 90%;"/>
 
 				<br />
-				<div style="text-align: left; width: 90%">
-						<select style="border-color: black;" id="boardId" class="select select-ghost w-full max-w-xs">
-								<option disabled selected>게시판 선택</option>
-								<option class="notice" value="1">공지사항</option>
-								<option class="free" value="2">자유게시판</option>
-								<option class="qna" value="3">QnA</option>
-								<option class="free" value="4">이런 동호회 없나?</option>
-								<option class="qna" value="5">여기 동호회 어때?</option>
-						</select>
-				</div>
 				<br />
 				<div style="text-align: left;">
-						<input class="boardId" type="hidden" name="boardId" />
 						<div style="font-size: 17px; font-weight: bold; width: 90%;">
 								제목 <br /> <input class="title input input-bordered"
 										style="border-radius: 8px; width: 500px;" type="text"

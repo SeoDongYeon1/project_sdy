@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.KoreaIT.sdy.demo.dto.member_club;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
+import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Club;
 
 @Mapper
@@ -39,5 +40,7 @@ public interface ClubRepository {
 	public member_club getClubByMemberId(int memberId, int clubId);
 	
 	public List<member_club> getMembersByClubId(int clubId);
+
+	public List<Article> getArticleByClubId(int id);
 
 }

@@ -578,8 +578,23 @@ color VARCHAR(45),
 clubid INT(11) UNSIGNED NOT NULL DEFAULT 0
 );
 
+#동호회 아이디 추가
+ALTER TABLE article ADD clubId INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 
+SELECT a.*, m.name AS 'extra__writer',
+		IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+		IFNULL(SUM(IF(R.`point` <0, R.`point`, 0)),0) AS 'goodReactionPoint',
+		IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'badReactionPoint'
+		FROM article a
+		INNER JOIN `member` m
+		ON a.memberId = m.id
+		LEFT JOIN board b
+		ON a.boardId = b.id
+		LEFT JOIN reactionPoint AS R
+		ON a.id = R.relId AND R.relTypeCode = 'article'
+		WHERE a.id = 1
+		GROUP BY a.id;
 #############################################################################################
 # 검색 쿼리
 SELECT * FROM article;
@@ -719,7 +734,34 @@ JOIN MEMBER m1 ON pc.memberId1 = m1.id
 JOIN MEMBER m2 ON pc.memberId2 = m2.id
 WHERE pc.id = 1;
 
+SELECT c.*, ca.name AS category_name, r.step1 AS 'region_name'
+FROM club c
+INNER JOIN category ca
+ON c.categoryId = ca.id
+INNER JOIN region r
+ON c.areacode = r.areacode
+WHERE 1
+AND r.step1 = "전라북도"
+AND r.step2 = "정읍시"
+AND r.step3 = "내장상동"
+ORDER BY c.id DESC
+
 
 SELECT *
 FROM member_club
 WHERE memberId = 2;
+
+SELECT mc.*, m.name AS 'name'
+FROM `member` m
+INNER JOIN member_club mc
+ON m.id = mc.memberId
+WHERE mc.clubId = 2;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate= NOW(),
+title = 'sd',
+`body`= 'sd',
+memberId = 1,
+boardId = 2,	
+clubId = 0;

@@ -18,6 +18,7 @@ import com.KoreaIT.sdy.demo.service.ClubService;
 import com.KoreaIT.sdy.demo.service.GenFileService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
+import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Club;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
@@ -178,8 +179,10 @@ public class UsrClubController {
 	
 	@RequestMapping("usr/club/gallery")
 	public String showGallery(int id, Model model) {
-		Club club = clubService.getClubById(id);	
+		Club club = clubService.getClubById(id);
+		List<Article> articles = clubService.getArticleByClubId(id);	
 		
+		model.addAttribute("articles", articles);
 		model.addAttribute("club", club);
 		
 		return "usr/club/gallery";

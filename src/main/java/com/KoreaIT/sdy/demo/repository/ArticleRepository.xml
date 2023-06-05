@@ -10,7 +10,8 @@
 		title =#{title},
 		`body`= #{body},
 		memberId = #{memberId},
-		boardId = #{boardId};
+		boardId = #{boardId},
+		clubId = #{clubId};
 	</insert>
 	
 	<select id="getArticles" resultType="Article">
@@ -114,7 +115,7 @@
 		FROM article a
 		INNER JOIN `member` m
 		ON a.memberId = m.id
-		INNER JOIN board b
+		LEFT JOIN board b
 		ON a.boardId = b.id
 		LEFT JOIN reactionPoint AS R
 		ON a.id = R.relId AND R.relTypeCode = 'article'

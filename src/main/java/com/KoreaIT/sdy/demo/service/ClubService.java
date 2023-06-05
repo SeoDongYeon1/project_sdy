@@ -10,6 +10,7 @@ import com.KoreaIT.sdy.demo.dto.member_club;
 import com.KoreaIT.sdy.demo.repository.ClubRepository;
 import com.KoreaIT.sdy.demo.repository.MemberRepository;
 import com.KoreaIT.sdy.demo.vo.AreaRequestDTO;
+import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Club;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
@@ -108,5 +109,9 @@ public class ClubService {
 	
 	public List<member_club> getMembersByClubId(int clubId) {
 		return clubRepository.getMembersByClubId(clubId);
+	}
+
+	public List<Article> getArticleByClubId(int id) {
+		return clubRepository.getArticleByClubId(id);
 	}
 }

@@ -21,8 +21,8 @@ public class ArticleService {
 	}
 
 	// 게시글 작성
-	public ResultData writeArticle(String title, String body, int memberId, int boardId) {
-		articleRepository.writeArticle(title, body, memberId, boardId);
+	public ResultData writeArticle(String title, String body, int memberId, int boardId, int clubId) {
+		articleRepository.writeArticle(title, body, memberId, boardId, clubId);
 
 		int id = articleRepository.getLastInsertId();
 

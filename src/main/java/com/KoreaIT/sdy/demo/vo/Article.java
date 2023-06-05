@@ -19,6 +19,7 @@ public class Article {
 	private int repliesCount;
 	private int goodReactionPoint;
 	private int badReactionPoint;
+	private int clubId;
 	
 	private String extra__writer;
 	private String board_name;
