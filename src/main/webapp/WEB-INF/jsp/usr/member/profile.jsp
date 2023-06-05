@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="pageTitle" value="Member Profile" />
+<c:set var="pageTitle" value="회원 정보" />
 <%@ include file="../common/head.jspf"%>
 
 

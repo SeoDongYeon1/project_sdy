@@ -5,6 +5,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="pageTitle" value="내 캘린더" />
+
+<c:if test="${not empty param.clubId || not empty param.id}">
+  <c:set var="pageTitle" value="동호회 캘린더" />
+</c:if>
+
 
 <%@ include file="../common/head.jspf"%>
 
