@@ -14,10 +14,12 @@
 						<th>
 							<img class="w-full rounded-xl" src="${rq.getMemberImgUri(member.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 								<div>첨부 이미지</div>
-								<div>
-										<input name="file__member__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
-								</div>
-								<button class="btn btn-outline" type="submit" value="업로드">업로드</button>
+								<c:if test="${rq.loginedMemberId == member.id }">
+									<div>
+											<input name="file__member__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
+									</div>
+									<button class="btn btn-outline" type="submit" value="업로드">업로드</button>
+								</c:if>
 						</th>
 				</tr>
 

@@ -63,6 +63,9 @@
 <br/>
 <style>
 /*----------bootstrap-navbar-css------------*/
+body {
+	overflow: auto;
+}
 .navbar-logo {
 	padding: 15px;
 	color: black;
@@ -71,6 +74,7 @@
 .navbar-mainbg {
 	background-color: var(--sidebar);
 	padding: 0px;
+	
 }
 
 #navbarSupportedContent {
