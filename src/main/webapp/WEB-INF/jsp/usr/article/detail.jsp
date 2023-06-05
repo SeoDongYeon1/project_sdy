@@ -151,7 +151,7 @@ function doBadReaction(articleId) {
 </script>
 
 <div class="mt-8 text-xl mx-auto px-3 detail_box">
-		<table class="table-box-type-1 table table-zebra w-full" style="text-align: center;">
+		<table class="table-box-type-1 table table-zebra" style="text-align: center; width: 600px;">
 				<tr>
 						<th>번호</th>
 						<th>${article.id }</th>
@@ -287,7 +287,7 @@ function doBadReaction(articleId) {
 				</table>
 				</c:if>
 				<c:if test="${rq.notLogined }">
-						<a class="btn-text-link btn btn-active btn-ghost" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
+						<a style="margin-left: 45%;" class="btn-text-link btn btn-active btn-ghost" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
 				</c:if>
 		</div>
 </div>

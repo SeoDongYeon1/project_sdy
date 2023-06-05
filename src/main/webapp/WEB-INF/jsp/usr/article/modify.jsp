@@ -33,7 +33,7 @@
 	}
 </script>
 
-<div style="text-align: center;">
+<div style="text-align: center; margin: 0 auto;">
 		<div style="font-weight: bold; font-size: 17px;">${article.id }번 게시글 수정</div>
 		<form method="post" action="doModify" onsubmit="ArticleModify__submit(this); return false;"
 				style="width: 850px; height: 1000px; border: 2px solid black; display: inline-block; border-radius: 8px;">

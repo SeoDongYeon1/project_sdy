@@ -36,8 +36,8 @@ function MemberCheckPw__submit(form) {
 }
 </script>	
 	
-	<div style="text-align:center;">
-		<div style="font-weight:bold; font-size: 17px;">
+	<div style="text-align:center; margin-left: auto; margin-right: auto; margin-top: 150px;">
+		<div style="font-weight:bold; font-size: 25px;">
 			회원정보 확인
 		</div>
 		<form method= "POST" action="modify" onsubmit="MemberCheckPw__submit(this); return false;" style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
@@ -57,8 +57,9 @@ function MemberCheckPw__submit(form) {
 				<br />
 			</div>
 			<br />
+			<br />
 			<div style="border-radius: 8px; display: inline-block; width: 150px;">
-				<button class="btn btn-outline" style="padding: 0 40px; " type="submit">확인</button>
+				<button class="btn btn-outline btn-sm" style="padding: 0 40px; " type="submit">확인</button>
 			</div>
 		</form>
 	</div>
