@@ -115,19 +115,19 @@ int endPage = startPage + displayPage - 1;
 						<div class="select_box" style="display: inline-block;">
 								<select id="categoryId" class="select select-ghost select-sm">
 										<option disabled selected>카테고리 선택</option>
-										<option value="${param.categoryId }">운동/스포츠</option>
-										<option value="${param.categoryId }">아웃도어/여행</option>
-										<option value="${param.categoryId }">문화/공연/축제</option>
-										<option value="${param.categoryId }">음악/악기</option>
-										<option value="${param.categoryId }">공예/만들기</option>
-										<option value="${param.categoryId }">댄스/무용</option>
-										<option value="${param.categoryId }">봉사활동</option>
-										<option value="${param.categoryId }">차/오토바이</option>
-										<option value="${param.categoryId }">사진/영상</option>
-										<option value="${param.categoryId }">게임/오락</option>
-										<option value="${param.categoryId }">요리/제조</option>
-										<option value="${param.categoryId }">반려동물</option>
-										<option value="${param.categoryId }">자유주제</option>
+										<option value="1">운동/스포츠</option>
+										<option value="2">아웃도어/여행</option>
+										<option value="3">문화/공연/축제</option>
+										<option value="4">음악/악기</option>
+										<option value="5">공예/만들기</option>
+										<option value="6">댄스/무용</option>
+										<option value="7">봉사활동</option>
+										<option value="8">차/오토바이</option>
+										<option value="9">사진/영상</option>
+										<option value="10">게임/오락</option>
+										<option value="11">요리/제조</option>
+										<option value="12">반려동물</option>
+										<option value="13">자유주제</option>
 								</select>
 						</div>
 

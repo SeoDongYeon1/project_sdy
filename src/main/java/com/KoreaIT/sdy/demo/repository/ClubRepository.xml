@@ -66,6 +66,8 @@
 	<select id="getClubsCount" resultType="int">
 		SELECT COUNT(c.id)
 		FROM club c
+		INNER JOIN region r
+		ON c.areacode = r.areacode
 		WHERE 1
 		<if test='categoryId != "" and categoryId != null'>
 			AND c.categoryId = #{categoryId}
@@ -74,6 +76,15 @@
 			AND (c.name LIKE CONCAT('%',#{searchKeyword},'%')
 			OR
 			c.purpose LIKE CONCAT('%',#{searchKeyword},'%'))
+		</if>
+		<if test="step1 != '' and step1 != null">
+			AND r.step1 = #{step1}
+		</if>
+		<if test="step2 != '' and step2 != null">
+			AND r.step2 = #{step2}
+		</if>
+		<if test="step3 != '' and step3 != null">
+			AND r.step3 = #{step3}
 		</if>
 	</select>
 

@@ -22,7 +22,7 @@ public interface ClubRepository {
 	
 	public List<Club> getForPrintClubs(int categoryId, int limitFrom, int limitTake, String searchKeyword, String step1, String step2, String step3);
 	
-	public int getClubsCount(int categoryId, String searchKeyword);
+	public int getClubsCount(int categoryId, String searchKeyword, String step1, String step2, String step3);
 
 	public List<Club> getavgAge();
 

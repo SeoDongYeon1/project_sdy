@@ -53,7 +53,7 @@ public class UsrHomeController {
 		}
 
 		// 조건식에 맞는 동호회 갯수 가져오기
-		int clubsCount = clubService.getClubsCount(categoryId, searchKeyword);
+		int clubsCount = clubService.getClubsCount(categoryId, searchKeyword, step1, step2, step3);
 
 		// 페이지 네이션
 		int itemsInAPage = 12;

@@ -56,8 +56,8 @@ public class ClubService {
 	}
 	
 	// 조건으로 카테고리와 검색어에 해당되는 동호회 가져오기
-	public int getClubsCount(int categoryId, String searchKeyword) {
-		return clubRepository.getClubsCount(categoryId, searchKeyword);
+	public int getClubsCount(int categoryId, String searchKeyword, String step1, String step2, String step3) {
+		return clubRepository.getClubsCount(categoryId, searchKeyword, step1, step2, step3);
 	}
 
 	// 검색어에 해당되는 동호회들을 한페이지 limitFrom과 limitTake의 조건에 맞게 보여주기 
