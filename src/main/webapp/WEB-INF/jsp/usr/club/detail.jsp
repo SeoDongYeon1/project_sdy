@@ -3,7 +3,8 @@
 <c:set var="pageTitle" value="${club.name }" />
 <%@ include file="../common/head.jspf"%>
 
-<div class=" text-xl mx-auto px-3" style="width: 100%;">
+<div>
+<div class=" text-xl mx-auto px-3" style="width: 100%; margin-left: auto; margin-right: auto;">
 <%@ include file="../common/clubhead.jspf"%>
 		<form action="../club/profileUpload" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="id" value="${param.id}" />
@@ -36,52 +37,12 @@
 								<th>개설날짜</th>
 								<th>${club.regDate }</th>
 						</tr>
-						<tr>
-								<th>사진첩</th>
-								<th><a href="../club/gallery?id=${club.id }">사진첩</a></th>
-						</tr>
-						<tr>
-								<th>일정</th>
-								<th>
-									<a href="../calendar/do?clubId=${club.id }" class="btn btn-outline btn-xs">일정</a>
-								</th>
-						</tr>
-
-						<tr>
-								<th>채팅</th>
-								<th>
-										<a href="../chat/ClubChatroom?id=${club.id }" class="btn btn-outline btn-xs">채팅</a>
-								</th>
-						</tr>
 				</table>
 
 		</form>
 		<br />
-
-		<div class="mt-8 text-xl mx-auto px-3">
-				<div>회원 리스트</div>
-				<table class="table-box-type-1 table table-zebra" style="text-align: center; width: 200px;">
-						<tr>
-								<th>이름</th>
-						</tr>
-						<c:forEach var="member" items="${members}">
-								<tr>
-										<th>
-												<c:choose>
-														<c:when test="${member.authLevel == 7 || member.authLevel == 6}">
-																<a href="../member/profile?id=${member.memberId}" style="color: blue;">${member.name}</a>
-														</c:when>
-														<c:otherwise>
-																<a href="../member/profile?id=${member.memberId}" style="color: black;">${member.name}</a>
-														</c:otherwise>
-												</c:choose>
-										</th>
-								</tr>
-						</c:forEach>
-				</table>
-		</div>
 </div>
-
+</div>
 
 
 <%@ include file="../common/foot.jspf"%>

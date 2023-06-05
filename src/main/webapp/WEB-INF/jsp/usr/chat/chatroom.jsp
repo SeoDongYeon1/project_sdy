@@ -35,16 +35,18 @@
 		<div id="username-page">
 				<div class="username-page-container">
 						<form id="usernameForm" method="post" action="../member/doLogin">
-								<br /> 
+								<br />
 								<div style="display: inline-block; text-align: left;">
 										<div class="form-group" style="font-size: 15px; font-weight: bold;">
-												아이디 <br /> <input class="form-control" type="text" placeholder="아이디" name="loginId" autocomplete="off"
-														required />
+												아이디
+												<br />
+												<input class="form-control" type="text" placeholder="아이디" name="loginId" autocomplete="off" required />
 										</div>
 										<br />
 										<div class="form-group" style="font-size: 15px; font-weight: bold;">
-												비밀번호 <br /> <input class="form-control" type="password" placeholder="비밀번호" name="loginPw"
-														autocomplete="off" required />
+												비밀번호
+												<br />
+												<input class="form-control" type="password" placeholder="비밀번호" name="loginPw" autocomplete="off" required />
 										</div>
 										<br />
 										<div class="form-group">
@@ -56,37 +58,38 @@
 		</div>
 </c:if>
 
-<div id="chat-page" class="hidden" >
-		<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">참가한 유저</button>
-				<div id="list" class="dropdown-menu" aria-labelledby="dropdownMenuButton"> </div>
-		</div>
-		<div class="chat-container" style="width: 600px;">
-				<div class="chat-header">
-						<c:if test="${roomType=='Club' }">
-							<h2>${room.roomName }</h2>
-						</c:if>
-						<c:if test="${roomType=='Personal' }">
-							<h2>${room.member1_name }</h2>
-						</c:if>
-						
+<div style="margin: 0 auto;">
+		<div id="chat-page" class="hidden">
+				<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">참가한 유저</button>
+						<div id="list" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
 				</div>
-				<div class="connecting">연결중..</div>
-				<ul id="messageArea">
+				<div class="chat-container" style="width: 600px;">
+						<div class="chat-header">
+								<c:if test="${roomType=='Club' }">
+										<h2>${room.roomName }</h2>
+								</c:if>
+								<c:if test="${roomType=='Personal' }">
+										<h2>${room.member1_name }</h2>
+								</c:if>
 
-				</ul>
-				<form id="messageForm" name="messageForm">
-						<div class="form-group">
-								<div class="input-group clearfix">
-										<input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control" />
-										<button type="submit" class="primary">전송</button>
-								</div>
 						</div>
-				</form>
+						<div class="connecting">연결중..</div>
+						<ul id="messageArea">
+
+						</ul>
+						<form id="messageForm" name="messageForm">
+								<div class="form-group">
+										<div class="input-group clearfix">
+												<input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control" />
+												<button type="submit" class="primary">전송</button>
+										</div>
+								</div>
+						</form>
+				</div>
 		</div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="/js/main.js"></script>
