@@ -114,4 +114,8 @@ public class ClubService {
 	public List<Article> getArticleByClubId(int id) {
 		return clubRepository.getArticleByClubId(id);
 	}
+
+	public int getmembersCountByclubId(int id) {
+		return clubRepository.getmembersCountByclubId(id);
+	}
 }

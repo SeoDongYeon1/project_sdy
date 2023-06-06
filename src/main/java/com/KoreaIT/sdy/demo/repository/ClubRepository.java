@@ -43,4 +43,6 @@ public interface ClubRepository {
 
 	public List<Article> getArticleByClubId(int id);
 
+	public int getmembersCountByclubId(int id);
+
 }

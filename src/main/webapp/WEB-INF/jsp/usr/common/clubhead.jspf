@@ -7,7 +7,7 @@
 				aria-label="Toggle navigation">
 				<i class="fas fa-bars text-white"></i>
 		</button>
-		<div style="width: 300px;"></div>
+		<div style="width: 200px;"></div>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
 						<div class="hori-selector">
@@ -17,7 +17,7 @@
 						<li class="nav-item">
 								<a class="nav-link"
 										href="../club/detail?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
-										<i class="fas fa-tachometer-alt"></i>
+										<i class="fa-solid fa-house"></i>
 										Home
 								</a>
 						</li>
@@ -37,14 +37,14 @@
 						<li class="nav-item">
 								<a class="nav-link"
 										href="../club/gallery?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
-										<i class="far fa-chart-bar"></i>
+										<i class="fa-regular fa-image"></i>
 										사진첩
 								</a>
 						</li>
 						<li class="nav-item">
 								<a class="nav-link"
 										href="../chat/ClubChatroom?id=<c:choose><c:when test='${not empty param.clubId}'>${param.clubId}</c:when><c:when test='${not empty param.id}'>${param.id}</c:when><c:otherwise>${club.id}</c:otherwise></c:choose>">
-										<i class="far fa-copy"></i>
+										<i class="fa-regular fa-comments"></i>
 										채팅
 								</a>
 						</li>

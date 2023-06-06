@@ -503,8 +503,13 @@
 
 
 <style>
+body {
+	overflow: auto;
+}
+
 form {
 	width: 100%;
+	overflow: auto;
 }
 
 .form-menu {

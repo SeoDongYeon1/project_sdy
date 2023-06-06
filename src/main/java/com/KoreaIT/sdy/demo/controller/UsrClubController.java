@@ -36,16 +36,7 @@ public class UsrClubController {
 	
 	@Autowired
 	private GenFileService genFileService;
-	
-
-//	@RequestMapping("/usr/club/list")
-//	public String showClubList(Model model, String category) {
-//		List<Club> clubs = clubService.getClubs();
-//		
-//		model.addAttribute("clubs", clubs);
-//		return "usr/club/list";
-//	}
-	
+		
 	// 동호회별 페이지
 	@RequestMapping("usr/club/detail")
 	public String showDetail(int id, Model model) {
@@ -194,8 +185,11 @@ public class UsrClubController {
 		
 		List<member_club> members = clubService.getMembersByClubId(id);
 		
+		int count = clubService.getmembersCountByclubId(id);
+		
 		model.addAttribute("club", club);
 		model.addAttribute("members", members);
+		model.addAttribute("count", count);
 		
 		return "usr/club/user_list";
 	}

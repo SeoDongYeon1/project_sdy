@@ -182,4 +182,12 @@
 		ON m.id = mc.memberId
 		WHERE mc.clubId = #{clubId};
 	</select>
+	
+	<select id="getmembersCountByclubId" resultType="int">
+		SELECT COUNT(mc.memberId) AS 'membersCount'
+		FROM club c
+		INNER JOIN member_club mc
+		ON c.id = mc.clubId
+		WHERE c.id = #{id};
+	</select>
 </mapper>

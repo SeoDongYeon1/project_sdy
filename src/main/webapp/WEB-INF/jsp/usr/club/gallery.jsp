@@ -3,7 +3,7 @@
 <c:set var="pageTitle" value="${club.name } 사진첩" />
 <%@ include file="../common/head.jspf"%>
 
-<div class="img_container">
+<div class=" text-xl mx-auto px-3 img_container" style="width: 100%;">
 		<%@ include file="../common/clubhead.jspf"%>
 		<nav style="margin: 0 65px;">
 				<div class="gallery">
@@ -25,10 +25,7 @@
 </div>
 
 <style>
-:root {
-	/* Base font size */
-	font-size: 10px;
-}
+
 
 *, *::before, *::after {
 	box-sizing: border-box;

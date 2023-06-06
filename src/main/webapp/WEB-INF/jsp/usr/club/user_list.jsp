@@ -3,15 +3,14 @@
 <c:set var="pageTitle" value="동호회 회원" />
 <%@ include file="../common/head.jspf"%>
 
-<div>
+<div class=" text-xl mx-auto px-3" style="width: 100%;">
+		<%@ include file="../common/clubhead.jspf"%>
+				<div style="margin: 5px 30px;">총 인원: ${count }명</div>
 		<div class="container">
-				<%@ include file="../common/clubhead.jspf"%>
 				<br/>
-				<br/>
+				<br />
 				<c:forEach var="member" items="${members}">
 						<div class="card">
-
-
 
 								<div class="card-header">
 										<img class="w-full rounded-xl" src="${rq.getMemberImgUri(member.memberId)}"
