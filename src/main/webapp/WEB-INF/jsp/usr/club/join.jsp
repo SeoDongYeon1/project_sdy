@@ -30,7 +30,7 @@
 				<br />
 				<div style="display: inline-block;">
 						<div class="form-purpose">가입 목적</div>
-						<div>
+						<div style="width: 600px;">
 								<textarea autocomplete="off" name="purpose" class="textarea textarea-bordered w-full" placeholder="가입목적을 입력해주세요"></textarea>
 						</div>
 				</div>
@@ -50,7 +50,7 @@
 
 <style>
 form {
-	width: 100%;
+	width: 90%;
 }
 
 .form-menu {

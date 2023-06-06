@@ -189,7 +189,7 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public String doModify(int id, String title, String body, MultipartRequest multipartRequest) {
 		Article foundArticle = articleService.getForPrintArticle(id);
 
 		if (foundArticle == null) {
@@ -203,6 +203,16 @@ public class UsrArticleController {
 		}
 
 		articleService.modifyArticle(id, title, body);
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, id);
+			}
+		}
 		
 		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}

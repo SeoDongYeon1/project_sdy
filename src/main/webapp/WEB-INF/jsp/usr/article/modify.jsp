@@ -36,7 +36,7 @@
 <div style="text-align: center; margin: 0 auto;">
 		<div style="font-weight: bold; font-size: 17px;">${article.id }번 게시글 수정</div>
 		<form method="post" action="doModify" onsubmit="ArticleModify__submit(this); return false;"
-				style="width: 850px; height: 1000px; border: 2px solid black; display: inline-block; border-radius: 8px;">
+				style="width: 850px; height: 1000px; border: 2px solid black; display: inline-block; border-radius: 8px;" enctype="multipart/form-data">
 				<br />
 				<div style="display: inline-block; text-align: left;">
 						<input value="${article.id }" type="hidden" name="id" />
@@ -48,6 +48,12 @@
 								제목 <br /> <input class="input input-bordered w-full max-w-xs"
 										style="border-radius: 8px; width: 500px; border: 2px solid black;" type="text" value="${article.title }"
 										name="title" />
+						</div>
+						<div>
+							<div>첨부 이미지</div>
+							<div>
+								<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
+							</div>
 						</div>
 						<br />
 						<div style="font-size: 17px; font-weight: bold;">

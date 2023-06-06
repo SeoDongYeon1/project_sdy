@@ -63,7 +63,7 @@ body {
 
 .gallery-item {
 	/* Minimum width of 24rem and grow to fit available space */
-	flex: 0 0 24rem;
+	flex: 0 0 20rem;
 	/* Margin value should be half of grid-gap value as margins on flex items don't collapse */
 	margin: 1rem;
 	box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
